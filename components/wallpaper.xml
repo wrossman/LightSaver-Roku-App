@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="Wallpaper" extends="Scene">
+    <children>
+        <Poster id="myPoster"
+                uri="m.global.currPicUri"
+                width="m.global.currPicWidth"
+                height="m.global.currPicHeight"
+        />
+    </children>
+    <script type="text/brightscript" uri="pkg:/source/Wallpapers.brs" />
+</component>

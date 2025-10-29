@@ -1,0 +1,13 @@
+# Channel Details
+title=Roku-Wallpaper
+major_version=1
+minor_version=1
+build_version=1
+
+# Channel Assets
+mm_icon_focus_fhd=pkg:/images/port-break_540x405.jpg
+mm_icon_focus_sd=pkg:/images/port-break_290x218.jpg
+
+# Splash Screen + Loading Screen Artwork
+splash_screen_fhd=pkg:/images/train-station_1280x720.jpg
+splash_screen_sd=pkg:/images/train-station_720x480.jpg
