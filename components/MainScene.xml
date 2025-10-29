@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="MainScene" extends="Scene">
+    <children>
+        <Wallpaper id="myWallpaper" />
+        <Menu id="myMenu"/>
+    </children>
+    <interface>
+        <field id="backgroundColor" type="string" />
+    </interface>
+    <script type="text/brightscript" uri="MainScene.brs" />
+</component>

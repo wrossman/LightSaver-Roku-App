@@ -3,7 +3,7 @@ sub Main()
     m.port = CreateObject("roMessagePort")
     screen.setMessagePort(m.port)
 
-    scene = screen.CreateScene("Wallpaper")
+    scene = screen.CreateScene("MainScene")
     screen.show()
 
     while(true)

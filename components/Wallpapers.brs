@@ -1,8 +1,5 @@
 sub init()
 
-    m.top.backgroundUri = ""
-    m.top.backgroundColor = "#FFFFFF"
-
     m.currWallpaper = m.top.findNode("currWallpaper")
     m.devInfo = CreateObject("roDeviceInfo")
     m.deviceSize = m.devInfo.GetDisplaySize()

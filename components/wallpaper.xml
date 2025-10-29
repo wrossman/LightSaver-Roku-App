@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component name="Wallpaper" extends="Scene">
+<component name="Wallpaper" extends="Group">
     <children>
         <Poster id="currWallpaper"/>
     </children>
-    <interface>
-        <field id="backgroundColor" type="string" />
-    </interface>
-    <script type="text/brightscript" uri="pkg:/source/Wallpapers.brs" />
+    <script type="text/brightscript" uri="Wallpapers.brs" />
 </component>

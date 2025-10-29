@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="Menu" extends="Group">
+    <children>
+        <Label
+            id="titleLabel"
+            text="Menu"
+            horizAlign="center"
+            color="#000000"
+        />
+    </children>
+    <script type="text/brightscript" uri="Menu.brs" />
+</component>
