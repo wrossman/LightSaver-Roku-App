@@ -1,5 +1,8 @@
 sub init()
 
+    m.top.backgroundUri = ""
+    m.top.backgroundColor = "#FFFFFF"
+
     m.currWallpaper = m.top.findNode("currWallpaper")
     m.devInfo = CreateObject("roDeviceInfo")
     m.deviceSize = m.devInfo.GetDisplaySize()
@@ -16,9 +19,6 @@ sub onPosterLoaded()
         currPicWidth = m.posterStage.bitmapWidth
         currPicHeight = m.posterStage.bitmapHeight
         currPicRatio = currPicWidth / currPicHeight
-
-        print currPicHeight
-        print currPicWidth
 
         if currPicWidth > currPicHeight
             m.currWallpaper.width = m.deviceSize["w"]
