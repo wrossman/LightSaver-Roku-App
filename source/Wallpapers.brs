@@ -8,7 +8,7 @@ sub init()
     m.deviceSize = m.devInfo.GetDisplaySize()
 
     m.posterStage = CreateObject("roSGNode", "Poster")
-    m.posterStage.uri = "pkg:/images/wallpapers/disney-portrait.jpg"
+    m.posterStage.uri = "pkg:/images/wallpapers/san-diego.jpg"
     m.posterStage.observeField("loadStatus", "onPosterLoaded")
 
 end sub
@@ -20,7 +20,10 @@ sub onPosterLoaded()
         currPicHeight = m.posterStage.bitmapHeight
         currPicRatio = currPicWidth / currPicHeight
 
-        if currPicWidth > currPicHeight
+        currDevRatio = m.deviceSize["w"] / m.deviceSize["h"]
+
+        if currPicRatio > currDevRatio
+            print "in first"
             m.currWallpaper.width = m.deviceSize["w"]
             m.currWallpaper.height = m.deviceSize["w"] / currPicRatio
 
@@ -28,6 +31,7 @@ sub onPosterLoaded()
 
             m.currWallpaper.translation = [0, moveDown]
         else
+            print "in second"
             m.currWallpaper.height = m.deviceSize["h"]
             m.currWallpaper.width = m.deviceSize["h"] * currPicRatio
 
@@ -38,6 +42,6 @@ sub onPosterLoaded()
 
     end if
 
-    m.currWallpaper.uri = "pkg:/images/wallpapers/disney-portrait.jpg"
+    m.currWallpaper.uri = "pkg:/images/wallpapers/san-diego.jpg"
 
 end sub
