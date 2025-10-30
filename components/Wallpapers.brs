@@ -71,6 +71,9 @@ sub onPosterLoaded()
         end if
     else
         print m.posterStage.loadStatus + " for " + m.currImageUri
+        m.currWallpaper.width = m.deviceSize["w"]
+        m.currWallpaper.height = m.deviceSize["h"]
+        m.currWallpaper.translation = [0, 0]
         m.currWallpaper.uri = m.currImageUri
     end if
 
