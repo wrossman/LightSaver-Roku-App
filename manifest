@@ -11,7 +11,7 @@ mm_icon_focus_sd=pkg:/images/port-break_290x218.png
 # Splash Screen + Loading Screen Artwork
 splash_screen_fhd=pkg:/images/train-station_1280x720.jpg
 splash_screen_sd=pkg:/images/train-station_720x480.jpg
-splash_color=#FFFFFFFF
+splash_color=#FFFFFFF
 splash_min_time=2000
 
 # Resolutions
