@@ -4,10 +4,10 @@ sub init()
     m.picTimer.ObserveField("fire", "onTimerFire")
 
     m.currWallpaper = m.top.findNode("currWallpaper")
-    m.currWallpaper.loadDisplayMode = "limitSize"
+    m.currWallpaper.loadDisplayMode = "scaleToFit"
 
     m.posterStage = CreateObject("roSGNode", "Poster")
-    m.posterStage.loadDisplayMode = "limitSize"
+    m.posterStage.loadDisplayMode = "scaleToFit"
 
     m.imageIndex = 0
 
@@ -71,6 +71,7 @@ sub onPosterLoaded()
         end if
     else
         print m.posterStage.loadStatus + " for " + m.currImageUri
+        m.currWallpaper.uri = m.currImageUri
     end if
 
     m.imageIndex++
