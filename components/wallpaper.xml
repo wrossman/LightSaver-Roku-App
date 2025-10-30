@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="Wallpaper" extends="Group">
     <children>
-        <Poster id="currWallpaper"/>
+        <Poster id="currWallpaper" />
+        <Timer id="picTimer" duration="5" repeat="true" />
     </children>
     <script type="text/brightscript" uri="Wallpapers.brs" />
 </component>
