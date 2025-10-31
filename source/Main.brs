@@ -1,16 +1,18 @@
 sub Main()
 
     folderPath = "pkg:/images/wallpapers/"
-    fs = CreateObject("roFileSystem")
-    fileList = fs.GetDirectoryListing(folderPath)
-    fileArr = []
-    for each item in fileList
-        fileArr.Push(folderPath + item)
+    lightroomAlbumUrl = "https://lightroom.adobe.com/shares/ed159d42b0474d3eb14ff0bd7da4a187"
+
+    imageUriArr = []
+    fileArr = getLocalImages(folderPath)
+    lightroomArr = getLightroomUrls(lightroomAlbumUrl)
+
+    for each item in lightroomArr
+        imageUriArr.Push(item)
     end for
 
-    lightroomArr = getLightroomUrls()
-    for each item in lightroomArr
-        fileArr.Push(item)
+    for each item in fileArr
+        imageUriArr.Push(item)
     end for
 
     screen = CreateObject("roSGScreen")
@@ -20,9 +22,9 @@ sub Main()
     scene = screen.CreateScene("MainScene")
 
     m.global = screen.getGlobalNode()
-    m.global.AddField("fileArr", "array", true)
+    m.global.AddField("imageUriArr", "array", true)
     m.global.AddField("folderPath", "string", true)
-    m.global.fileArr = fileArr
+    m.global.imageUriArr = imageUriArr
     m.global.folderPath = folderPath
 
     for each item in m.global.fileArr
@@ -40,12 +42,11 @@ sub Main()
     end while
 end sub
 
-function getLightroomUrls() as object
+function getLightroomUrls(myAlbumUrl as string) as object
 
     endpointUrlEnd = "/assets?embed=asset&subtype=image%3Bvideo"
     baseUrl = "https://photos.adobe.io/v2/"
-    myAlbumUrl = "https://lightroom.adobe.com/shares/ed159d42b0474d3eb14ff0bd7da4a187"
-
+   
     myUrlTransfer = CreateObject("roUrlTransfer")
     myUrlTransfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
 
@@ -76,5 +77,18 @@ function getLightroomUrls() as object
     end for
 
     return outputArr
+
+end function
+
+function getLocalImages(folderPath as string) as object
+
+    fs = CreateObject("roFileSystem")
+    fileList = fs.GetDirectoryListing(folderPath)
+    fileArr = []
+    for each item in fileList
+        fileArr.Push(folderPath + item)
+    end for
+
+    return fileArr
 
 end function

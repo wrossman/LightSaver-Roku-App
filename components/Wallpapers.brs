@@ -21,11 +21,11 @@ end sub
 
 sub onTimerFire()
 
-    if m.imageIndex = m.global.fileArr.Count()
+    if m.imageIndex = m.global.imageUriArr.Count()
         m.imageIndex = 0
     end if
 
-    m.currImageUri = m.global.fileArr[m.imageIndex]
+    m.currImageUri = m.global.imageUriArr[m.imageIndex]
     m.posterStage.uri = m.currImageUri
     m.posterStage.observeField("loadStatus", "onPosterLoaded")
 
