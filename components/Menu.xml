@@ -3,7 +3,7 @@
     <children>
         <Label
             id="titleLabel"
-            text="Menu"
+            text=""
             horizAlign="center"
             color="#000000"
         />

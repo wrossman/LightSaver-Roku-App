@@ -22,12 +22,14 @@ sub Main()
     scene = screen.CreateScene("MainScene")
 
     m.global = screen.getGlobalNode()
+    m.global.AddField("deviceSize", "assocarray", true)
     m.global.AddField("imageUriArr", "array", true)
     m.global.AddField("folderPath", "string", true)
+    m.global.deviceSize = getDeviceSize()
     m.global.imageUriArr = imageUriArr
     m.global.folderPath = folderPath
 
-    for each item in m.global.fileArr
+    for each item in m.global.imageUriArr
         print item
     end for
 
@@ -90,5 +92,12 @@ function getLocalImages(folderPath as string) as object
     end for
 
     return fileArr
+
+end function
+
+function getDeviceSize()
+
+    devInfo = CreateObject("roDeviceInfo")
+    return devInfo.GetDisplaySize()
 
 end function

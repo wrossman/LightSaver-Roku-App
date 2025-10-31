@@ -2,7 +2,21 @@
 <component name="Wallpaper" extends="Group">
     <children>
         <Poster id="currWallpaper" />
-        <Timer id="picTimer" duration="2" repeat="true" />
+        <Rectangle id="fadeRect" opacity="0" />
+        <Timer id="picTimer" duration="4" repeat="true" />
+        <Timer id="fadeTimer" duration="2" repeat="true" />
+        <Animation
+            id="FadeAnimation"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="4.0">
+            <FloatFieldInterpolator
+                id="FadeInterpolator"
+                key="[0.0,0.25,0.75,1.0]"
+                KeyValue="[0.0,1.0,1.0,0.0]"
+                fieldToInterp="fadeRect.opacity"
+            />
+        </Animation>
     </children>
     <script type="text/brightscript" uri="Wallpapers.brs" />
 </component>

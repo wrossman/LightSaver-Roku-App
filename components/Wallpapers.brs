@@ -3,6 +3,12 @@ sub init()
     m.picTimer = m.top.findNode("picTimer")
     m.picTimer.ObserveField("fire", "onTimerFire")
 
+    m.fadeRect = m.top.findNode("fadeRect")
+    ' m.fadeRect.height = 
+
+    m.fadeTimer = m.top.findNode("fadeTimer")
+    m.fadeTimer.observeField("fire", "")
+
     m.currWallpaper = m.top.findNode("currWallpaper")
     m.currWallpaper.loadDisplayMode = "scaleToFit"
 
@@ -10,9 +16,6 @@ sub init()
     m.posterStage.loadDisplayMode = "scaleToFit"
 
     m.imageIndex = 0
-
-    m.devInfo = CreateObject("roDeviceInfo")
-    m.deviceSize = m.devInfo.GetDisplaySize()
 
     m.picTimer.control = "start"
     onTimerFire()
@@ -35,40 +38,35 @@ end sub
 sub onPosterLoaded()
 
     m.posterStage.unobserveField("loadStatus")
-    print "Current image: " + m.currImageUri
-    print "bitmap width: " + m.posterStage.bitmapWidth.toStr()
-    print "bitmap height: " + m.posterStage.bitmapHeight.toStr()
     if m.posterStage.loadStatus = "ready"
-        print m.currImageUri + " is ready"
         currPicWidth = m.posterStage.bitmapWidth
         currPicHeight = m.posterStage.bitmapHeight
         currPicRatio = currPicWidth / currPicHeight
 
-        currDevRatio = m.deviceSize["w"] / m.deviceSize["h"]
+        currDevRatio = m.global.deviceSize["w"] / m.global.deviceSize["h"]
 
         if currPicRatio > currDevRatio
-            m.currWallpaper.width = m.deviceSize["w"]
-            m.currWallpaper.height = m.deviceSize["w"] / currPicRatio
+            m.currWallpaper.width = m.global.deviceSize["w"]
+            m.currWallpaper.height = m.global.deviceSize["w"] / currPicRatio
 
-            moveDown = (m.deviceSize["h"] - m.currWallpaper.height) / 2
+            moveDown = (m.global.deviceSize["h"] - m.currWallpaper.height) / 2
 
             m.currWallpaper.translation = [0, moveDown]
 
             m.currWallpaper.uri = m.currImageUri
         else
-            m.currWallpaper.height = m.deviceSize["h"]
-            m.currWallpaper.width = m.deviceSize["h"] * currPicRatio
+            m.currWallpaper.height = m.global.deviceSize["h"]
+            m.currWallpaper.width = m.global.deviceSize["h"] * currPicRatio
 
-            moveRight = (m.deviceSize["w"] - m.currWallpaper.width) / 2
+            moveRight = (m.global.deviceSize["w"] - m.currWallpaper.width) / 2
 
             m.currWallpaper.translation = [moveRight, 0]
 
             m.currWallpaper.uri = m.currImageUri
         end if
     else
-        print m.posterStage.loadStatus + " for " + m.currImageUri
-        m.currWallpaper.width = m.deviceSize["w"]
-        m.currWallpaper.height = m.deviceSize["h"]
+        m.currWallpaper.width = m.global.deviceSize["w"]
+        m.currWallpaper.height = m.global.deviceSize["h"]
         m.currWallpaper.translation = [0, 0]
         m.currWallpaper.uri = m.currImageUri
     end if
