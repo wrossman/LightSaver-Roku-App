@@ -2,7 +2,7 @@
 <component name="Wallpaper" extends="Group">
     <children>
         <Poster id="currWallpaper" />
-        <Timer id="picTimer" duration="5" repeat="true" />
+        <Timer id="picTimer" duration="2" repeat="true" />
     </children>
     <script type="text/brightscript" uri="Wallpapers.brs" />
 </component>

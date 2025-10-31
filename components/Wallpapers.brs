@@ -14,10 +14,6 @@ sub init()
     m.devInfo = CreateObject("roDeviceInfo")
     m.deviceSize = m.devInfo.GetDisplaySize()
 
-    for each image in m.global.fileArr
-        print m.global.folderPath + image
-    end for
-
     m.picTimer.control = "start"
     onTimerFire()
 
@@ -29,7 +25,7 @@ sub onTimerFire()
         m.imageIndex = 0
     end if
 
-    m.currImageUri = m.global.folderPath + m.global.fileArr[m.imageIndex]
+    m.currImageUri = m.global.fileArr[m.imageIndex]
     m.posterStage.uri = m.currImageUri
     m.posterStage.observeField("loadStatus", "onPosterLoaded")
 
