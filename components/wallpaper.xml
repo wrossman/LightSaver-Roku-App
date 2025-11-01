@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="Wallpaper" extends="Group">
     <children>
-        <Poster id="currWallpaper" />
-        <Rectangle id="fadeRect" opacity="0" />
-        <Timer id="picTimer" duration="5" repeat="true" />
-        <Timer id="fadeTimer" duration="2" repeat="true" />
+        <Poster id="currWallpaper" loadDisplayMode = "scaleToFit"/>
+        <Rectangle id="fadeRect" opacity="100" color = "0xFFFFFF"/>
+        <Timer id="picTimer" repeat="true" />
         <Animation
-            id="FadeAnimation"
+            id="fadeOutAnimation"
             repeat="false"
             easeFunction="inQuad"
-            duration="4.0">
+            duration="1.0">
             <FloatFieldInterpolator
-                id="FadeInterpolator"
-                key="[0.0,0.25,0.75,1.0]"
-                KeyValue="[0.0,1.0,1.0,0.0]"
+                id="animateOutInterp"
+                key="[0.0,1.0]"
+                KeyValue="[0.0,1.0]"
+                fieldToInterp="fadeRect.opacity"
+            />
+        </Animation>
+        <Animation
+            id="fadeInAnimation"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="1.0">
+            <FloatFieldInterpolator
+                id="animateInInterp"
+                key="[0.0,1.0]"
+                KeyValue="[1.0,0.0]"
                 fieldToInterp="fadeRect.opacity"
             />
         </Animation>

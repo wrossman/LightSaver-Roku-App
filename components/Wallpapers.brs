@@ -1,29 +1,46 @@
 sub init()
 
-    m.fadeRect = m.top.findNode("fadeRect")
-    ' m.fadeRect.height =
+    m.picDisplayTime = 10
 
-    m.fadeTimer = m.top.findNode("fadeTimer")
-    m.fadeTimer.observeField("fire", "")
+    m.fadeRect = m.top.findNode("fadeRect")
+    m.fadeRect.height = m.global.deviceSize["h"]
+    m.fadeRect.width = m.global.deviceSize["w"]
+    m.fadeRect.color = m.global.backgroundColor
+
+    m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
+    m.fadeInAnimation = m.top.findNode("fadeInAnimation")
 
     m.currWallpaper = m.top.findNode("currWallpaper")
-    m.currWallpaper.loadDisplayMode = "scaleToFit"
 
     m.posterStage = CreateObject("roSGNode", "Poster")
     m.posterStage.loadDisplayMode = "scaleToFit"
 
     m.imageIndex = 0
 
-    m.picTimer = m.top.findNode("picTimer")
-    m.picTimer.ObserveField("fire", "onTimerFire")
-    m.picTimer.control = "start"
+    firstLaunch()
 
-    onTimerFire()
+end sub
 
+sub firstLaunch()
+    if m.global.imageUriArr.Count() > 1
+        m.picTimer = m.top.findNode("picTimer")
+        m.picTimer.ObserveField("fire", "onTimerFire")
+        m.picTimer.duration = m.picDisplayTime
+        m.picTimer.control = "start"
+    end if
+    getPoster()
 end sub
 
 sub onTimerFire()
 
+    m.fadeOutAnimation.control = "start"
+    m.fadeOutAnimation.observeField("state", "getPoster")
+
+end sub
+
+sub getPoster()
+
+    m.fadeOutAnimation.unobserveField("state")
     if m.imageIndex = m.global.imageUriArr.Count()
         m.imageIndex = 0
     end if
@@ -74,6 +91,18 @@ sub onPosterLoaded()
     end if
 
     m.currWallpaper.uri = m.currImageUri
+
+    if m.currWallpaper.loadStatus = "loading"
+        m.currWallpaper.observeField("loadStatus", "animateIn")
+    else if m.currWallpaper.loadStatus = "ready"
+        animateIn()
+    end if
+
     m.imageIndex++
 
+end sub
+
+sub animateIn()
+    m.currWallpaper.unobserveField("loadStatus")
+    m.fadeInAnimation.control = "start"
 end sub

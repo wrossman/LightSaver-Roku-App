@@ -25,6 +25,8 @@ sub Main()
     m.global.AddField("deviceSize", "assocarray", true)
     m.global.AddField("imageUriArr", "array", true)
     m.global.AddField("folderPath", "string", true)
+    m.global.AddField("backgroundColor", "string", true)
+    m.global.backgroundColor = "#FFFFFF"
     m.global.deviceSize = getDeviceSize()
     m.global.imageUriArr = imageUriArr
     m.global.folderPath = folderPath
