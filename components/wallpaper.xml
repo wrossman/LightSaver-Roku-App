@@ -3,7 +3,7 @@
     <children>
         <Poster id="currWallpaper" />
         <Rectangle id="fadeRect" opacity="0" />
-        <Timer id="picTimer" duration="4" repeat="true" />
+        <Timer id="picTimer" duration="5" repeat="true" />
         <Timer id="fadeTimer" duration="2" repeat="true" />
         <Animation
             id="FadeAnimation"

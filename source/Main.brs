@@ -33,6 +33,8 @@ sub Main()
         print item
     end for
 
+    print m.global.imageUriArr.Count()
+
     screen.show()
 
     while(true)
@@ -46,16 +48,17 @@ end sub
 
 function getLightroomUrls(myAlbumUrl as string) as object
 
-    endpointUrlEnd = "/assets?embed=asset&subtype=image%3Bvideo"
     baseUrl = "https://photos.adobe.io/v2/"
-   
+    endpointUrlEnd = "/assets?embed=asset&subtype=image%3Bvideo"
+
     myUrlTransfer = CreateObject("roUrlTransfer")
     myUrlTransfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
 
     myUrlTransfer.SetUrl(myAlbumUrl)
     response = myUrlTransfer.GetToString()
 
-    indexOfAlbumJson = Instr(1, response, "albumAttributes") + 16
+    albumJsonMarker = "albumAttributes"
+    indexOfAlbumJson = Instr(1, response, albumJsonMarker) + Len(albumJsonMarker) + 1
     endIndexOfAlbumJson = Instr(indexOfAlbumJson, response, "};") - 1
     albumJsonString = Mid(response, indexOfAlbumJson, endIndexOfAlbumJson - indexOfAlbumJson)
 
@@ -68,8 +71,8 @@ function getLightroomUrls(myAlbumUrl as string) as object
     myUrlTransfer.SetUrl(albumUrl)
     response = myUrlTransfer.GetToString()
 
-    cleanRespone = Mid(response, 13).trim()
-    cleanJson = ParseJson(cleanRespone)
+    cleanResponse = Mid(response, 13).trim()
+    cleanJson = ParseJson(cleanResponse)
 
     outputArr = []
 
