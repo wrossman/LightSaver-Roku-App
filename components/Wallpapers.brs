@@ -106,3 +106,12 @@ sub animateIn()
     m.currWallpaper.unobserveField("loadStatus")
     m.fadeInAnimation.control = "start"
 end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    if key = "back"
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.wallpaperOpen = false
+        return true
+    end if
+end function

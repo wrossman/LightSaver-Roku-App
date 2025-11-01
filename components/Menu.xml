@@ -3,10 +3,22 @@
     <children>
         <Label
             id="titleLabel"
-            text=""
+            text="Menu"
             horizAlign="center"
             color="#000000"
         />
+        <LabelList
+            id="menuSelection"
+            itemSize="[500,100]"
+            color="#000000"
+            vertFocusAnimationStyle="floatingFocus"
+            drawFocusFeedback="false"
+        >
+            <ContentNode id="menuContent" role="content">
+                <ContentNode title="Start Wallpaper" />
+                <ContentNode title="Settings" />
+            </ContentNode>
+        </LabelList>
     </children>
     <script type="text/brightscript" uri="Menu.brs" />
 </component>

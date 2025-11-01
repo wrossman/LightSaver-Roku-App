@@ -23,6 +23,7 @@ sub Main()
 
     m.global = screen.getGlobalNode()
     m.global.AddField("deviceSize", "assocarray", true)
+    m.global.AddField("wallpaperOpen", "bool", true)
     m.global.AddField("imageUriArr", "array", true)
     m.global.AddField("folderPath", "string", true)
     m.global.AddField("backgroundColor", "string", true)
