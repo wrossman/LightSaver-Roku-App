@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="Settings" extends="Group" initialFocus="exampleKeyboard">
+    <children>
+        <Label
+            id="settingsLabel"
+            text="Settings"
+            horizAlign="center"
+            color="#000000"
+        />
+        <LabelList
+            id="settingsSelection"
+            itemSize="[500,100]"
+            color="#000000"
+            vertFocusAnimationStyle="floatingFocus"
+            drawFocusFeedback="false"
+        >
+            <ContentNode id="settingsContent" role="content">
+                <ContentNode title="Change Lightroom Album" />
+                <ContentNode title="Change Picture Display Time" />
+            </ContentNode>
+        </LabelList>
+    </children>
+    <script type="text/brightscript" uri="Settings.brs" />
+</component>

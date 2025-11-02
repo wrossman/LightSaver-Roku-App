@@ -19,14 +19,23 @@ sub onMenuSelection()
         m.top.appendChild(m.wallpapers)
         m.wallpapers.setFocus(true)
         m.global.wallpaperOpen = true
-        m.global.observeField("wallpaperOpen", "onWallpaperClose")
+        m.global.observeField("wallpaperOpen", "onMenuReturn")
     else if m.menuSelection.itemSelected = 1
-        print "Goto Settings"
+        m.settings = CreateObject("roSGNode", "Settings")
+        m.top.appendChild(m.settings)
+        m.settings.setFocus(true)
+        m.global.settingsOpen = true
+        m.global.observeField("settingsOpen", "onMenuReturn")
     end if
+    m.titleLabel.visible = false
+    m.menuSelection.visible = false
 
 end sub
 
-sub onWallpaperClose()
+sub onMenuReturn()
+    m.titleLabel.visible = true
+    m.menuSelection.visible = true
     m.menuSelection.setFocus(true)
     m.global.unobserveField("wallpaperOpen")
+    m.global.unobserveField("settingsOpen")
 end sub

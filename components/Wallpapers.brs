@@ -32,7 +32,7 @@ sub firstLaunch()
 end sub
 
 sub onTimerFire()
-
+    print "timer fired"
     m.fadeOutAnimation.control = "start"
     m.fadeOutAnimation.observeField("state", "getPoster")
 
@@ -104,14 +104,21 @@ end sub
 
 sub animateIn()
     m.currWallpaper.unobserveField("loadStatus")
+    m.picTimer.control = "start"
     m.fadeInAnimation.control = "start"
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back"
+        'remove all children of wallpapers then remove wallpaper from parent
+        m.picTimer.control = "stop"
+        while m.top.getChildCount() > 0
+            m.top.removeChild(m.top.getChild(0))
+        end while
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.wallpaperOpen = false
         return true
     end if
+    return false
 end function

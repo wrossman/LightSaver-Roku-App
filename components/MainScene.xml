@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="MainScene" extends="Scene">
     <children>
-        <!-- <Wallpapers id="myWallpaper" /> -->
         <Menu id="myMenu"/>
     </children>
     <interface>

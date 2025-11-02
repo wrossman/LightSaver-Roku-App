@@ -1,44 +1,37 @@
 sub Main()
 
-    folderPath = "pkg:/images/wallpapers/"
-    lightroomAlbumUrl = "https://lightroom.adobe.com/shares/ed159d42b0474d3eb14ff0bd7da4a187"
-
-    imageUriArr = []
-    fileArr = getLocalImages(folderPath)
-    lightroomArr = getLightroomUrls(lightroomAlbumUrl)
-
-    for each item in lightroomArr
-        imageUriArr.Push(item)
-    end for
-
-    for each item in fileArr
-        imageUriArr.Push(item)
-    end for
-
     screen = CreateObject("roSGScreen")
     m.port = CreateObject("roMessagePort")
     screen.setMessagePort(m.port)
-
     scene = screen.CreateScene("MainScene")
 
     m.global = screen.getGlobalNode()
     m.global.AddField("deviceSize", "assocarray", true)
     m.global.AddField("wallpaperOpen", "bool", true)
+    m.global.AddField("settingsOpen", "bool", true)
     m.global.AddField("imageUriArr", "array", true)
     m.global.AddField("folderPath", "string", true)
     m.global.AddField("backgroundColor", "string", true)
+    m.global.AddField("lightroomAlbumUrl", "string", true)
+    m.global.AddField("urlChange", "int", true)
+    m.global.AddField("displayTimeChange", "int", true)
+
+
+    m.global.folderPath = "pkg:/images/wallpapers/"
+    m.global.lightroomAlbumUrl = "470uKsm"
+    ' m.global.lightroomAlbumUrl = ""
     m.global.backgroundColor = "#FFFFFF"
     m.global.deviceSize = getDeviceSize()
-    m.global.imageUriArr = imageUriArr
-    m.global.folderPath = folderPath
+    ' m.global.observeField("lightroomAlbumUrl", "getImageUris")
+
+    getImageUris()
+
+    screen.show()
 
     for each item in m.global.imageUriArr
         print item
     end for
 
-    print m.global.imageUriArr.Count()
-
-    screen.show()
 
     while(true)
         msg = wait(0, m.port)
@@ -49,8 +42,30 @@ sub Main()
     end while
 end sub
 
-function getLightroomUrls(myAlbumUrl as string) as object
+function getFullFromShortLink(url as string) as string
 
+    lightroomShortPrefix = "https://adobe.ly/"
+    url = lightroomShortPrefix + url
+    urlTransfer = CreateObject("roUrlTransfer")
+    urlTransfer.SetUrl(url)
+    urlTransferPort = CreateObject("roMessagePort")
+    urlTransfer.SetPort(urlTransferPort)
+    urlTransfer.AsyncGetToString()
+    responseEvent = Wait(0, urlTransferPort)
+    responseHeaders = responseEvent.GetResponseHeadersArray()
+    for each item in responseHeaders
+        if item.DoesExist("Location")
+            return item["Location"]
+        end if
+    end for
+    return ""
+end function
+
+sub getImageUris()
+
+    m.global.imageUriArr = CreateObject("roArray",1,true)
+
+    myAlbumUrl = getFullFromShortLink(m.global.lightroomAlbumUrl)
     baseUrl = "https://photos.adobe.io/v2/"
     endpointUrlEnd = "/assets?embed=asset&subtype=image%3Bvideo"
 
@@ -84,22 +99,17 @@ function getLightroomUrls(myAlbumUrl as string) as object
         outputArr.Push(itemUrl)
     end for
 
-    return outputArr
-
-end function
-
-function getLocalImages(folderPath as string) as object
+    ' GET LOCAL IMAGES
 
     fs = CreateObject("roFileSystem")
-    fileList = fs.GetDirectoryListing(folderPath)
+    fileList = fs.GetDirectoryListing(m.global.folderPath)
     fileArr = []
     for each item in fileList
-        fileArr.Push(folderPath + item)
+        outputArr.Push(m.global.folderPath + item)
     end for
 
-    return fileArr
-
-end function
+    m.global.imageUriArr = outputArr
+end sub
 
 function getDeviceSize()
 
