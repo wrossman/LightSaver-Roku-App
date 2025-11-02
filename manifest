@@ -12,7 +12,7 @@ mm_icon_focus_sd=pkg:/images/port-break_290x218.png
 splash_screen_hd=pkg:/images/train-station_1280x720.jpg
 splash_screen_sd=pkg:/images/train-station_720x480.jpg
 splash_color=#FFFFFF
-splash_min_time=2000
+splash_min_time=0
 
 # Resolutions
 ui_resolutions=sd,hd,fhd

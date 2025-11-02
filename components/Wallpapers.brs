@@ -1,7 +1,5 @@
 sub init()
 
-    m.picDisplayTime = 10
-
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
     m.fadeRect.width = m.global.deviceSize["w"]
@@ -25,7 +23,7 @@ sub firstLaunch()
     if m.global.imageUriArr.Count() > 1
         m.picTimer = m.top.findNode("picTimer")
         m.picTimer.ObserveField("fire", "onTimerFire")
-        m.picTimer.duration = m.picDisplayTime
+        m.picTimer.duration = m.global.picDisplayTime
         m.picTimer.control = "start"
     end if
     getPoster()
@@ -117,7 +115,7 @@ function onKeyEvent(key as string, press as boolean) as boolean
         end while
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.wallpaperOpen = false
+        m.global.currScreen = "menu"
         return true
     end if
     return false

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="ChangeTime" extends="Group">
+    <children>
+        <Rectangle id="background" color="#000000" />
+        <DynamicKeyboard id="keyboard" domain="numeric"/>
+        <!-- <Button id="okButton" text="OK"/>
+        <Button id="cancelButton" text="Cancel"/> -->
+    </children>
+    <script type="text/brightscript" uri="ChangeTime.brs" />
+</component>

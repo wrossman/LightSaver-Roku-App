@@ -12,22 +12,22 @@ sub init()
 
 end sub
 
-function onKeyEvent(key as string, press as boolean) as boolean
-    if key = "back"
-        menu = m.top.getParent()
-        menu.removeChild(m.top)
-        m.global.settingsOpen = false
-        return true
-    end if
-    return false
-end function
-
 sub onSettingsSelection()
 
     if m.settingsSelection.itemSelected = 0
         m.global.urlChange++
     else if m.settingsSelection.itemSelected = 1
-        m.global.displayTimeChange++
+        m.global.displayTimeChange++ 
     end if
 
 end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    if key = "back"
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "menu"
+        return true
+    end if
+    return false
+end function

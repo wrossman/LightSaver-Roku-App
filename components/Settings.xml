@@ -12,8 +12,7 @@
             itemSize="[500,100]"
             color="#000000"
             vertFocusAnimationStyle="floatingFocus"
-            drawFocusFeedback="false"
-        >
+            drawFocusFeedback="false">
             <ContentNode id="settingsContent" role="content">
                 <ContentNode title="Change Lightroom Album" />
                 <ContentNode title="Change Picture Display Time" />
