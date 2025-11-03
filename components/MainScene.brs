@@ -18,10 +18,6 @@ sub init()
         end for
     end if
 
-    ' m.keyboard = CreateObject("roSGNode", "DynamicKeyboard")
-    ' m.top.appendChild(m.keyboard)
-    ' m.keyboard.setFocus(true)
-
     checkScreen()
 
 end sub

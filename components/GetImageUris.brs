@@ -23,8 +23,6 @@ end function
 
 sub getImageUris()
 
-    print "in get image uri"
-
     m.global.imageUriArr = CreateObject("roArray", 1, true)
 
     myAlbumUrl = getFullFromShortLink(m.global.lightroomAlbumUrl)
