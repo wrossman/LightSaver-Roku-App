@@ -1,0 +1,7 @@
+TODO:
+1.  Error Checking for urls and json
+2.  Custom Keyboard for entering seconds to display
+3.  Google Photos?
+4.  iCloud Photos?
+5.  Other Animations
+6.  Change Dialog Colors/Design
