@@ -119,7 +119,7 @@ sub animateIn()
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
-    if key = "back"
+    if key = "back" and press = true
         'remove all children of wallpapers then remove wallpaper from parent
         m.picTimer.control = "stop"
         while m.top.getChildCount() > 0

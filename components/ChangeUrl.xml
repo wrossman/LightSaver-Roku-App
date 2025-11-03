@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component name="ChangeUrl" extends="Group">
+<component name="ChangeUrl" extends="Group" initialFocus="urlKeyboard">
     <children>
         <Rectangle id="background" color="#000000" />
-        <DynamicKeyboard id="keyboard" domain="numeric"/>
+        <StandardKeyboardDialog id="urlKeyboard"/>
         <!-- <Button id="okButton" text="OK"/>
         <Button id="cancelButton" text="Cancel"/> -->
     </children>
