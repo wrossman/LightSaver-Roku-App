@@ -42,10 +42,8 @@ sub firstLaunch()
 end sub
 
 sub onTimerFire()
-    print "timer fired"
     m.fadeOutAnimation.control = "start"
     m.fadeOutAnimation.observeField("state", "getPoster")
-
 end sub
 
 sub getPoster()

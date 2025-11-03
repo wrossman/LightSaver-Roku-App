@@ -25,12 +25,12 @@ sub onSettingsSelection()
     if m.settingsSelection.itemSelected = 0
         ' m.global.settingsJumpTo = 0
         mainScene = m.top.getParent()
-        print mainScene.removeChild(m.top)
+        mainScene.removeChild(m.top)
         m.global.currScreen = "ChangeUrl"
     else if m.settingsSelection.itemSelected = 1
         ' m.global.settingsJumpTo = 1
         mainScene = m.top.getParent()
-        print mainScene.removeChild(m.top)
+        mainScene.removeChild(m.top)
         m.global.currScreen = "ChangeTime"
     end if
 
