@@ -41,56 +41,11 @@ sub checkFocus()
 end sub
 
 sub checkScreen()
-    ' if m.global.currScreen = "menu"
-    '     launchMenu()
-    ' else if m.global.currScreen = "settings"
-    '     launchSettings()
-    ' else if m.global.currScreen = "wallpapers"
-    '     launchWallpapers()
-    ' else if m.global.currScreen = "changeurl"
-    '     launchChangeUrl()
-    ' else if m.global.currScreen = "changetime"
-    '     launchChangeTime()
-    ' else
-    '     print "Screen not found"
-    ' end if
-
     launchScreen(m.global.currScreen)
-
 end sub
 
 sub launchScreen(screen as string)
     m.screen = CreateObject("roSGNode", screen)
     m.top.appendChild(m.screen)
     m.screen.setFocus(true)
-end sub
-
-sub launchMenu()
-    m.menu = CreateObject("roSGNode", "Menu")
-    m.top.appendChild(m.menu)
-    m.menu.setFocus(true)
-end sub
-
-sub launchSettings()
-    m.settings = CreateObject("roSGNode", "Settings")
-    m.top.appendChild(m.settings)
-    m.settings.setFocus(true)
-end sub
-
-sub launchWallpapers()
-    m.wallpapers = CreateObject("roSGNode", "Wallpapers")
-    m.top.appendChild(m.wallpapers)
-    m.wallpapers.setFocus(true)
-end sub
-
-sub launchChangeUrl()
-    m.changeUrl = CreateObject("roSGNode", "ChangeUrl")
-    m.top.appendChild(m.changeUrl)
-    m.changeUrl.setFocus(true)
-end sub
-
-sub launchChangeTime()
-    m.changeTime = CreateObject("roSGNode", "ChangeTime")
-    m.top.appendChild(m.changeTime)
-    m.changeTime.setFocus(true)
 end sub

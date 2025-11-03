@@ -15,9 +15,13 @@ end sub
 sub onSettingsSelection()
 
     if m.settingsSelection.itemSelected = 0
-        m.global.urlChange++
+        mainScene = m.top.getParent()
+        print mainScene.removeChild(m.top)
+        m.global.currScreen = "ChangeUrl"
     else if m.settingsSelection.itemSelected = 1
-        m.global.displayTimeChange++ 
+        mainScene = m.top.getParent()
+        print mainScene.removeChild(m.top)
+        m.global.currScreen = "ChangeTime"
     end if
 
 end sub

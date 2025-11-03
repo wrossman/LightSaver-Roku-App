@@ -13,8 +13,6 @@ sub Main()
     m.global.AddField("backgroundColor", "string", true)
     m.global.AddField("lightroomAlbumUrl", "string", true)
     m.global.AddField("picDisplayTime", "int", true)
-    m.global.AddField("urlChange", "int", true)
-    m.global.AddField("displayTimeChange", "int", true)
 
     m.global.deviceSize = getDeviceSize()
 
