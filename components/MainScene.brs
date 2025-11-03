@@ -2,7 +2,7 @@ sub init()
 
     m.focusTimer = CreateObject("roSGNode", "Timer")
     m.focusTimer.repeat = true
-    m.focusTimer.duration = 1   ' half a second
+    m.focusTimer.duration = 1 ' half a second
     m.focusTimer.observeField("fire", "checkFocus")
     m.top.appendChild(m.focusTimer)
     m.focusTimer.control = "start"
@@ -12,7 +12,7 @@ sub init()
     m.global.lightroomAlbumUrl = "470uKsm"
     m.global.picDisplayTime = 10
     m.global.backgroundColor = "#FFFFFF"
-    m.global.currScreen = "menu"
+    m.global.currScreen = "Menu"
     m.top.backgroundUri = ""
     m.top.backgroundColor = m.global.backgroundColor
 
@@ -30,17 +30,39 @@ sub init()
 
 end sub
 
-sub checkScreen()
-    if m.global.currScreen = "menu"
-        launchMenu()
-    else if m.global.currScreen = "settings"
-        launchSettings()
-    else if m.global.currScreen = "wallpapers"
-        launchWallpapers()
+sub checkFocus()
+    scene = m.top.getScene()
+    focused = scene.focusedChild
+    if focused <> invalid
+        ? "Currently focused node: "; focused.id; " ("; focused.subtype(); ")"
     else
-        print "Screen not found"
+        ? "No node has focus"
     end if
+end sub
 
+sub checkScreen()
+    ' if m.global.currScreen = "menu"
+    '     launchMenu()
+    ' else if m.global.currScreen = "settings"
+    '     launchSettings()
+    ' else if m.global.currScreen = "wallpapers"
+    '     launchWallpapers()
+    ' else if m.global.currScreen = "changeurl"
+    '     launchChangeUrl()
+    ' else if m.global.currScreen = "changetime"
+    '     launchChangeTime()
+    ' else
+    '     print "Screen not found"
+    ' end if
+
+    launchScreen(m.global.currScreen)
+
+end sub
+
+sub launchScreen(screen as string)
+    m.screen = CreateObject("roSGNode", screen)
+    m.top.appendChild(m.screen)
+    m.screen.setFocus(true)
 end sub
 
 sub launchMenu()
@@ -56,70 +78,19 @@ sub launchSettings()
 end sub
 
 sub launchWallpapers()
-    getImageUris()
     m.wallpapers = CreateObject("roSGNode", "Wallpapers")
     m.top.appendChild(m.wallpapers)
     m.wallpapers.setFocus(true)
 end sub
 
 sub launchChangeUrl()
-    getImageUris()
-    m.wallpapers = CreateObject("roSGNode", "Wallpapers")
-    m.top.appendChild(m.wallpapers)
-    m.wallpapers.setFocus(true)
+    m.changeUrl = CreateObject("roSGNode", "ChangeUrl")
+    m.top.appendChild(m.changeUrl)
+    m.changeUrl.setFocus(true)
 end sub
 
-sub checkFocus()
-    scene = m.top.getScene()
-    focused = scene.focusedChild
-    if focused <> invalid
-        ? "Currently focused node: "; focused.id; " ("; focused.subtype(); ")"
-    else
-        ? "No node has focus"
-    end if
-end sub
-
-sub changeLightroomUrl()
-    m.currDiag = createObject("roSGNode", "UrlKeyboardDialog")
-    m.currDiag.observeFieldScoped("buttonSelected", "handleUrlDialog")
-    m.top.dialog = m.currDiag
-
-end sub
-
-sub changePictureDisplayTime()
-    ' m.currDiag = createObject("roSGNode", "TimeKeyboardDialog")
-    ' m.currDiag.observeFieldScoped("buttonSelected", "handleTimeDialog")
-    ' m.top.dialog = m.currDiag
-    m.changeTime = CreateObject("roSGNode","ChangeTime")
+sub launchChangeTime()
+    m.changeTime = CreateObject("roSGNode", "ChangeTime")
     m.top.appendChild(m.changeTime)
-    
-end sub
-
-sub handleUrlDialog()
-    print "in handle url"
-    print m.currDiag.text
-    if m.currDiag.buttonSelected = "OK"
-        m.global.observeField("lightroomAlbumUrl", "getImageUris")
-        m.global.lightroomAlbumUrl = m.currDiag.text
-    else if m.currDiag.buttonSelected = "Cancel"
-        'add closing logic
-        print "close dialog"
-    end if
-end sub
-
-sub handleTimeDialog()
-    print "in handle time"
-    print m.currDiag.text
-    if m.currDiag.buttonSelected = 0
-        m.global.picDisplayTime = m.currDiag.text
-    else if m.currDiag.buttonSelected = 1
-        'add closing logic
-        print "close dialog"
-    end if
-end sub
-
-sub getImageUris()
-    m.global.unobserveField("lightroomAlbumUrl")
-    m.getImageUriTask = CreateObject("roSGNode", "GetImageUris")
-    m.getImageUriTask.control = "run"
+    m.changeTime.setFocus(true)
 end sub

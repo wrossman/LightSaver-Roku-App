@@ -1,5 +1,9 @@
 sub init()
 
+    m.getImageUriTask = CreateObject("roSGNode", "GetImageUris")
+    m.getImageUriTask.control = "run"
+    m.getImageUriTask.observeField("state", "checkUriTask")
+
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
     m.fadeRect.width = m.global.deviceSize["w"]
@@ -15,8 +19,16 @@ sub init()
 
     m.imageIndex = 0
 
-    firstLaunch()
+end sub
 
+sub checkUriTask()
+    if m.getImageUriTask.state = "done"
+        firstLaunch()
+    else if m.getImageUriTask.state = "stop"
+        firstLaunch()
+    else
+        print "Get image task status: "m.getImageUriTask.state
+    end if
 end sub
 
 sub firstLaunch()
@@ -115,7 +127,7 @@ function onKeyEvent(key as string, press as boolean) as boolean
         end while
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "menu"
+        m.global.currScreen = "Menu"
         return true
     end if
     return false

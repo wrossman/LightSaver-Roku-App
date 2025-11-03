@@ -26,7 +26,7 @@ function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back"
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "menu"
+        m.global.currScreen = "Menu"
         return true
     end if
     return false

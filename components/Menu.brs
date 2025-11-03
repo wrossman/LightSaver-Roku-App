@@ -17,11 +17,11 @@ sub onMenuSelection()
     if m.menuSelection.itemSelected = 0
         mainScene = m.top.getParent()
         print mainScene.removeChild(m.top)
-        m.global.currScreen = "wallpapers"
+        m.global.currScreen = "Wallpapers"
     else if m.menuSelection.itemSelected = 1
         mainScene = m.top.getParent()
         print mainScene.removeChild(m.top)
-        m.global.currScreen = "settings"
+        m.global.currScreen = "Settings"
     end if
 
 end sub
