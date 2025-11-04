@@ -70,5 +70,7 @@ sub getImageUris()
 
     m.global.imageUriArr = outputArr
 
+    m.top.result = "Finished"
+
     print "end uri task"
 end sub

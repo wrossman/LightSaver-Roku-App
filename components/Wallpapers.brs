@@ -4,7 +4,7 @@ sub init()
     
     m.getImageUriTask = m.top.findNode("GetImageUriTask")
     m.getImageUriTask.control = "run"
-    m.getImageUriTask.observeField("state", "checkUriTask")
+    m.getImageUriTask.observeField("result", "checkUriTask")
 
     m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
     m.progressDialog.message = "Starting Wallpapers"
@@ -30,12 +30,11 @@ sub init()
 end sub
 
 sub checkUriTask()
-    if m.getImageUriTask.state = "done"
+    if m.getImageUriTask.result = "finish"
         firstLaunch()
-    else if m.getImageUriTask.state = "stop"
-        firstLaunch()
+        print m.getImageUriTask.result
     else
-        print "Get image task status: "m.getImageUriTask.state
+        print "Get URI Task Failed with result: "m.getImageUriTask.result
     end if
 end sub
 
