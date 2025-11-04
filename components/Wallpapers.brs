@@ -1,8 +1,14 @@
 sub init()
 
-    m.getImageUriTask = CreateObject("roSGNode", "GetImageUris")
+    print "opening wallpapers"
+    
+    m.getImageUriTask = m.top.findNode("GetImageUriTask")
     m.getImageUriTask.control = "run"
     m.getImageUriTask.observeField("state", "checkUriTask")
+
+    m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
+    m.progressDialog.message = "Starting Wallpapers"
+    m.top.appendChild(m.progressDialog)
 
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
@@ -19,6 +25,8 @@ sub init()
 
     m.imageIndex = 0
 
+    print "end wallpapers init"
+
 end sub
 
 sub checkUriTask()
@@ -32,6 +40,7 @@ sub checkUriTask()
 end sub
 
 sub firstLaunch()
+    m.top.removeChild(m.progressDialog)
     if m.global.imageUriArr.Count() > 1
         m.picTimer = m.top.findNode("picTimer")
         m.picTimer.ObserveField("fire", "onTimerFire")

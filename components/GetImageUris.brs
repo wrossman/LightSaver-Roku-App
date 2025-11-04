@@ -1,5 +1,7 @@
 sub init()
-    getImageUris()
+    print "start get uri task"
+    m.top.functionName = "getImageUris"
+
 end sub
 
 function getFullFromShortLink(url as string) as string
@@ -67,4 +69,6 @@ sub getImageUris()
     end for
 
     m.global.imageUriArr = outputArr
+
+    print "end uri task"
 end sub
