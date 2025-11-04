@@ -1,7 +1,5 @@
 sub init()
 
-    print "opening wallpapers"
-    
     m.getImageUriTask = m.top.findNode("GetImageUriTask")
     m.getImageUriTask.control = "run"
     m.getImageUriTask.observeField("result", "checkUriTask")
@@ -25,12 +23,10 @@ sub init()
 
     m.imageIndex = 0
 
-    print "end wallpapers init"
-
 end sub
 
 sub checkUriTask()
-    if m.getImageUriTask.result = "finish"
+    if m.getImageUriTask.result = "success"
         firstLaunch()
         print m.getImageUriTask.result
     else
