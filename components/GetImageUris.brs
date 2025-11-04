@@ -7,16 +7,28 @@ function getFullFromShortLink(url as string) as boolean
     lightroomShortPrefix = "https://adobe.ly/"
     url = lightroomShortPrefix + url
     urlTransfer = CreateObject("roUrlTransfer")
+    urlTransfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
     urlTransfer.SetUrl(url)
     urlTransferPort = CreateObject("roMessagePort")
     urlTransfer.SetPort(urlTransferPort)
     urlTransfer.AsyncGetToString()
-    responseEvent = Wait(0, urlTransferPort)
+    responseEvent = Wait(5000, urlTransferPort)
+    if responseEvent = invalid
+        print "urlTransfer timed out while trying to get long link."
+        return false
+    end if
     responseHeaders = responseEvent.GetResponseHeadersArray()
     for each item in responseHeaders
-        if item.DoesExist("Location")
-            m.global.longLightroomAlbumUrl = item["Location"]
-            return true
+        if item.DoesExist("location")
+            print "lightroom long link: " + item["location"]
+            if item["location"] = "http://www.adobe.com"
+                print "getFullFromShortLink returned false because location was www.adobe.com"
+                return false
+            else
+                m.global.longLightroomAlbumUrl = item["location"]
+                print "in else"
+                return true
+            end if
         end if
     end for
     return false
@@ -41,19 +53,17 @@ sub getImageUris()
     myUrlTransfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
     myUrlTransfer.SetUrl(myAlbumUrl)
     response = myUrlTransfer.GetToString()
-
-    try
-        albumJsonMarker = "albumAttributes"
-        indexOfAlbumJson = Instr(1, response, albumJsonMarker) + Len(albumJsonMarker) + 1
-        endIndexOfAlbumJson = Instr(indexOfAlbumJson, response, "};") - 1
-        albumJsonString = Mid(response, indexOfAlbumJson, endIndexOfAlbumJson - indexOfAlbumJson)
-    catch e
-        print "Error in retrieving albumJsonString: " + e.message
-        m.top.result = "Failed to grab albumJsonString from inital response."
+    if response = invalid
+        m.top.result = "Failed to get response from Lightroom using long link."
         return
-    end try
+    end if
+
+    albumJsonMarker = "albumAttributes"
+    indexOfAlbumJson = Instr(1, response, albumJsonMarker) + Len(albumJsonMarker) + 1
+    endIndexOfAlbumJson = Instr(indexOfAlbumJson, response, "};") - 1
 
     try
+        albumJsonString = Mid(response, indexOfAlbumJson, endIndexOfAlbumJson - indexOfAlbumJson)
         albumJson = ParseJson(albumJsonString)
         albumAssetUrl = albumJson.links.self["href"]
         spaceUrl = Left(albumAssetUrl, Instr(1, albumAssetUrl, "/albums"))
@@ -78,6 +88,8 @@ sub getImageUris()
 
     outputArr = []
 
+
+    ' ADD LOGIC TO FIND THE HIGHEST QUALITY IMAGE LINK
     for each item in finalJson.resources
         itemUrl = baseUrl + spaceUrl + item.asset.links["/rels/rendition_type/1280"]["href"]
         outputArr.Push(itemUrl)
@@ -93,6 +105,7 @@ sub getImageUris()
     m.global.imageUriArr = outputArr
 
     m.top.result = "success"
+
     print "Get URI Task Succeeded "
-    
+
 end sub

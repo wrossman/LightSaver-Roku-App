@@ -3,11 +3,7 @@ sub init()
     m.background.width = m.global.deviceSize["w"]
     m.background.height = m.global.deviceSize["h"]
 
-    m.dialog = m.top.findNode("urlKeyboard")
-    m.dialog.title = "Change Lightroom Album"
-    m.dialog.message = ["Please enter the link to your public lightroom album."]
-    m.dialog.buttons = ["OK", "Cancel"]
-    m.dialog.observeField("buttonSelected", "onButtonSelected")
+    launchDialog()
 
     ' m.keyboard = m.top.findNode("urlKeyboard")
     ' m.keyboardWidth = m.keyboard.boundingRect()["width"]
@@ -34,16 +30,65 @@ sub init()
 
 end sub
 
+sub launchDialog()
+    m.dialog = m.top.findNode("urlKeyboard")
+    m.dialog.title = "Change Lightroom Album"
+    m.dialog.message = ["Please enter the link to your public lightroom album."]
+    m.dialog.buttons = ["OK", "Cancel"]
+    m.dialog.observeField("buttonSelected", "onButtonSelected")
+end sub
+
 sub onButtonSelected()
+    m.dialog.visible = false
     if m.dialog.buttonSelected = 0
-        m.global.lightroomAlbumUrl = m.dialog.text
-        menu = m.top.getParent()
-        menu.removeChild(m.top)
-        m.global.currScreen = "Settings"
+        m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
+        m.progressDialog.message = "Changing Album"
+        m.top.appendChild(m.progressDialog)
+        checkNewUrl()
     else if m.dialog.buttonSelected = 1
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "Settings"
+    end if
+end sub
+
+sub checkNewUrl()
+    m.urlBak = m.global.lightroomAlbumUrl
+    m.global.lightroomAlbumUrl = m.dialog.text
+    m.uriTask = CreateObject("roSGNode", "GetImageUris")
+    m.top.appendChild(m.uriTask)
+    m.uriTask.observeField("result", "uriTaskResultHandler")
+    m.uriTask.control = "run"
+end sub
+
+sub uriTaskResultHandler()
+    m.uriTask.unobserveField("result")
+    m.top.removeChild(m.progressDialog)
+    if m.uriTask.result = "success"
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "Settings"
+    else
+        m.global.lightroomAlbumUrl = m.urlBak
+        print "getImageUriTask failed: " + m.uriTask.result
+        m.failDialog = CreateObject("roSGNode", "StandardMessageDialog")
+        m.top.appendChild(m.failDialog)
+        m.failDialog.title = "Album Change Failed"
+        m.failDialog.message = ["Please try again."]
+        m.failDialog.buttons = ["OK"]
+        m.failDialog.observeField("buttonSelected", "onFailDialogPress")
+        m.failDialog.setFocus(true)
+
+    end if
+
+end sub
+
+sub onFailDialogPress()
+    m.top.removeChild(m.failDialog)
+    if m.failDialog.buttonSelected = 0
+        m.dialog.text = ""
+        m.dialog.visible = true
+        m.dialog.setFocus(true)
     end if
 end sub
 

@@ -2,7 +2,8 @@
 <component name="ChangeUrl" extends="Group" initialFocus="urlKeyboard">
     <children>
         <Rectangle id="background" color="#000000" />
-        <StandardKeyboardDialog id="urlKeyboard"/>
+        <StandardKeyboardDialog id="urlKeyboard" />
+        <GetImageUris id="GetImageUriTask" />
         <!-- <Button id="okButton" text="OK"/>
         <Button id="cancelButton" text="Cancel"/> -->
     </children>

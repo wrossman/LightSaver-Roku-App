@@ -30,6 +30,7 @@ sub checkUriTask()
         firstLaunch()
         print m.getImageUriTask.result
     else
+        ' ADD FAILURE DIALOG
         print "Get URI Task Failed with result: "m.getImageUriTask.result
     end if
 end sub
