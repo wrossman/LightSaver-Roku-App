@@ -2,6 +2,7 @@ sub init()
 
     m.titleLabel = m.top.findNode("titleLabel")
     m.titleLabel.width = m.global.deviceSize["w"]
+    m.titleLabel.translation = [0,m.global.deviceSize["h"] / 5]
     m.menuSelection = m.top.findNode("menuSelection")
     selectionX = (m.global.deviceSize["w"] - 500) / 2
     selectionY = (m.global.deviceSize["h"] - 200) / 2

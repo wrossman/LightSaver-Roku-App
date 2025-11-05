@@ -2,6 +2,7 @@ sub init()
 
     m.settingsLabel = m.top.findNode("settingsLabel")
     m.settingsLabel.width = m.global.deviceSize["w"]
+    m.settingsLabel.translation = [0,m.global.deviceSize["h"] / 5]
 
     m.settingsSelection = m.top.findNode("settingsSelection")
     selectionX = (m.global.deviceSize["w"] - 500) / 2
