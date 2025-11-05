@@ -65,6 +65,10 @@ sub uriTaskResultHandler()
     m.uriTask.unobserveField("result")
     m.top.removeChild(m.progressDialog)
     if m.uriTask.result = "success"
+        m.settings = CreateObject("roRegistrySection", "Config")
+        m.settings.Write("albumUrl", m.global.lightroomAlbumUrl)
+        m.settings.Flush()
+        print "wrote new album to registry"
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "Settings"
