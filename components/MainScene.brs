@@ -13,7 +13,7 @@ sub init()
     m.top.backgroundColor = m.global.backgroundColor
 
     getRegistry()
-
+    
     m.global.observeField("currScreen", "checkScreen")
 
     if m.global.imageUriArr <> invalid
