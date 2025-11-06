@@ -2,7 +2,6 @@ sub init()
 
     m.global.folderPath = "pkg:/images/wallpapers/"
     m.global.lightroomAlbumUrl = ""
-    ' m.global.lightroomAlbumUrl = "a"
     m.global.longLightroomAlbumUrl = ""
     m.global.picDisplayTime = 10
     m.global.backgroundColor = "#FFFFFF"
