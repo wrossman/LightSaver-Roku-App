@@ -13,9 +13,16 @@ sub Main()
     m.global.AddField("backgroundColor", "string", true)
     m.global.AddField("lightroomAlbumUrl", "string", true)
     m.global.AddField("longLightroomAlbumUrl", "string", true)
+
+    m.global.AddField("googleDiscDocUrl", "string", true)
+    m.global.AddField("googleClientID", "string", true)
+    m.global.AddField("googleAuthUrl", "string", true)
+    m.global.AddField("googlePhotosScope", "string", true)
+
     m.global.AddField("picDisplayTime", "int", true)
     m.global.AddField("settingsJumpTo", "int", true)
     m.global.AddField("menuJumpTo", "int", true)
+
 
     m.global.deviceSize = getDeviceSize()
 
