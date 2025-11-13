@@ -18,6 +18,7 @@ sub Main()
     m.global.AddField("googleClientID", "string", true)
     m.global.AddField("googleAuthUrl", "string", true)
     m.global.AddField("googlePhotosScope", "string", true)
+    m.global.AddField("certificates", "string", true)
 
     m.global.AddField("picDisplayTime", "int", true)
     m.global.AddField("settingsJumpTo", "int", true)

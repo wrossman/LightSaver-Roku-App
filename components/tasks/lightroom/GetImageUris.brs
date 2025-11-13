@@ -7,7 +7,7 @@ function getFullFromShortLink(url as string) as boolean
     lightroomShortPrefix = "https://adobe.ly/"
     url = lightroomShortPrefix + url
     urlTransfer = CreateObject("roUrlTransfer")
-    urlTransfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
+    urlTransfer.SetCertificatesFile(m.global.certificates)
     urlTransfer.SetUrl(url)
     urlTransferPort = CreateObject("roMessagePort")
     urlTransfer.SetPort(urlTransferPort)
@@ -50,7 +50,7 @@ sub getImageUris()
     endpointUrlEnd = "/assets?embed=asset&subtype=image%3Bvideo"
 
     myUrlTransfer = CreateObject("roUrlTransfer")
-    myUrlTransfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
+    myUrlTransfer.SetCertificatesFile(m.global.certificates)
     myUrlTransfer.SetUrl(myAlbumUrl)
     response = myUrlTransfer.GetToString()
     if response = invalid

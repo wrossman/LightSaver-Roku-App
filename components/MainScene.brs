@@ -4,12 +4,13 @@ sub init()
     m.global.googleDiscDocUrl = "https://accounts.google.com/.well-known/openid-configuration"
     m.global.googleAuthUrl = ""
     m.global.googlePhotosScope = "https://www.googleapis.com/auth/photospicker.mediaitems.readonly"
+    m.global.certificates = "common:/certs/ca-bundle.crt"
     m.global.folderPath = "pkg:/images/wallpapers/"
     m.global.lightroomAlbumUrl = ""
     m.global.longLightroomAlbumUrl = ""
     m.global.picDisplayTime = 10
     m.global.backgroundColor = "#FFFFFF"
-    m.global.currScreen = "Menu"
+    m.global.currScreen = "Google"
     m.global.settingsJumpTo = 0
     m.global.menuJumpTo = 0
     m.top.backgroundUri = ""
