@@ -1,7 +1,7 @@
 sub init()
-    m.googleLabel = m.top.findNode("googleLabel")
-    m.googleLabel.width = m.global.deviceSize["w"]
-    m.googleLabel.translation = [0, m.global.deviceSize["h"] / 5]
+    ' m.googleLabel = m.top.findNode("googleLabel")
+    ' m.googleLabel.width = m.global.deviceSize["w"]
+    ' m.googleLabel.translation = [0, m.global.deviceSize["h"] / 5]
 
     m.getGooglePhotos = m.top.findNode("getGooglePhotos")
     m.getGooglePhotos.control = "run"
@@ -33,3 +33,13 @@ sub GetPickerUri()
     'start url transfer with pem cert in cert/
 
 end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+    if key = "back" and press = true
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "Menu"
+        return true
+    end if
+    return false
+end function

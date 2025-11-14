@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component name="Wallpapers" extends="Group">
+<component name="GoogleWallpapers" extends="Group">
     <children>
         <Poster id="currWallpaper" loadDisplayMode="scaleToFit" />
         <Rectangle id="fadeRect" opacity="100" color="0xFFFFFF" />
         <Timer id="picTimer" repeat="true" />
-        <GetImageUris id="GetImageUriTask" />
+        <GetGooglePhotos id="GetGooglePhotosTask" />
         <Animation
             id="fadeOutAnimation"
             repeat="false"
@@ -30,5 +30,5 @@
             />
         </Animation>
     </children>
-    <script type="text/brightscript" uri="Wallpapers.brs" />
+    <script type="text/brightscript" uri="GoogleWallpapers.brs" />
 </component>

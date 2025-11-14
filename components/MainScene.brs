@@ -10,7 +10,7 @@ sub init()
     m.global.longLightroomAlbumUrl = ""
     m.global.picDisplayTime = 10
     m.global.backgroundColor = "#FFFFFF"
-    m.global.currScreen = "Google"
+    m.global.currScreen = "Menu"
     m.global.settingsJumpTo = 0
     m.global.menuJumpTo = 0
     m.top.backgroundUri = ""

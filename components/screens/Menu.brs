@@ -21,6 +21,10 @@ sub onMenuSelection()
     else if m.menuSelection.itemSelected = 1
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
+        m.global.currScreen = "GoogleWallpapers"
+    else if m.menuSelection.itemSelected = 2
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
         m.global.currScreen = "Settings"
     end if
 

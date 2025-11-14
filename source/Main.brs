@@ -8,17 +8,18 @@ sub Main()
     m.global = screen.getGlobalNode()
     m.global.AddField("deviceSize", "assocarray", true)
     m.global.AddField("imageUriArr", "array", true)
+
     m.global.AddField("folderPath", "string", true)
     m.global.AddField("currScreen", "string", true)
     m.global.AddField("backgroundColor", "string", true)
     m.global.AddField("lightroomAlbumUrl", "string", true)
     m.global.AddField("longLightroomAlbumUrl", "string", true)
-
     m.global.AddField("googleDiscDocUrl", "string", true)
     m.global.AddField("googleClientID", "string", true)
     m.global.AddField("googleAuthUrl", "string", true)
     m.global.AddField("googlePhotosScope", "string", true)
     m.global.AddField("certificates", "string", true)
+    m.global.AddField("clientId", "string", true)
 
     m.global.AddField("picDisplayTime", "int", true)
     m.global.AddField("settingsJumpTo", "int", true)
@@ -26,6 +27,9 @@ sub Main()
 
 
     m.global.deviceSize = getDeviceSize()
+    m.global.clientId = getChannelClientId()
+
+    print m.global.clientId
 
     screen.show()
 
@@ -42,4 +46,9 @@ end sub
 function getDeviceSize()
     devInfo = CreateObject("roDeviceInfo")
     return devInfo.GetDisplaySize()
+end function
+
+function getChannelClientId()
+    devInfo = CreateObject("roDeviceInfo")
+    return devInfo.GetChannelClientId()
 end function

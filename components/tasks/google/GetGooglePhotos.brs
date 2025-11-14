@@ -5,22 +5,35 @@ end sub
 sub pollLightSaver()
 
     print "in get google photos"
-    print m.global.certificates
 
+    serialArr = {
+        "RokuId": m.global.clientId
+    }
+    serialJson = FormatJson(serialArr)
 
-    urlTransfer = CreateObject("roUrlTransfer")
-    urlTransfer.SetUrl("http://10.0.0.15:8080/roku")
-    codeResponse = urlTransfer.GetToString()
-    sessionCode = Mid(codeResponse, Instr(1, codeResponse, "span id=") + 22, 6)
+    firstPost = CreateObject("roUrlTransfer")
+    firstPost.SetUrl("http://10.0.0.15:8080/roku")
+    firstPostPort = CreateObject("roMessagePort")
+    firstPost.SetPort(firstPostPort)
+    firstPost.AsyncPostFromString(serialJson)
+    firstPostEvent = Wait(5000, firstPostPort)
+
+    rokuPostResponse = firstPostEvent.GetString()
+    sessionCodeJson = ParseJson(rokuPostResponse)
+    if sessionCodeJson = invalid
+        print "Unable to retrieve session code"
+        'Retry for a little bit and then display that the server is down
+    end if
+    sessionCode = sessionCodeJson.RokuSessionCode
 
     print sessionCode
 
     sessionCodeArr = {
         "RokuSessionCode": sessionCode
     }
+    jsonPostSessionBody = FormatJson(sessionCodeArr)
 
-    jsonPostBody = FormatJson(sessionCodeArr)
-    print jsonPostBody
+    print jsonPostSessionBody
 
     responseString = ""
     urlPost = CreateObject("roUrlTransfer")
@@ -31,7 +44,7 @@ sub pollLightSaver()
     while responseString <> "Ready"
 
         ' needs to be updated to https once i get ssl set up
-        urlPost.AsyncPostFromString(jsonPostBody)
+        urlPost.AsyncPostFromString(jsonPostSessionBody)
         responseEvent = Wait(5000, urlPostPort)
         if responseEvent <> invalid
             if responseEvent.GetString() <> ""
@@ -44,11 +57,18 @@ sub pollLightSaver()
 
     print "Ready to receive photos"
 
+    sessionCodeIdJson = {
+        "RokuSessionCode": sessionCode
+        "RokuId": m.global.clientId
+    }
+
+    resourcePost = FormatJson(sessionCodeIdJson)
+
     secondPost = CreateObject("roUrlTransfer")
-    secondPost.SetUrl("http://10.0.0.15:8080/roku-links")
+    secondPost.SetUrl("http://10.0.0.15:8080/roku-get-resource-package")
     secondPostPort = CreateObject("roMessagePort")
     secondPost.SetPort(secondPostPort)
-    secondPost.AsyncPostFromString(jsonPostBody)
+    secondPost.AsyncPostFromString(resourcePost)
     secondResponseEvent = Wait(5000, secondPostPort)
 
     if secondResponseEvent <> invalid
@@ -60,12 +80,13 @@ sub pollLightSaver()
     end if
 
     if linksJson <> invalid
-        for each link in linksJson.Links
+        for each link in linksJson
             print link
+            print linksJson[link]
         end for
     end if
 
-
+    m.top.result = linksJson
     print "end google photos"
 
 end sub

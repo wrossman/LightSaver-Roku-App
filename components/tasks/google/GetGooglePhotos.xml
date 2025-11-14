@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="GetGooglePhotos" extends="Task">
     <interface>
-        <field id="result" type="string" />
+        <field id="result" type="assocarray" />
     </interface>
     <script type="text/brightscript" uri="GetGooglePhotos.brs" />
 </component>
