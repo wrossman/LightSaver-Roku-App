@@ -7,6 +7,7 @@ sub Main()
 
     m.global = screen.getGlobalNode()
     m.global.AddField("deviceSize", "assocarray", true)
+    m.global.AddField("googleImgLinks", "assocarray", true)
     m.global.AddField("imageUriArr", "array", true)
 
     m.global.AddField("folderPath", "string", true)
@@ -20,7 +21,9 @@ sub Main()
     m.global.AddField("googlePhotosScope", "string", true)
     m.global.AddField("certificates", "string", true)
     m.global.AddField("clientId", "string", true)
+    m.global.AddField("googleUri", "string", true)
 
+    m.global.AddField("googleImgIndex", "int", true)
     m.global.AddField("picDisplayTime", "int", true)
     m.global.AddField("settingsJumpTo", "int", true)
     m.global.AddField("menuJumpTo", "int", true)

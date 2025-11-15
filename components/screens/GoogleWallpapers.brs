@@ -16,70 +16,61 @@ sub init()
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
     m.fadeInAnimation = m.top.findNode("fadeInAnimation")
 
+    m.writeImgToTmpTask = m.top.findNode("WriteImgToTmp")
+
     m.currWallpaper = m.top.findNode("currWallpaper")
 
     m.posterStage = CreateObject("roSGNode", "Poster")
     m.posterStage.loadDisplayMode = "scaleToFit"
 
-    m.stageAgent = CreateObject("roHttpAgent")
-    m.wallpaperAgent = CreateObject("roHttpAgent")
-
-    m.currWallpaper.setHttpAgent(m.wallpaperAgent)
-    m.posterStage.setHttpAgent(m.stageAgent)
-
-    m.imageIndex = 0
+    m.global.googleImgIndex = 0
 
 end sub
 
 sub checkUriTask()
-    if m.getImageUriTask.result.Count() > 0
-        m.keyList = []
-        for each item in m.getImageUriTask.result
-            m.keyList.Push(item)
-        end for
+    if m.global.googleImgLinks.Count() > 0
         firstLaunch()
-        print m.getImageUriTask.result
     else
         ' ADD FAILURE DIALOG
-        print "Get URI Task Failed with result: "m.getImageUriTask.result
     end if
 end sub
 
 sub firstLaunch()
     m.top.removeChild(m.progressDialog)
-    if m.getImageUriTask.result.Count() > 1
+    if m.global.googleImgLinks.Count() > 1
         m.picTimer = m.top.findNode("picTimer")
         m.picTimer.ObserveField("fire", "onTimerFire")
         m.picTimer.duration = m.global.picDisplayTime
         m.picTimer.control = "start"
     end if
-    getPoster()
+    writeToTmp()
 end sub
 
 sub onTimerFire()
     m.fadeOutAnimation.control = "start"
-    m.fadeOutAnimation.observeField("state", "getPoster")
+    m.fadeOutAnimation.observeField("state", "writeToTmp")
+end sub
+
+sub writeToTmp()
+    m.fadeOutAnimation.unobserveField("state")
+    m.writeImgToTmpTask.control = "run"
+    m.writeImgToTmpTask.observeField("result", "getPoster")
+
 end sub
 
 sub getPoster()
+    m.writeImgToTmpTask.unobserveField("result")
 
-    m.fadeOutAnimation.unobserveField("state")
-    if m.imageIndex = m.getImageUriTask.result.Count()
-        m.imageIndex = 0
+    if m.writeImgToTmpTask.result = "success"
+        ' ADD FAILURE DIALOG
+        print "Successfully wrote file to tmp"
+    else
+        print "Failed to write file to tmp"
     end if
 
-    m.currHeader = {
-        "Authorization": m.getImageUriTask.result[m.keyList[m.imageIndex]],
-        "Location": m.keyList[m.imageIndex],
-        "Device": m.global.clientId
-    }
-    m.stageAgent = CreateObject("roHttpAgent")
-    m.stageAgent.SetHeaders(m.currHeader)
-    print m.posterStage.setHttpAgent(m.stageAgent)
-    m.posterStage.uri = ""
-    m.posterStage.uri = "http://10.0.0.15:8080/roku-get-resource"
+    m.posterStage.uri = m.global.googleUri
 
-    ' m.currImageUri = m.global.imageUriArr[m.imageIndex]
+    ' m.currImageUri = m.global.imageUriArr[m.global.googleImgIndex]
     ' m.posterStage.uri = m.currImageUri
 
     if m.posterStage.loadStatus = "loading"
@@ -123,11 +114,8 @@ sub onPosterLoaded()
         m.currWallpaper.height = m.global.deviceSize["h"]
         m.currWallpaper.translation = [0, 0]
     end if
-    m.wallpaperAgent = CreateObject("roHttpAgent")
-    m.wallpaperAgent.SetHeaders(m.currHeader)
-    print m.currWallpaper.setHttpAgent(m.wallpaperAgent)
-    m.currWallpaper.uri = ""
-    m.currWallpaper.uri = "http://10.0.0.15:8080/roku-get-resource"
+
+    m.currWallpaper.uri = m.global.googleUri
 
     ' m.currWallpaper.uri = m.currImageUri
 
@@ -137,8 +125,8 @@ sub onPosterLoaded()
         animateIn()
     end if
 
-    m.imageIndex++
-    print m.imageIndex
+    m.global.googleImgIndex++
+    print m.global.googleImgIndex
 
 end sub
 

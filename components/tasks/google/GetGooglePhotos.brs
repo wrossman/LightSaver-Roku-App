@@ -24,7 +24,12 @@ sub pollLightSaver()
         print "Unable to retrieve session code"
         'Retry for a little bit and then display that the server is down
     end if
-    sessionCode = sessionCodeJson.RokuSessionCode
+    try
+        sessionCode = sessionCodeJson.RokuSessionCode
+    catch e
+        ' add fail dialog
+        print "Failed to Retrieve Session code"
+    end try
 
     print sessionCode
 
@@ -86,7 +91,9 @@ sub pollLightSaver()
         end for
     end if
 
-    m.top.result = linksJson
+
+    m.global.googleImgLinks = linksJson
+    m.top.result = "done"
     print "end google photos"
 
 end sub

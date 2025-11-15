@@ -5,6 +5,7 @@
         <Rectangle id="fadeRect" opacity="100" color="0xFFFFFF" />
         <Timer id="picTimer" repeat="true" />
         <GetGooglePhotos id="GetGooglePhotosTask" />
+        <WriteImgToTmp id="WriteImgToTmp" />
         <Animation
             id="fadeOutAnimation"
             repeat="false"
