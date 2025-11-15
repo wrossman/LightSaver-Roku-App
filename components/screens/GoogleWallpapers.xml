@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="GoogleWallpapers" extends="Group">
     <children>
+        <Video
+            id="bgVideo"
+            visible="false"
+            enableUI="false"
+            loop="true" />
         <Poster id="currWallpaper" loadDisplayMode="scaleToFit" />
         <Rectangle id="fadeRect" opacity="100" color="0xFFFFFF" />
         <Timer id="picTimer" repeat="true" />

@@ -12,7 +12,7 @@ sub pollLightSaver()
     serialJson = FormatJson(serialArr)
 
     firstPost = CreateObject("roUrlTransfer")
-    firstPost.SetUrl("http://10.0.0.15:8080/roku")
+    firstPost.SetUrl("http://10.0.0.15:8080/google/roku")
     firstPostPort = CreateObject("roMessagePort")
     firstPost.SetPort(firstPostPort)
     firstPost.AsyncPostFromString(serialJson)
@@ -32,7 +32,7 @@ sub pollLightSaver()
     end try
 
     print sessionCode
-
+    ' it keeps dropping here when i run the app when i am blocked or the web app is down
     sessionCodeArr = {
         "RokuSessionCode": sessionCode
     }
@@ -42,7 +42,7 @@ sub pollLightSaver()
 
     responseString = ""
     urlPost = CreateObject("roUrlTransfer")
-    urlPost.SetUrl("http://10.0.0.15:8080/roku-reception")
+    urlPost.SetUrl("http://10.0.0.15:8080/google/roku-reception")
     urlPostPort = CreateObject("roMessagePort")
     urlPost.SetPort(urlPostPort)
 
@@ -70,7 +70,7 @@ sub pollLightSaver()
     resourcePost = FormatJson(sessionCodeIdJson)
 
     secondPost = CreateObject("roUrlTransfer")
-    secondPost.SetUrl("http://10.0.0.15:8080/roku-get-resource-package")
+    secondPost.SetUrl("http://10.0.0.15:8080/google/roku-get-resource-package")
     secondPostPort = CreateObject("roMessagePort")
     secondPost.SetPort(secondPostPort)
     secondPost.AsyncPostFromString(resourcePost)

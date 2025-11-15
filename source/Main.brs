@@ -1,3 +1,5 @@
+' - fix the video in the background not making the screensaver stop.
+
 sub Main()
 
     screen = CreateObject("roSGScreen")

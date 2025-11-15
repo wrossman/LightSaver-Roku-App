@@ -37,6 +37,7 @@ sub init()
 
 end sub
 
+
 sub checkScreen()
     launchScreen(m.global.currScreen)
 end sub

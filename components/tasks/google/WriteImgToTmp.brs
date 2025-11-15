@@ -5,7 +5,8 @@ end sub
 sub WriteImgToTmp()
 
     print "Running writeimgtotmp"
-
+    fs = CreateObject("roFileSystem")
+    fs.Delete(m.global.googleUri)
 
     ' this can be sent to a global variable so it doesnt run everytime
     m.keyList = []
@@ -25,7 +26,7 @@ sub WriteImgToTmp()
 
     m.imageHttp = CreateObject("roUrlTransfer")
     m.imageHttp.SetHeaders(m.currHeader)
-    m.imageHttp.SetUrl("http://10.0.0.15:8080/roku-get-resource")
+    m.imageHttp.SetUrl("http://10.0.0.15:8080/google/roku-get-resource")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToFile("tmp:/googleImg")
@@ -41,11 +42,12 @@ sub WriteImgToTmp()
         end for
     else
         m.top.result = "fail"
+        return
     end if
 
     m.finalImgName = "tmp:/googleImg" + m.global.googleImgIndex.ToStr() + "." + m.cleanType
 
-    fs = CreateObject("roFileSystem")
+
     success = fs.CopyFile("tmp:/googleImg", m.finalImgName)
     fs.Delete("tmp:/googleImg")
 

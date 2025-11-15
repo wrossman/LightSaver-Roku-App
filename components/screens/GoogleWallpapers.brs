@@ -25,7 +25,25 @@ sub init()
 
     m.global.googleImgIndex = 0
 
+    m.videocontent = createObject("RoSGNode", "ContentNode")
+    m.videocontent.streamformat = "mp4"
+    m.videocontent.url = "pkg:/images/blank_5min.mp4"
+    m.video = m.top.findNode("bgVideo")
+    m.video.content = m.videocontent
+    m.video.control = "play"
+
+    m.video.observeField("state", "onVideoState")
+
 end sub
+
+sub onVideoState()
+    print "in onvideostate"
+    if m.video.state = "finished"
+        print "replaying video"
+        m.video.control = "play"
+    end if
+end sub
+
 
 sub checkUriTask()
     if m.global.googleImgLinks.Count() > 0
