@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="StartGooglePhotos" extends="Group">
+    <children>
+        <Label
+            id="sessionCode"
+            text="Menu"
+            horizAlign="center"
+            color="#000000"
+        />
+        <GetSessionCode id="GetSessionCodeTask" />
+        <PollLightSaverWebApp id="PollLightSaverWebAppTask" />
+        <GetGoogleResourcePackage id="GetGoogleResourcePackageTask" />
+    </children>
+    <script type="text/brightscript" uri="StartGooglePhotos.brs" />
+</component>

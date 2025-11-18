@@ -1,9 +1,5 @@
 sub init()
 
-    m.getImageUriTask = m.top.findNode("GetGooglePhotosTask")
-    m.getImageUriTask.control = "run"
-    m.getImageUriTask.observeField("result", "checkUriTask")
-
     m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
     m.progressDialog.message = "Starting Wallpapers"
     m.top.appendChild(m.progressDialog)
@@ -34,6 +30,8 @@ sub init()
 
     m.video.observeField("state", "onVideoState")
 
+    checkUriTask()
+
 end sub
 
 sub onVideoState()
@@ -46,6 +44,12 @@ end sub
 
 
 sub checkUriTask()
+    m.regConfig = CreateObject("roRegistrySection", "Config")
+    if m.regConfig.Exists("googleLinks")
+        m.links = m.regConfig.Read("googleLinks")
+        m.linksParse = ParseJson(m.links)
+        m.global.googleImgLinks = m.linksParse
+    end if
     if m.global.googleImgLinks.Count() > 0
         firstLaunch()
     else

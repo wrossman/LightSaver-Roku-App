@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="ChooseImgSource" extends="Group">
+    <children>
+        <Label
+            id="titleLabel"
+            text="Choose Image Source"
+            horizAlign="center"
+            color="#000000"
+        />
+        <LabelList
+            id="sourceSelection"
+            itemSize="[500,100]"
+            color="#000000"
+            vertFocusAnimationStyle="floatingFocus"
+            drawFocusFeedback="false"
+        >
+            <ContentNode id="sourceSelectionContent" role="content">
+                <ContentNode title="Upload From Device" />
+                <ContentNode title="Google Photos" />
+                <ContentNode title="Public Adobe Lightroom Album" />
+            </ContentNode>
+        </LabelList>
+    </children>
+    <script type="text/brightscript" uri="ChooseImgSource.brs" />
+</component>

@@ -5,7 +5,6 @@ sub init()
     m.global.googleAuthUrl = ""
     m.global.googleImgIndex = 0
     m.global.googleUri = ""
-    m.global.googleImgLinks = []
     m.global.googlePhotosScope = "https://www.googleapis.com/auth/photospicker.mediaitems.readonly"
     m.global.certificates = "common:/certs/ca-bundle.crt"
     m.global.folderPath = "pkg:/images/wallpapers/"
@@ -16,47 +15,55 @@ sub init()
     m.global.currScreen = "Menu"
     m.global.settingsJumpTo = 0
     m.global.menuJumpTo = 0
+
     m.top.backgroundUri = ""
     m.top.backgroundColor = m.global.backgroundColor
 
-    ' m.getGPhotosTask = CreateObject("roSGNode", "GetGooglePhotos")
-    ' m.top.appendChild(m.getGPhotosTask)
-    ' m.getGPhotosTask.control = "run"
+    m.global.observeField("currScreen", "launchScreen")
 
     getRegistry()
 
-    m.global.observeField("currScreen", "checkScreen")
-
-    if m.global.imageUriArr <> invalid
-        for each item in m.global.imageUriArr
-            print item
-        end for
-    end if
-
-    checkScreen()
+    launchScreen()
 
 end sub
 
-
-sub checkScreen()
-    launchScreen(m.global.currScreen)
-end sub
-
-sub launchScreen(screen as string)
-    m.screen = CreateObject("roSGNode", screen)
+sub launchScreen()
+    m.screen = CreateObject("roSGNode", m.global.currScreen)
     m.top.appendChild(m.screen)
     m.screen.setFocus(true)
 end sub
 
 sub getRegistry()
 
-    m.settings = CreateObject("roRegistrySection", "Config")
-    if m.settings.Exists("albumUrl")
-        print "found registry"
-        m.global.lightroomAlbumUrl = m.settings.Read("albumUrl")
-        print m.settings.Read("albumUrl")
+    m.regConfig = CreateObject("roRegistrySection", "Config")
+
+    if m.regConfig.Exists("albumUrl")
+        m.global.lightroomAlbumUrl = m.regConfig.Read("albumUrl")
     else
-        print "did not find the registry key"
+        print "did not find the registry key for albumUrl"
+        m.global.lightroomAlbumUrl = ""
     end if
+
+    ' if m.regConfig.Exists("imgSource")
+
+    '     if m.regConfig.Read("imgSource") = "google"
+
+    '         if m.regConfig.Exists("googleLinks")
+    '             m.global.imgSource = "google"
+    '         else
+    '             m.global.imgSource = ""
+    '         end if
+
+    '     else
+
+    '         m.global.imgSource = m.regConfig.Read("imgSource")
+
+    '     end if
+
+    ' else
+    '     print "did not find the registry key for imgSource"
+    '     m.global.imgSource = ""
+    ' end if
+    m.global.imgSource = ""
 
 end sub

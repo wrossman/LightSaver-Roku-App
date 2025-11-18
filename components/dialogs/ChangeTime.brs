@@ -2,6 +2,7 @@ sub init()
     m.background = m.top.findNode("background")
     m.background.width = m.global.deviceSize["w"]
     m.background.height = m.global.deviceSize["h"]
+    m.background.color = m.global.backgroundColor
 
     m.dialog = m.top.findNode("timeKeyboard")
     m.dialog.title = "Change Picture Display Time"

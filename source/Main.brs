@@ -12,6 +12,8 @@ sub Main()
     m.global.AddField("googleImgLinks", "assocarray", true)
     m.global.AddField("imageUriArr", "array", true)
 
+    m.global.AddField("sessionCode", "string", true)
+    m.global.AddField("imgSource", "string", true)
     m.global.AddField("folderPath", "string", true)
     m.global.AddField("currScreen", "string", true)
     m.global.AddField("backgroundColor", "string", true)

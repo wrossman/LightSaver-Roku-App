@@ -16,7 +16,7 @@
         >
             <ContentNode id="menuContent" role="content">
                 <ContentNode title="Start Wallpaper" />
-                <ContentNode title="Get Google Photos" />
+                <ContentNode title="Select Photo Source" />
                 <ContentNode title="Settings" />
             </ContentNode>
         </LabelList>
