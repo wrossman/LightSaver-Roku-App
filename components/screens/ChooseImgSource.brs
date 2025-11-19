@@ -20,19 +20,32 @@ sub onMenuSelection()
         ' mainScene.removeChild(m.top)
         ' m.global.currScreen = "Wallpapers"
     else if m.menuSelection.itemSelected = 1
-        mainScene = m.top.getParent()
-        mainScene.removeChild(m.top)
-        m.global.currScreen = "StartGooglePhotos"
+        m.registry = CreateObject("roRegistrySection", "Config")
+        if m.registry.Exists("googleLinks")
+            m.registry.Write("imgSource", "google")
+            m.registry.Flush()
+            m.global.imgSource = "google"
+            mainScene = m.top.getParent()
+            mainScene.removeChild(m.top)
+            m.global.currScreen = "Menu"
+        else
+            mainScene = m.top.getParent()
+            mainScene.removeChild(m.top)
+            m.global.currScreen = "StartGooglePhotos"
+        end if
     else if m.menuSelection.itemSelected = 2
         if m.global.lightroomAlbumUrl = ""
             mainScene = m.top.getParent()
             mainScene.removeChild(m.top)
             m.global.currScreen = "ChangeUrl"
         else
+            m.registry = CreateObject("roRegistrySection", "Config")
+            m.registry.Write("imgSource", "lightroom")
+            m.registry.Flush()
             m.global.imgSource = "lightroom"
             mainScene = m.top.getParent()
             mainScene.removeChild(m.top)
-            m.global.currScreen = "StartWallpapers"
+            m.global.currScreen = "Menu"
         end if
     end if
 
