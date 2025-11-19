@@ -18,7 +18,7 @@ sub getNextGoogleImage()
         m.keyList.Push(item)
     end for
 
-    if m.global.imgIndex = m.keyList.Count()
+    if m.global.imgIndex >= m.keyList.Count()
         m.global.imgIndex = 0
     end if
 
@@ -35,6 +35,19 @@ sub getNextGoogleImage()
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToFile("tmp:/tempImg")
     m.imgResponse = Wait(5000, m.imgHttpPort)
+
+    ' handle if the keys did not work at the web app
+
+    m.responseCode = m.imgResponse.GetResponseCode()
+
+    if m.responseCode <> invalid
+        print "response code valid " + m.responseCode.ToStr() + " type " + Type(m.responseCode)
+        if m.responseCode = 401
+            print "response code equals 401"
+            m.top.result = "401"
+            return
+        end if
+    end if
 
     if m.imgResponse <> invalid
         m.responseHeaders = m.imgResponse.GetResponseHeaders()
@@ -71,7 +84,7 @@ sub getNextLightroomImage()
     fs = CreateObject("roFileSystem")
     fs.Delete(m.global.imageUri)
 
-    if m.global.imgIndex = m.global.imageUriArr.Count()
+    if m.global.imgIndex >= m.global.imageUriArr.Count()
         m.global.imgIndex = 0
     end if
 

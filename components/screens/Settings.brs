@@ -2,7 +2,7 @@ sub init()
 
     m.settingsLabel = m.top.findNode("settingsLabel")
     m.settingsLabel.width = m.global.deviceSize["w"]
-    m.settingsLabel.translation = [0,m.global.deviceSize["h"] / 5]
+    m.settingsLabel.translation = [0, m.global.deviceSize["h"] / 5]
 
     m.settingsSelection = m.top.findNode("settingsSelection")
     selectionX = (m.global.deviceSize["w"] - 500) / 2
@@ -10,6 +10,12 @@ sub init()
     m.settingsSelection.translation = [selectionX, selectionY]
     m.settingsSelection.observeField("itemSelected", "onSettingsSelection")
     m.settingsSelection.setFocus(true)
+
+    if m.global.googleImgLinks.Count() > 0
+        m.settingsContent = m.top.findNode("settingsContent")
+        m.contentNodeChild = m.settingsContent.CreateChild("ContentNode")
+        m.contentNodeChild.title = "Select New Google Photos Images"
+    end if
 
 end sub
 
@@ -23,6 +29,10 @@ sub onSettingsSelection()
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "ChangeTime"
+    else if m.settingsSelection.itemSelected = 2
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "StartGooglePhotos"
     end if
 
 end sub

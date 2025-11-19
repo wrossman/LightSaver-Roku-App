@@ -28,8 +28,6 @@ sub init()
 
     m.video.observeField("state", "onVideoState")
 
-    m.global.imgIndex = 0
-
     print m.global.imgSource
 
     if m.global.imgSource = "lightroom"
@@ -99,6 +97,12 @@ end sub
 sub getPoster()
     m.getNextImageTask.unobserveField("result")
 
+    if m.getNextImageTask.result = "401"
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "WebAppKeyError"
+    end if
+
     print "setting posterstage uri to " + m.global.imageUri
     m.posterStage.uri = m.global.imageUri
 
@@ -155,14 +159,19 @@ end sub
 
 sub animateIn()
     m.currWallpaper.unobserveField("loadStatus")
-    m.picTimer.control = "start"
+    if m.global.imageCount > 1
+        m.picTimer.control = "start"
+    end if
     m.fadeInAnimation.control = "start"
+
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
         'remove all children of wallpapers then remove wallpaper from parent
-        m.picTimer.control = "stop"
+        if m.global.imageCount > 1
+            m.picTimer.control = "stop"
+        end if
         while m.top.getChildCount() > 0
             m.top.removeChild(m.top.getChild(0))
         end while
