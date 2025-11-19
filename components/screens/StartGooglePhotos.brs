@@ -51,6 +51,9 @@ sub finishGoogleFlow()
     m.settings.Write("imgSource", "google")
     m.settings.Write("googleLinks", linksStr)
     m.settings.Flush()
+
+    m.global.imgSource = "google"
+
     menu = m.top.getParent()
     menu.removeChild(m.top)
     m.global.currScreen = "GooglePhotosSuccess"

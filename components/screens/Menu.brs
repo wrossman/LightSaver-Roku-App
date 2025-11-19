@@ -20,14 +20,10 @@ sub onMenuSelection()
             mainScene = m.top.getParent()
             mainScene.removeChild(m.top)
             m.global.currScreen = "SelectSource"
-        else if m.global.imgSource = "google"
+        else
             mainScene = m.top.getParent()
             mainScene.removeChild(m.top)
-            m.global.currScreen = "GoogleWallpapers"
-        else if m.global.imgSource = "lightroom"
-            mainScene = m.top.getParent()
-            mainScene.removeChild(m.top)
-            m.global.currScreen = "Wallpapers"
+            m.global.currScreen = "StartWallpapers"
         end if
 
     else if m.menuSelection.itemSelected = 1

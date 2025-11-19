@@ -68,11 +68,13 @@ sub uriTaskResultHandler()
     if m.uriTask.result = "success"
         m.settings = CreateObject("roRegistrySection", "Config")
         m.settings.Write("albumUrl", m.global.lightroomAlbumUrl)
+        m.settings.Write("imgSource", "lightroom")
         m.settings.Flush()
-        print "wrote new album to registry"
+        m.global.imgSource = "lightroom"
+        print "wrote new album to registry and set lightroom as image source"
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "Settings"
+        m.global.currScreen = "StartWallpapers"
     else
         m.global.lightroomAlbumUrl = m.urlBak
         print "getImageUriTask failed: " + m.uriTask.result

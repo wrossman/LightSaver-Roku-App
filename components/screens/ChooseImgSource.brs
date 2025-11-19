@@ -24,9 +24,16 @@ sub onMenuSelection()
         mainScene.removeChild(m.top)
         m.global.currScreen = "StartGooglePhotos"
     else if m.menuSelection.itemSelected = 2
-        mainScene = m.top.getParent()
-        mainScene.removeChild(m.top)
-        m.global.currScreen = "Wallpapers"
+        if m.global.lightroomAlbumUrl = ""
+            mainScene = m.top.getParent()
+            mainScene.removeChild(m.top)
+            m.global.currScreen = "ChangeUrl"
+        else
+            m.global.imgSource = "lightroom"
+            mainScene = m.top.getParent()
+            mainScene.removeChild(m.top)
+            m.global.currScreen = "StartWallpapers"
+        end if
     end if
 
 end sub

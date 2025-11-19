@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="StartWallpapers" extends="Group">
+    <children>
+        <Video
+            id="bgVideo"
+            visible="false"
+            enableUI="false"
+            loop="true" />
+        <Poster id="currWallpaper" loadDisplayMode="scaleToFit" />
+        <Rectangle id="fadeRect" opacity="100" color="0xFFFFFF" />
+        <Timer id="picTimer" repeat="true" />
+        <GetImageUris id="GetImageUriTask" />
+        <GetNextImage id="GetNextImageTask" />
+        <GetLinksFromRegistry id="GetLinksFromRegistryTask" />
+        <Animation
+            id="fadeOutAnimation"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="1.0">
+            <FloatFieldInterpolator
+                id="animateOutInterp"
+                key="[0.0,1.0]"
+                KeyValue="[0.0,1.0]"
+                fieldToInterp="fadeRect.opacity"
+            />
+        </Animation>
+        <Animation
+            id="fadeInAnimation"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="1.0">
+            <FloatFieldInterpolator
+                id="animateInInterp"
+                key="[0.0,1.0]"
+                KeyValue="[1.0,0.0]"
+                fieldToInterp="fadeRect.opacity"
+            />
+        </Animation>
+    </children>
+    <script type="text/brightscript" uri="StartWallpapers.brs" />
+</component>

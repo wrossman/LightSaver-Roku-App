@@ -21,7 +21,7 @@ sub onButtonSelected()
     if m.dialog.buttonSelected = 0
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
-        m.global.currScreen = "GoogleWallpapers"
+        m.global.currScreen = "StartWallpapers"
     end if
 end sub
 

@@ -95,17 +95,20 @@ sub getImageUris()
         outputArr.Push(itemUrl)
     end for
 
-    fs = CreateObject("roFileSystem")
-    fileList = fs.GetDirectoryListing(m.global.folderPath)
-    for each item in fileList
-        outputArr.Push(m.global.folderPath + item)
-    end for
+    ' This was for getting my test images from the local package
+    ' fs = CreateObject("roFileSystem")
+    ' fileList = fs.GetDirectoryListing(m.global.folderPath)
+    ' for each item in fileList
+    '     outputArr.Push(m.global.folderPath + item)
+    ' end for
 
+    m.global.imageCount = outputArr.Count()
     m.global.imageUriArr = CreateObject("roArray", 1, true)
     m.global.imageUriArr = outputArr
 
     m.top.result = "success"
-
+    print m.global.imageCount
+    print m.global.imageUriArr
     print "Get URI Task Succeeded "
 
 end sub

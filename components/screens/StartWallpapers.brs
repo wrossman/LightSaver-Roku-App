@@ -12,6 +12,8 @@ sub init()
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
     m.fadeInAnimation = m.top.findNode("fadeInAnimation")
 
+    m.getNextImageTask = m.top.findNode("GetNextImageTask")
+
     m.currWallpaper = m.top.findNode("currWallpaper")
 
     m.posterStage = CreateObject("roSGNode", "Poster")
@@ -26,16 +28,20 @@ sub init()
 
     m.video.observeField("state", "onVideoState")
 
-
-
     m.global.imgIndex = 0
 
-    m.writeImgToTmpTask = m.top.findNode("WriteImgToTmp")
+    print m.global.imgSource
 
-
-
-    checkUriTask()
-
+    if m.global.imgSource = "lightroom"
+        m.getImageUriTask = m.top.findNode("GetImageUriTask")
+        m.getImageUriTask.observeField("result", "checkLightroomUriTask")
+        m.getImageUriTask.control = "run"
+    else if m.global.imgSource = "google"
+        m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
+        m.getLinksFromRegistry.observeField("result", "checkGoogleUriTask")
+        m.getLinksFromRegistry.control = "run"
+    end if
+    print "end start wallpapers init"
 end sub
 
 sub onVideoState()
@@ -46,58 +52,55 @@ sub onVideoState()
     end if
 end sub
 
-
-sub checkUriTask()
-    m.regConfig = CreateObject("roRegistrySection", "Config")
-    if m.regConfig.Exists("googleLinks")
-        m.links = m.regConfig.Read("googleLinks")
-        m.linksParse = ParseJson(m.links)
-        m.global.googleImgLinks = m.linksParse
-    end if
-    if m.global.googleImgLinks.Count() > 0
+sub checkLightroomUriTask()
+    print "in checklightroom uri task"
+    m.getImageUriTask.unobserveField("result")
+    if m.getImageUriTask.result = "success"
         firstLaunch()
     else
         ' ADD FAILURE DIALOG
+        print "Get URI Task Failed with result: "m.getImageUriTask.result
+    end if
+end sub
+
+sub checkGoogleUriTask()
+    m.getLinksFromRegistry.unobserveField("result")
+    if m.getLinksFromRegistry.result = "success"
+        firstLaunch()
+    else
+        ' ADD FAILURE DIALOG
+        print "Get URI Task Failed with result: "m.getLinksFromRegistry.result
     end if
 end sub
 
 sub firstLaunch()
+    print "in first launch"
     m.top.removeChild(m.progressDialog)
-    if m.global.googleImgLinks.Count() > 1
+    if m.global.imageCount > 1
         m.picTimer = m.top.findNode("picTimer")
         m.picTimer.ObserveField("fire", "onTimerFire")
         m.picTimer.duration = m.global.picDisplayTime
         m.picTimer.control = "start"
     end if
-    writeToTmp()
+    getNextImage()
+end sub
+
+sub getNextImage()
+    m.fadeOutAnimation.unobserveField("state")
+    m.getNextImageTask.control = "run"
+    m.getNextImageTask.observeField("result", "getPoster")
 end sub
 
 sub onTimerFire()
     m.fadeOutAnimation.control = "start"
-    m.fadeOutAnimation.observeField("state", "writeToTmp")
-end sub
-
-sub writeToTmp()
-    m.fadeOutAnimation.unobserveField("state")
-    m.writeImgToTmpTask.control = "run"
-    m.writeImgToTmpTask.observeField("result", "getPoster")
-
+    m.fadeOutAnimation.observeField("state", "getNextImage")
 end sub
 
 sub getPoster()
-    m.writeImgToTmpTask.unobserveField("result")
+    m.getNextImageTask.unobserveField("result")
 
-    if m.writeImgToTmpTask.result = "success"
-        ' ADD FAILURE DIALOG
-        print "Successfully wrote file to tmp"
-    else
-        print "Failed to write file to tmp"
-    end if
-
-    m.posterStage.uri = m.global.googleUri
-
-    ' m.currImageUri = m.global.imageUriArr[m.global.imgIndex]
-    ' m.posterStage.uri = m.currImageUri
+    print "setting posterstage uri to " + m.global.imageUri
+    m.posterStage.uri = m.global.imageUri
 
     if m.posterStage.loadStatus = "loading"
         m.posterStage.observeField("loadStatus", "onPosterLoaded")
@@ -106,7 +109,6 @@ sub getPoster()
     end if
 
 end sub
-
 
 sub onPosterLoaded()
 
@@ -140,19 +142,14 @@ sub onPosterLoaded()
         m.currWallpaper.height = m.global.deviceSize["h"]
         m.currWallpaper.translation = [0, 0]
     end if
-
-    m.currWallpaper.uri = m.global.googleUri
-
-    ' m.currWallpaper.uri = m.currImageUri
+    print "setting currwallpaper uri to " + m.global.imageUri
+    m.currWallpaper.uri = m.global.imageUri
 
     if m.currWallpaper.loadStatus = "loading"
         m.currWallpaper.observeField("loadStatus", "animateIn")
     else if m.currWallpaper.loadStatus = "ready"
         animateIn()
     end if
-
-    m.global.imgIndex++
-    print m.global.imgIndex
 
 end sub
 
