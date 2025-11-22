@@ -56,6 +56,13 @@ end sub
 sub checkLightroomUriTask()
     print "in checklightroom uri task"
     m.getImageUriTask.unobserveField("result")
+    if m.global.imageCount = 0
+        ' Exit out of wallpaper because there are no images from lightroom task
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "LightroomImgCountError"
+        return
+    end if
     if m.getImageUriTask.result = "success"
         firstLaunch()
     else
