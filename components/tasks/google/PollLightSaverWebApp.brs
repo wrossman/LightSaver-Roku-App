@@ -19,6 +19,7 @@ sub pollLightSaverWebApp()
     responseString = ""
 
     while responseString <> "Ready"
+        print "Polling Web App"
         ' needs to be updated to https once i get ssl set up
         post.AsyncPostFromString(jsonPostSessionBody)
         responseEvent = Wait(5000, postPort)

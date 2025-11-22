@@ -3,6 +3,7 @@ sub init()
     m.global.googleClientID = "834931356217-rhe6d5j089k46p2d3rg3c1firo52971g.apps.googleusercontent.com"
     m.global.googleDiscDocUrl = "https://accounts.google.com/.well-known/openid-configuration"
     m.global.googleAuthUrl = ""
+    m.global.filenameCounter = 0
     m.global.imgIndex = 0
     m.global.imageUri = ""
     m.global.imgSource = ""

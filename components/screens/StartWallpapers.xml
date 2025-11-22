@@ -12,6 +12,7 @@
         <GetImageUris id="GetImageUriTask" />
         <GetNextImage id="GetNextImageTask" />
         <GetLinksFromRegistry id="GetLinksFromRegistryTask" />
+        <RemoveTempFiles id="RemoveTempFilesTask" />
         <Animation
             id="fadeOutAnimation"
             repeat="false"

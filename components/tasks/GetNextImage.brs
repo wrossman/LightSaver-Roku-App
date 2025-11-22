@@ -33,7 +33,7 @@ sub getNextGoogleImage()
     m.imageHttp.SetUrl("http://10.0.0.15:8080/google/roku-get-resource")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
-    m.imageHttp.AsyncGetToFile("tmp:/tempImg")
+    m.imageHttp.AsyncGetToFile("tmp:/" + m.global.filenameCounter.ToStr())
     m.imgResponse = Wait(5000, m.imgHttpPort)
 
     ' handle if the keys did not work at the web app
@@ -41,7 +41,7 @@ sub getNextGoogleImage()
     m.responseCode = m.imgResponse.GetResponseCode()
 
     if m.responseCode <> invalid
-        print "response code valid " + m.responseCode.ToStr() + " type " + Type(m.responseCode)
+        print "response code valid " + m.responseCode.ToStr()
         if m.responseCode = 401
             print "response code equals 401"
             m.top.result = "401"
@@ -62,10 +62,12 @@ sub getNextGoogleImage()
         return
     end if
 
-    m.finalImgName = "tmp:/img" + m.global.imgIndex.ToStr() + "." + m.cleanType
+    m.finalImgName = "tmp:/img" + m.global.filenameCounter.ToStr() + "." + m.cleanType
 
-    success = fs.CopyFile("tmp:/tempImg", m.finalImgName)
-    fs.Delete("tmp:/tempImg")
+    success = fs.CopyFile("tmp:/" + m.global.filenameCounter.ToStr(), m.finalImgName)
+    fs.Delete("tmp:/" + m.global.filenameCounter.ToStr())
+
+    m.global.filenameCounter++
 
     if success
         m.global.imageUri = m.finalImgName
@@ -93,18 +95,20 @@ sub getNextLightroomImage()
     m.imageHttp.SetUrl(m.global.imageUriArr[m.global.imgIndex])
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
-    m.imageHttp.AsyncGetToFile("tmp:/img" + m.global.imgIndex.ToStr())
+    m.imageHttp.AsyncGetToFile("tmp:/img" + m.global.filenameCounter.ToStr())
     m.imgResponse = Wait(5000, m.imgHttpPort)
 
     if m.imgResponse <> invalid
         print "successfully got response in getnext lightroom image"
-        m.global.imageUri = "tmp:/img" + m.global.imgIndex.ToStr()
+        m.global.imageUri = "tmp:/img" + m.global.filenameCounter.ToStr()
         m.global.imgIndex++
-        m.top.result = "tmp:/img" + m.global.imgIndex.ToStr()
+        m.top.result = "tmp:/img" + m.global.filenameCounter.ToStr()
     else
         print "failed to get image from lightroom uri arr"
         m.top.result = "fail"
         return
     end if
+
+    m.global.filenameCounter++
 
 end sub

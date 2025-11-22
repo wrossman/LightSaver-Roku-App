@@ -61,6 +61,11 @@ end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
+
+        if m.pollLightSaverWebAppTask.state <> "done"
+            m.pollLightSaverWebAppTask.control = "stop"
+        end if
+
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "Menu"

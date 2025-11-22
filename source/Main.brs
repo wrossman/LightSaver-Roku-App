@@ -27,6 +27,7 @@ sub Main()
     m.global.AddField("clientId", "string", true)
     m.global.AddField("imageUri", "string", true)
 
+    m.global.AddField("filenameCounter", "int", true)
     m.global.AddField("imageCount", "int", true)
     m.global.AddField("imgIndex", "int", true)
     m.global.AddField("picDisplayTime", "int", true)

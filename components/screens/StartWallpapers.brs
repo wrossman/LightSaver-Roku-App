@@ -1,5 +1,8 @@
 sub init()
 
+    m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
+    m.removeTempFilesTask.control = "run"
+
     m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
     m.progressDialog.message = "Starting Wallpapers"
     m.top.appendChild(m.progressDialog)
@@ -172,6 +175,13 @@ function onKeyEvent(key as string, press as boolean) as boolean
         if m.global.imageCount > 1
             m.picTimer.control = "stop"
         end if
+
+        m.global.filenameCounter++
+        m.currWallpaper.uri = ""
+        m.posterStage.uri = ""
+        m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
+        m.removeTempFilesTask.control = "run"
+
         while m.top.getChildCount() > 0
             m.top.removeChild(m.top.getChild(0))
         end while
