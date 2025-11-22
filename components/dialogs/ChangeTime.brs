@@ -37,7 +37,17 @@ end sub
 
 sub onButtonSelected()
     if m.dialog.buttonSelected = 0
-        m.global.picDisplayTime = m.dialog.text
+
+        m.time = m.dialog.text.ToInt()
+
+        if m.time < 1
+            menu = m.top.getParent()
+            menu.removeChild(m.top)
+            m.global.currScreen = "DisplayTimeRangeError"
+            return
+        end if
+
+        m.global.picDisplayTime = m.time
         m.registry = CreateObject("roRegistrySection", "Config")
         m.registry.Write("displayTime", m.global.picDisplayTime.ToStr())
         m.registry.Flush()
