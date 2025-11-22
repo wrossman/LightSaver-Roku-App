@@ -23,28 +23,14 @@ sub init()
 
     m.global.observeField("currScreen", "launchScreen")
 
-    m.registry = CreateObject("roRegistrySection", "Config")
+    getConfig()
 
-    if m.registry.Exists("albumUrl")
-        m.global.lightroomAlbumUrl = m.registry.Read("albumUrl")
-    else
-        m.global.lightroomAlbumUrl = ""
-    end if
+end sub
 
-    if m.registry.Exists("imgSource")
-        m.global.imgSource = m.registry.Read("imgSource")
-    else
-        m.global.imgSource = ""
-    end if
-
-    if m.registry.Exists("googleLinks")
-        m.global.googleImgLinks = ParseJson(m.registry.Read("googleLinks"))
-    else
-        m.global.googleImgLinks = []
-    end if
-
-    launchScreen()
-
+sub getConfig()
+    m.loadConfigTask = m.top.findNode("LoadConfigTask")
+    m.loadConfigTask.observeField("result", "launchScreen")
+    m.loadConfigTask.control = "run"
 end sub
 
 sub launchScreen()

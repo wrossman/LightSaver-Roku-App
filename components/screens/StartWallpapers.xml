@@ -8,7 +8,7 @@
             loop="true" />
         <Poster id="currWallpaper" loadDisplayMode="scaleToFit" />
         <Rectangle id="fadeRect" opacity="100" color="0xFFFFFF" />
-        <Timer id="picTimer" repeat="true" />
+        <Timer id="picTimer" />
         <GetImageUris id="GetImageUriTask" />
         <GetNextImage id="GetNextImageTask" />
         <GetLinksFromRegistry id="GetLinksFromRegistryTask" />

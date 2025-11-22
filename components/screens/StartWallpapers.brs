@@ -6,6 +6,7 @@ sub init()
     m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
     m.progressDialog.message = "Starting Wallpapers"
     m.top.appendChild(m.progressDialog)
+    m.firstFire = true
 
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
@@ -14,6 +15,9 @@ sub init()
 
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
     m.fadeInAnimation = m.top.findNode("fadeInAnimation")
+
+    m.picTimer = m.top.findNode("picTimer")
+    m.picTimer.duration = m.global.picDisplayTime
 
     m.getNextImageTask = m.top.findNode("GetNextImageTask")
 
@@ -64,7 +68,7 @@ sub checkLightroomUriTask()
         return
     end if
     if m.getImageUriTask.result = "success"
-        firstLaunch()
+        getNextImage()
     else
         ' ADD FAILURE DIALOG
         print "Get URI Task Failed with result: "m.getImageUriTask.result
@@ -74,34 +78,23 @@ end sub
 sub checkGoogleUriTask()
     m.getLinksFromRegistry.unobserveField("result")
     if m.getLinksFromRegistry.result = "success"
-        firstLaunch()
+        getNextImage()
     else
         ' ADD FAILURE DIALOG
         print "Get URI Task Failed with result: "m.getLinksFromRegistry.result
     end if
 end sub
 
-sub firstLaunch()
-    print "in first launch"
-    m.top.removeChild(m.progressDialog)
-    if m.global.imageCount > 1
-        m.picTimer = m.top.findNode("picTimer")
-        m.picTimer.ObserveField("fire", "onTimerFire")
-        m.picTimer.duration = m.global.picDisplayTime
-        m.picTimer.control = "start"
-    end if
-    getNextImage()
+sub onTimerFire()
+    m.picTimer.unobserveField("fire")
+    m.fadeOutAnimation.control = "start"
+    m.fadeOutAnimation.observeField("state", "getNextImage")
 end sub
 
 sub getNextImage()
     m.fadeOutAnimation.unobserveField("state")
     m.getNextImageTask.control = "run"
     m.getNextImageTask.observeField("result", "getPoster")
-end sub
-
-sub onTimerFire()
-    m.fadeOutAnimation.control = "start"
-    m.fadeOutAnimation.observeField("state", "getNextImage")
 end sub
 
 sub getPoster()
@@ -168,12 +161,21 @@ sub onPosterLoaded()
 end sub
 
 sub animateIn()
+    if m.firstFire
+        m.top.removeChild(m.progressDialog)
+        m.firstFire = false
+    end if
     m.currWallpaper.unobserveField("loadStatus")
+    m.fadeInAnimation.control = "start"
+    m.fadeInAnimation.observeField("state", "finishAnimateIn")
+end sub
+
+sub finishAnimateIn()
+    m.fadeInAnimation.unobserveField("state")
     if m.global.imageCount > 1
+        m.picTimer.observeField("fire", "onTimerFire")
         m.picTimer.control = "start"
     end if
-    m.fadeInAnimation.control = "start"
-
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
