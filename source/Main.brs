@@ -38,8 +38,6 @@ sub Main()
     m.global.deviceSize = getDeviceSize()
     m.global.clientId = getChannelClientId()
 
-    print m.global.clientId
-
     screen.show()
 
     while(true)
@@ -58,6 +56,20 @@ function getDeviceSize()
 end function
 
 function getChannelClientId()
+
     devInfo = CreateObject("roDeviceInfo")
-    return devInfo.GetChannelClientId()
+    devSerial = devInfo.GetChannelClientId()
+    print "Device Serial: " devSerial
+
+    ba = CreateObject("roByteArray")
+    ba.FromAsciiString(devSerial)
+
+    digest = CreateObject("roEVPDigest")
+    digest.Setup("sha256")
+    result = digest.Process(ba)
+
+    print "Device Serial Hash: " result
+
+    return result
+
 end function
