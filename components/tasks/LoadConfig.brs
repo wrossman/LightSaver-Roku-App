@@ -29,14 +29,17 @@ sub loadConfig()
         m.global.imgSource = ""
     end if
 
-    if m.registry.Exists("googleLinks")
-        m.global.googleImgLinks = ParseJson(m.registry.Read("googleLinks"))
-        print "loaded googleImgLinks: "
-        for each item in m.global.googleImgLinks
+    if m.registry.Exists("imgLinks")
+        m.global.resourceLinks = ParseJson(m.registry.Read("imgLinks"))
+        if m.global.resourceLinks = invalid
+            m.global.resourceLinks = {}
+        end if
+        print "loaded resourceLinks: "
+        for each item in m.global.resourceLinks
             print item
         end for
     else
-        m.global.googleImgLinks = []
+        m.global.resourceLinks = {}
     end if
 
     print "Finished loading config"

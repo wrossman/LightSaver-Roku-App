@@ -11,7 +11,6 @@ sub init()
     m.global.picDisplayTime = 10
     m.global.backgroundColor = "#FFFFFF"
     m.global.currScreen = "Menu"
-    m.global.settingsJumpTo = 0
 
     m.top.backgroundUri = ""
     m.top.backgroundColor = m.global.backgroundColor

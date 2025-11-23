@@ -9,7 +9,7 @@
         />
         <GetSessionCode id="GetSessionCodeTask" />
         <PollLightSaverWebApp id="PollLightSaverWebAppTask" />
-        <GetGoogleResourcePackage id="GetGoogleResourcePackageTask" />
+        <GetResourcePackage id="GetResourcePackageTask" />
     </children>
     <script type="text/brightscript" uri="StartGooglePhotos.brs" />
 </component>

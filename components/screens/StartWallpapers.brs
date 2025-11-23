@@ -81,6 +81,9 @@ sub checkGoogleUriTask()
         getNextImage()
     else
         ' ADD FAILURE DIALOG
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "SelectSource"
         print "Get URI Task Failed with result: "m.getLinksFromRegistry.result
     end if
 end sub

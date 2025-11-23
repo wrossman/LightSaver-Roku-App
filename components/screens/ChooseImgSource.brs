@@ -21,13 +21,19 @@ sub onMenuSelection()
         ' m.global.currScreen = "Wallpapers"
     else if m.menuSelection.itemSelected = 1
         m.registry = CreateObject("roRegistrySection", "Config")
-        if m.registry.Exists("googleLinks")
-            m.registry.Write("imgSource", "google")
-            m.registry.Flush()
-            m.global.imgSource = "google"
-            mainScene = m.top.getParent()
-            mainScene.removeChild(m.top)
-            m.global.currScreen = "Menu"
+        if m.registry.Exists("imgLinks")
+            if ParseJson(m.registry.Read("imgLinks")) = invalid
+                mainScene = m.top.getParent()
+                mainScene.removeChild(m.top)
+                m.global.currScreen = "StartGooglePhotos"
+            else
+                m.registry.Write("imgSource", "google")
+                m.registry.Flush()
+                m.global.imgSource = "google"
+                mainScene = m.top.getParent()
+                mainScene.removeChild(m.top)
+                m.global.currScreen = "Menu"
+            end if
         else
             mainScene = m.top.getParent()
             mainScene.removeChild(m.top)

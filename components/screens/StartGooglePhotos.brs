@@ -8,7 +8,7 @@ sub init()
     m.getSessionCodeTask = m.top.findNode("GetSessionCodeTask")
     m.getSessionCodeTask.observeField("result", "startPollTask")
 
-    m.getGoogleResourcePackageTask = m.top.findNode("GetGoogleResourcePackageTask")
+    m.getResourcePackageTask = m.top.findNode("GetResourcePackageTask")
     m.pollLightSaverWebAppTask = m.top.findNode("PollLightSaverWebAppTask")
 
     m.getSessionCodeTask.control = "run"
@@ -36,20 +36,20 @@ sub startGetResource()
 
     m.pollLightSaverWebAppTask.unobserveField("result")
 
-    m.getGoogleResourcePackageTask.observeField("result", "finishGoogleFlow")
-    m.getGoogleResourcePackageTask.control = "run"
+    m.getResourcePackageTask.observeField("result", "finishGoogleFlow")
+    m.getResourcePackageTask.control = "run"
 
 end sub
 
 sub finishGoogleFlow()
 
-    m.getGoogleResourcePackageTask.unobserveField("result")
+    m.getResourcePackageTask.unobserveField("result")
 
-    linksStr = FormatJson(m.global.googleImgLinks)
+    linksStr = FormatJson(m.global.resourceLinks)
 
     m.settings = CreateObject("roRegistrySection", "Config")
     m.settings.Write("imgSource", "google")
-    m.settings.Write("googleLinks", linksStr)
+    m.settings.Write("imgLinks", linksStr)
     m.settings.Flush()
 
     m.global.imgSource = "google"

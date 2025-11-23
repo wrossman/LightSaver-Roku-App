@@ -11,7 +11,7 @@ sub init()
     m.settingsSelection.observeField("itemSelected", "onSettingsSelection")
     m.settingsSelection.setFocus(true)
 
-    if m.global.googleImgLinks.Count() > 0
+    if m.global.resourceLinks.Count() > 0
         m.settingsContent = m.top.findNode("settingsContent")
         m.contentNodeChild = m.settingsContent.CreateChild("ContentNode")
         m.contentNodeChild.title = "Select New Google Photos Images"

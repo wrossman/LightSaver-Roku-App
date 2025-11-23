@@ -14,7 +14,7 @@ sub getNextGoogleImage()
 
     ' this can be sent to a global variable so it doesnt run everytime
     m.keyList = []
-    for each item in m.global.googleImgLinks
+    for each item in m.global.resourceLinks
         m.keyList.Push(item)
     end for
 
@@ -23,14 +23,14 @@ sub getNextGoogleImage()
     end if
 
     m.currHeader = {
-        "Authorization": m.global.googleImgLinks[m.keyList[m.global.imgIndex]],
+        "Authorization": m.global.resourceLinks[m.keyList[m.global.imgIndex]],
         "Location": m.keyList[m.global.imgIndex],
         "Device": m.global.clientId
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
     m.imageHttp.SetHeaders(m.currHeader)
-    m.imageHttp.SetUrl("http://10.0.0.15:8080/google/roku-get-resource")
+    m.imageHttp.SetUrl("http://10.0.0.15:8080/roku/get-resource")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToFile("tmp:/" + m.global.filenameCounter.ToStr())

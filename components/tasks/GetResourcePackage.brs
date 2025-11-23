@@ -1,8 +1,8 @@
 sub init()
-    m.top.functionName = "getGoogleResourcePackage"
+    m.top.functionName = "getResourcePackage"
 end sub
 
-sub getGoogleResourcePackage()
+sub getResourcePackage()
 
     print "Retrieving resource package"
 
@@ -14,7 +14,7 @@ sub getGoogleResourcePackage()
     postPayload = FormatJson(sessionCodeIdJson)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/google/roku-get-resource-package")
+    post.SetUrl("http://10.0.0.15:8080/roku/resource-package")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
     post.AsyncPostFromString(postPayload)
@@ -35,7 +35,7 @@ sub getGoogleResourcePackage()
         end for
     end if
 
-    m.global.googleImgLinks = linksJson
+    m.global.resourceLinks = linksJson
     m.top.result = "done"
 
     print "Finished Retrieving Resource Package"
