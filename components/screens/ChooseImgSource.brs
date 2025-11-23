@@ -16,9 +16,9 @@ end sub
 sub onMenuSelection()
 
     if m.menuSelection.itemSelected = 0
-        ' mainScene = m.top.getParent()
-        ' mainScene.removeChild(m.top)
-        ' m.global.currScreen = "Wallpapers"
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "StartUpload"
     else if m.menuSelection.itemSelected = 1
         m.registry = CreateObject("roRegistrySection", "Config")
         if m.registry.Exists("imgLinks")
