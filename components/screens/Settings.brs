@@ -11,12 +11,6 @@ sub init()
     m.settingsSelection.observeField("itemSelected", "onSettingsSelection")
     m.settingsSelection.setFocus(true)
 
-    if m.global.resourceLinks.Count() > 0
-        m.settingsContent = m.top.findNode("settingsContent")
-        m.contentNodeChild = m.settingsContent.CreateChild("ContentNode")
-        m.contentNodeChild.title = "Select New Google Photos Images"
-    end if
-
 end sub
 
 sub onSettingsSelection()
@@ -24,15 +18,11 @@ sub onSettingsSelection()
     if m.settingsSelection.itemSelected = 0
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
-        m.global.currScreen = "ChangeUrl"
+        m.global.currScreen = "ChangeTime"
     else if m.settingsSelection.itemSelected = 1
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
-        m.global.currScreen = "ChangeTime"
-    else if m.settingsSelection.itemSelected = 2
-        mainScene = m.top.getParent()
-        mainScene.removeChild(m.top)
-        m.global.currScreen = "StartGooglePhotos"
+        m.global.currScreen = "GetPhotos"
     end if
 
 end sub

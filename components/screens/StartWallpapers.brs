@@ -35,18 +35,9 @@ sub init()
 
     m.video.observeField("state", "onVideoState")
 
-    print m.global.imgSource
-
-    if m.global.imgSource = "lightroom"
-        m.getImageUriTask = m.top.findNode("GetImageUriTask")
-        m.getImageUriTask.observeField("result", "checkLightroomUriTask")
-        m.getImageUriTask.control = "run"
-        ' else if m.global.imgSource = "google"
-    else
-        m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
-        m.getLinksFromRegistry.observeField("result", "checkGoogleUriTask")
-        m.getLinksFromRegistry.control = "run"
-    end if
+    m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
+    m.getLinksFromRegistry.observeField("result", "checkUriTask")
+    m.getLinksFromRegistry.control = "run"
     print "end start wallpapers init"
 end sub
 
@@ -58,25 +49,7 @@ sub onVideoState()
     end if
 end sub
 
-sub checkLightroomUriTask()
-    print "in checklightroom uri task"
-    m.getImageUriTask.unobserveField("result")
-    if m.global.imageCount = 0
-        ' Exit out of wallpaper because there are no images from lightroom task
-        menu = m.top.getParent()
-        menu.removeChild(m.top)
-        m.global.currScreen = "LightroomImgCountError"
-        return
-    end if
-    if m.getImageUriTask.result = "success"
-        getNextImage()
-    else
-        ' ADD FAILURE DIALOG
-        print "Get URI Task Failed with result: "m.getImageUriTask.result
-    end if
-end sub
-
-sub checkGoogleUriTask()
+sub checkUriTask()
     m.getLinksFromRegistry.unobserveField("result")
     if m.getLinksFromRegistry.result = "success"
         getNextImage()

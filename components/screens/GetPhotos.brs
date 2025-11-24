@@ -36,27 +36,24 @@ sub startGetResource()
 
     m.pollLightSaverWebAppTask.unobserveField("result")
 
-    m.getResourcePackageTask.observeField("result", "finishGoogleFlow")
+    m.getResourcePackageTask.observeField("result", "finishGetPhotosFlow")
     m.getResourcePackageTask.control = "run"
 
 end sub
 
-sub finishGoogleFlow()
+sub finishGetPhotosFlow()
 
     m.getResourcePackageTask.unobserveField("result")
 
     linksStr = FormatJson(m.global.resourceLinks)
 
     m.settings = CreateObject("roRegistrySection", "Config")
-    m.settings.Write("imgSource", "google")
     m.settings.Write("imgLinks", linksStr)
     m.settings.Flush()
 
-    m.global.imgSource = "google"
-
     menu = m.top.getParent()
     menu.removeChild(m.top)
-    m.global.currScreen = "GooglePhotosSuccess"
+    m.global.currScreen = "GetPhotosSuccess"
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean

@@ -1,16 +1,12 @@
 sub init()
 
-    if m.global.imgSource = "lightroom"
-        m.top.functionName = "getNextLightroomImage"
-        ' else if m.global.imgSource = "google"
-    else
-        m.top.functionName = "getNextGoogleImage"
-    end if
+    m.top.functionName = "getNextImage"
+
 end sub
 
-sub getNextGoogleImage()
+sub getNextImage()
 
-    print "Running Get Next Google Image"
+    print "Running Get Next Image"
     fs = CreateObject("roFileSystem")
     fs.Delete(m.global.imageUri)
 
@@ -76,10 +72,10 @@ sub getNextGoogleImage()
         m.global.imgIndex++
         m.top.result = m.finalImgName
     else
-        print "failed to rename the google img file"
+        print "failed to rename the img file"
     end if
 
-    print "Finish get next google image"
+    print "Finish get next image"
 end sub
 
 sub getNextLightroomImage()

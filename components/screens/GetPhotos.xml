@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component name="StartGooglePhotos" extends="Group">
+<component name="GetPhotos" extends="Group">
     <children>
         <Label
             id="sessionCode"
@@ -11,5 +11,5 @@
         <PollLightSaverWebApp id="PollLightSaverWebAppTask" />
         <GetResourcePackage id="GetResourcePackageTask" />
     </children>
-    <script type="text/brightscript" uri="StartGooglePhotos.brs" />
+    <script type="text/brightscript" uri="GetPhotos.brs" />
 </component>

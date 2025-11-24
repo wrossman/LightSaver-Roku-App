@@ -11,7 +11,7 @@ end sub
 sub launchDialog()
     m.dialog = m.top.findNode("error")
     m.dialog.title = ["Connection Error"]
-    m.dialog.message = ["Please try adding your Google Photos again."]
+    m.dialog.message = ["Please try again."]
     m.dialog.buttons = ["Continue"]
     m.dialog.observeField("buttonSelected", "onButtonSelected")
 end sub

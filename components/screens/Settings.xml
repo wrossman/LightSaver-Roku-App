@@ -14,8 +14,8 @@
             vertFocusAnimationStyle="floatingFocus"
             drawFocusFeedback="false">
             <ContentNode id="settingsContent" role="content">
-                <ContentNode title="Change Lightroom Album" />
                 <ContentNode title="Change Picture Display Time" />
+                <ContentNode title="Change Wallpaper Images" />
             </ContentNode>
         </LabelList>
     </children>

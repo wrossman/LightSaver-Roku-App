@@ -6,11 +6,12 @@ sub init()
 
     launchDialog()
 
+
 end sub
 
 sub launchDialog()
     m.dialog = m.top.findNode("success")
-    m.dialog.title = ["Successfully Uploaded Photos to LightSaver"]
+    m.dialog.title = ["Successfully Added Photos"]
     m.dialog.buttons = ["Continue"]
     m.dialog.observeField("buttonSelected", "onButtonSelected")
 end sub
