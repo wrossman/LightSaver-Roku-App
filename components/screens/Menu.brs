@@ -16,21 +16,10 @@ end sub
 sub onMenuSelection()
 
     if m.menuSelection.itemSelected = 0
-        if m.global.imgSource = ""
-            mainScene = m.top.getParent()
-            mainScene.removeChild(m.top)
-            m.global.currScreen = "SelectSource"
-        else
-            mainScene = m.top.getParent()
-            mainScene.removeChild(m.top)
-            m.global.currScreen = "StartWallpapers"
-        end if
-
-    else if m.menuSelection.itemSelected = 1
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
-        m.global.currScreen = "ChooseImgSource"
-    else if m.menuSelection.itemSelected = 2
+        m.global.currScreen = "StartWallpapers"
+    else if m.menuSelection.itemSelected = 1
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "Settings"
