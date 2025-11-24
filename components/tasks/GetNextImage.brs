@@ -1,8 +1,10 @@
 sub init()
-    if m.global.imgSource = "google"
-        m.top.functionName = "getNextGoogleImage"
-    else if m.global.imgSource = "lightroom"
+
+    if m.global.imgSource = "lightroom"
         m.top.functionName = "getNextLightroomImage"
+        ' else if m.global.imgSource = "google"
+    else
+        m.top.functionName = "getNextGoogleImage"
     end if
 end sub
 

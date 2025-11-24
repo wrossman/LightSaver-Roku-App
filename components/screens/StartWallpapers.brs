@@ -41,7 +41,8 @@ sub init()
         m.getImageUriTask = m.top.findNode("GetImageUriTask")
         m.getImageUriTask.observeField("result", "checkLightroomUriTask")
         m.getImageUriTask.control = "run"
-    else if m.global.imgSource = "google"
+        ' else if m.global.imgSource = "google"
+    else
         m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
         m.getLinksFromRegistry.observeField("result", "checkGoogleUriTask")
         m.getLinksFromRegistry.control = "run"
