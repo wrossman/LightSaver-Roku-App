@@ -7,7 +7,8 @@ sub pollLightSaverWebApp()
     print "Start Polling LightSaver Web App"
 
     sessionCodeArr = {
-        "RokuSessionCode": m.global.sessionCode
+        "SessionCode": m.global.sessionCode,
+        "RokuId": m.global.clientId
     }
 
     jsonPostSessionBody = FormatJson(sessionCodeArr)
