@@ -1,12 +1,11 @@
 sub init()
-
-    m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
-    m.removeTempFilesTask.control = "run"
-
     m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
     m.progressDialog.message = "Starting Wallpapers"
     m.top.appendChild(m.progressDialog)
     m.firstFire = true
+
+    m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
+    m.removeTempFilesTask.control = "run"
 
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
@@ -35,10 +34,19 @@ sub init()
 
     m.video.observeField("state", "onVideoState")
 
+    m.initialGetResourceTask = m.top.findNode("InitialGetResourceTask")
+    m.initialGetResourceTask.observeField("result", "getLinksFromRegistry")
+    m.initialGetResourceTask.control = "run"
+
+    print "end start wallpapers init"
+end sub
+
+sub getLinksFromRegistry()
+    m.initialGetResourceTask.unobserveField("result")
+
     m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
     m.getLinksFromRegistry.observeField("result", "checkUriTask")
     m.getLinksFromRegistry.control = "run"
-    print "end start wallpapers init"
 end sub
 
 sub onVideoState()

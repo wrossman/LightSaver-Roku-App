@@ -23,7 +23,7 @@ sub getNextImage()
     m.currHeader = {
         "Authorization": m.global.resourceLinks[m.keyList[m.global.imgIndex]],
         "Location": m.keyList[m.global.imgIndex],
-        "Device": m.global.clientId
+        "Device": m.global.clientId,
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
