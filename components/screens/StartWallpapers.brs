@@ -57,7 +57,7 @@ sub checkUriTask()
         ' ADD FAILURE DIALOG
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "SelectSource"
+        m.global.currScreen = "Menu"
         print "Get URI Task Failed with result: "m.getLinksFromRegistry.result
     end if
 end sub
@@ -81,6 +81,10 @@ sub getPoster()
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "WebAppKeyError"
+    else if m.getNextImageTask.result = "fail"
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "WebAppError"
     end if
 
     print "setting posterstage uri to " + m.global.imageUri

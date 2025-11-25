@@ -49,23 +49,27 @@ sub finishGetPhotosFlow()
 
     m.settings = CreateObject("roRegistrySection", "Config")
     m.settings.Write("imgLinks", linksStr)
+    m.settings.Write("loaded", "true")
     m.settings.Flush()
-
+    m.global.loaded = "true"
     menu = m.top.getParent()
     menu.removeChild(m.top)
     m.global.currScreen = "GetPhotosSuccess"
+
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
-
+        if m.global.loaded = "false"
+            return true
+        end if
         if m.pollLightSaverWebAppTask.state <> "done"
             m.pollLightSaverWebAppTask.control = "stop"
         end if
 
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "Menu"
+        m.global.currScreen = "Settings"
         return true
     end if
     return false

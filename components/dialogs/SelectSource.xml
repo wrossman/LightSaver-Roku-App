@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="SelectSource" extends="Group" initialFocus="selectSource">
-    <children>
-        <Rectangle id="background" color="#000000" />
-        <StandardMessageDialog id="selectSource" />
-    </children>
-    <script type="text/brightscript" uri="SelectSource.brs" />
-</component>

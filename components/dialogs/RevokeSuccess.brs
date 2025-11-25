@@ -9,9 +9,8 @@ sub init()
 end sub
 
 sub launchDialog()
-    m.dialog = m.top.findNode("error")
-    m.dialog.title = ["Your Images Have Expired"]
-    m.dialog.message = ["Please select your wallpaper images again."]
+    m.dialog = m.top.findNode("success")
+    m.dialog.title = ["Successfully Removed Images from LightSaver"]
     m.dialog.buttons = ["Continue"]
     m.dialog.observeField("buttonSelected", "onButtonSelected")
 end sub
@@ -19,14 +18,6 @@ end sub
 sub onButtonSelected()
     m.dialog.visible = false
     if m.dialog.buttonSelected = 0
-        m.registry = CreateObject("roRegistrySection", "Config")
-        m.registry.Write("loaded", "false")
-        m.registry.Write("imgLinks", "")
-        m.registry.Flush()
-
-        m.global.resourceLinks = {}
-        m.global.loaded = "false"
-
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "GetPhotos"
@@ -37,7 +28,7 @@ function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "GetPhotos"
+        m.global.currScreen = "Menu"
         return true
     end if
     return false

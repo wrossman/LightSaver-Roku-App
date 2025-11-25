@@ -23,6 +23,10 @@ sub onSettingsSelection()
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "GetPhotos"
+    else if m.settingsSelection.itemSelected = 2
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "RevokeAccess"
     end if
 
 end sub

@@ -3,19 +3,12 @@ sub init()
     m.global.filenameCounter = 0
     m.global.imgIndex = 0
     m.global.imageUri = ""
-    m.global.imgSource = ""
     m.global.certificates = "common:/certs/ca-bundle.crt"
     m.global.folderPath = "pkg:/images/wallpapers/"
-    m.global.lightroomAlbumUrl = ""
-    m.global.longLightroomAlbumUrl = ""
-    m.global.picDisplayTime = 10
     m.global.backgroundColor = "#FFFFFF"
-    m.global.currScreen = "Menu"
 
     m.top.backgroundUri = ""
     m.top.backgroundColor = m.global.backgroundColor
-
-    m.global.observeField("currScreen", "launchScreen")
 
     getConfig()
 
@@ -23,8 +16,20 @@ end sub
 
 sub getConfig()
     m.loadConfigTask = m.top.findNode("LoadConfigTask")
-    m.loadConfigTask.observeField("result", "launchScreen")
+    m.loadConfigTask.observeField("result", "firstLaunch")
     m.loadConfigTask.control = "run"
+end sub
+
+sub firstLaunch()
+    if m.global.loaded = "true"
+        m.global.currScreen = "StartWallpapers"
+    else
+        m.global.currScreen = "GetPhotos"
+    end if
+
+    m.global.observeField("currScreen", "launchScreen")
+
+    launchScreen()
 end sub
 
 sub launchScreen()

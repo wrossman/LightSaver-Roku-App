@@ -16,6 +16,7 @@
             <ContentNode id="settingsContent" role="content">
                 <ContentNode title="Change Picture Display Time" />
                 <ContentNode title="Change Wallpaper Images" />
+                <ContentNode title="Revoke LightSaver Image Access" />
             </ContentNode>
         </LabelList>
     </children>

@@ -1,5 +1,3 @@
-' - fix the video in the background not making the screensaver stop.
-
 sub Main()
 
     screen = CreateObject("roSGScreen")
@@ -13,15 +11,13 @@ sub Main()
     m.global.AddField("imageUriArr", "array", true)
 
     m.global.AddField("sessionCode", "string", true)
-    m.global.AddField("imgSource", "string", true)
     m.global.AddField("folderPath", "string", true)
     m.global.AddField("currScreen", "string", true)
     m.global.AddField("backgroundColor", "string", true)
-    m.global.AddField("lightroomAlbumUrl", "string", true)
-    m.global.AddField("longLightroomAlbumUrl", "string", true)
     m.global.AddField("certificates", "string", true)
     m.global.AddField("clientId", "string", true)
     m.global.AddField("imageUri", "string", true)
+    m.global.AddField("loaded", "string", true)
 
     m.global.AddField("filenameCounter", "int", true)
     m.global.AddField("imageCount", "int", true)
@@ -52,7 +48,6 @@ function getChannelClientId()
 
     devInfo = CreateObject("roDeviceInfo")
     devSerial = devInfo.GetChannelClientId()
-    print "Device Serial: " devSerial
 
     ba = CreateObject("roByteArray")
     ba.FromAsciiString(devSerial)
@@ -60,8 +55,6 @@ function getChannelClientId()
     digest = CreateObject("roEVPDigest")
     digest.Setup("sha256")
     result = digest.Process(ba)
-
-    print "Device Serial Hash: " result
 
     return result
 

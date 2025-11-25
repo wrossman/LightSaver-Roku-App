@@ -4,24 +4,29 @@ sub init()
     m.background.height = m.global.deviceSize["h"]
     m.background.color = m.global.backgroundColor
 
-    launchDialog()
+    m.revokeAccessTask = m.top.findNode("RevokeAccessTask")
+    m.revokeAccessTask.control = "run"
+    m.revokeAccessTask.observeField("result", "finishRevokeTask")
 
+    launchDialog()
 
 end sub
 
 sub launchDialog()
-    m.dialog = m.top.findNode("selectSource")
-    m.dialog.title = ["Please select your image source."]
-    m.dialog.buttons = ["Continue"]
-    m.dialog.observeField("buttonSelected", "onButtonSelected")
+    m.dialog = m.top.findNode("progress")
+    m.dialog.title = ["Removing Images from LightSaver"]
 end sub
 
-sub onButtonSelected()
-    m.dialog.visible = false
-    if m.dialog.buttonSelected = 0
+sub finishRevokeTask()
+    if m.revokeAccessTask.result = "200"
+        m.settings = CreateObject("roRegistrySection", "Config")
+        m.settings.Write("loaded", "false")
+        m.settings.Flush()
+        m.global.loaded = "false"
+
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
-        m.global.currScreen = "ChooseImgSource"
+        m.global.currScreen = "RevokeSuccess"
     end if
 end sub
 

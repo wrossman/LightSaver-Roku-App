@@ -6,41 +6,53 @@ sub loadConfig()
 
     print "loading config from registry"
 
+    ' FOR TESTING A CLEAN REGISTRY
+    ' m.reg = CreateObject("roRegistry")
+    ' print "Successfully deleted config from registry: " + m.reg.Delete("Config").ToStr()
+    ' m.reg.Flush()
+
     m.registry = CreateObject("roRegistrySection", "Config")
 
-    if m.registry.Exists("albumUrl")
-        m.global.lightroomAlbumUrl = m.registry.Read("albumUrl")
-        print "loaded lightroomAlbumUrl: " + m.global.lightroomAlbumUrl
+    if m.registry.Exists("loaded")
+        m.global.loaded = m.registry.Read("loaded")
+        print "loaded loaded: " + m.global.loaded.ToStr()
     else
-        m.global.lightroomAlbumUrl = ""
+        m.registry.Write("loaded", "false")
+        m.global.loaded = "false"
     end if
 
     if m.registry.Exists("displayTime")
         m.global.picDisplayTime = m.registry.Read("displayTime").ToInt()
-        print "loaded picDisplayTime: " + m.global.picDisplayTime.TOStr()
+        print "loaded picDisplayTime: " + m.global.picDisplayTime.ToStr()
     else
+        m.registry.Write("displayTime", "10")
         m.global.picDisplayTime = 10
     end if
 
-    if m.registry.Exists("imgSource")
-        m.global.imgSource = m.registry.Read("imgSource")
-        print "loaded imgSource: " + m.global.imgSource
-    else
-        m.global.imgSource = ""
-    end if
-
     if m.registry.Exists("imgLinks")
+
         m.global.resourceLinks = ParseJson(m.registry.Read("imgLinks"))
+
         if m.global.resourceLinks = invalid
+            print "loaded resource links were invalid"
             m.global.resourceLinks = {}
+            m.registry.Write("loaded", "false")
+            m.registry.Write("imgLinks", "")
+            m.global.loaded = "false"
+        else
+            print "loaded resourceLinks: "
+            for each item in m.global.resourceLinks
+                print item
+            end for
         end if
-        print "loaded resourceLinks: "
-        for each item in m.global.resourceLinks
-            print item
-        end for
     else
         m.global.resourceLinks = {}
+        m.global.loaded = "false"
+        m.registry.Write("loaded", "false")
+        m.registry.Write("imgLinks", "")
     end if
+
+    m.registry.Flush()
 
     print "Finished loading config"
 

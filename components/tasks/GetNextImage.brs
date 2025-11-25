@@ -47,6 +47,11 @@ sub getNextImage()
         end if
     end if
 
+    if m.responseCode <> 200
+        m.top.result = "fail"
+        return
+    end if
+
     if m.imgResponse <> invalid
         m.responseHeaders = m.imgResponse.GetResponseHeaders()
         for each item in m.responseHeaders
@@ -76,37 +81,4 @@ sub getNextImage()
     end if
 
     print "Finish get next image"
-end sub
-
-sub getNextLightroomImage()
-    print "in get next lightroom image"
-
-    fs = CreateObject("roFileSystem")
-    fs.Delete(m.global.imageUri)
-
-    if m.global.imgIndex >= m.global.imageUriArr.Count()
-        m.global.imgIndex = 0
-    end if
-
-    print m.global.imgIndex
-    m.imageHttp = CreateObject("roUrlTransfer")
-    m.imageHttp.SetUrl(m.global.imageUriArr[m.global.imgIndex])
-    m.imgHttpPort = CreateObject("roMessagePort")
-    m.imageHttp.SetPort(m.imgHttpPort)
-    m.imageHttp.AsyncGetToFile("tmp:/img" + m.global.filenameCounter.ToStr())
-    m.imgResponse = Wait(5000, m.imgHttpPort)
-
-    if m.imgResponse <> invalid
-        print "successfully got response in getnext lightroom image"
-        m.global.imageUri = "tmp:/img" + m.global.filenameCounter.ToStr()
-        m.global.imgIndex++
-        m.top.result = "tmp:/img" + m.global.filenameCounter.ToStr()
-    else
-        print "failed to get image from lightroom uri arr"
-        m.top.result = "fail"
-        return
-    end if
-
-    m.global.filenameCounter++
-
 end sub
