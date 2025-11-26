@@ -7,7 +7,8 @@ sub getSessionCode()
     print "in getSessionCode"
 
     serialArr = {
-        "RokuId": m.global.clientId
+        "RokuId": m.global.clientId,
+        "MaxScreenSize": m.global.maxScreenSize
     }
     serialJson = FormatJson(serialArr)
 

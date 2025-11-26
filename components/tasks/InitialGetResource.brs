@@ -16,6 +16,7 @@ sub initialGet()
         "Authorization": m.global.resourceLinks[m.keyList[0]],
         "Location": m.keyList[0],
         "Device": m.global.clientId,
+        "MaxScreenSize": m.global.maxScreenSize.ToStr()
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
@@ -24,7 +25,7 @@ sub initialGet()
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToString()
-    m.imgResponse = Wait(5000, m.imgHttpPort)
+    m.imgResponse = Wait(0, m.imgHttpPort)
 
     if m.imgResponse.GetResponseCode() < 0
         m.top.result = "failed to connect"
