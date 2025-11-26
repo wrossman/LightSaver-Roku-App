@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component name="RevokeAccessTask" extends="Task">
+<component name="RevokeAccess" extends="Task">
     <interface>
         <field id="result" type="string" />
     </interface>
-    <script type="text/brightscript" uri="RevokeAccessTask.brs" />
+    <script type="text/brightscript" uri="RevokeAccess.brs" />
 </component>

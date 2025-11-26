@@ -27,9 +27,7 @@ sub initialGet()
     m.imgResponse = Wait(5000, m.imgHttpPort)
 
     if m.imgResponse.GetResponseCode() < 0
-        menu = m.top.getParent()
-        menu.removeChild(m.top)
-        m.global.currScreen = "WebAppError"
+        m.top.result = "failed to connect"
         return
     end if
 

@@ -4,9 +4,9 @@ sub init()
     m.background.height = m.global.deviceSize["h"]
     m.background.color = m.global.backgroundColor
 
-    m.revokeAccessTask = m.top.findNode("RevokeAccessTask")
-    m.revokeAccessTask.control = "run"
-    m.revokeAccessTask.observeField("result", "finishRevokeTask")
+    m.revokeAccess = m.top.findNode("RevokeAccess")
+    m.revokeAccess.control = "run"
+    m.revokeAccess.observeField("result", "finishRevokeTask")
 
     launchDialog()
 
@@ -18,7 +18,7 @@ sub launchDialog()
 end sub
 
 sub finishRevokeTask()
-    if m.revokeAccessTask.result = "200"
+    if m.revokeAccess.result = "200"
         m.settings = CreateObject("roRegistrySection", "Config")
         m.settings.Write("loaded", "false")
         m.settings.Flush()

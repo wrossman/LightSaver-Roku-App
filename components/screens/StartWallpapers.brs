@@ -44,6 +44,13 @@ end sub
 sub getLinksFromRegistry()
     m.initialGetResourceTask.unobserveField("result")
 
+    if m.initialGetResourceTask.result = "failed to connect"
+        m.top.removeChild(m.progressDialog)
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "WebAppError"
+    end if
+
     m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
     m.getLinksFromRegistry.observeField("result", "checkUriTask")
     m.getLinksFromRegistry.control = "run"
@@ -63,6 +70,7 @@ sub checkUriTask()
         getNextImage()
     else
         ' ADD FAILURE DIALOG
+        m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "Menu"
@@ -86,10 +94,12 @@ sub getPoster()
     m.getNextImageTask.unobserveField("result")
 
     if m.getNextImageTask.result = "401"
+        m.top.removeChild(m.progressDialog)
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "WebAppKeyError"
     else if m.getNextImageTask.result = "fail"
+        m.top.removeChild(m.progressDialog)
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "WebAppError"
@@ -183,6 +193,7 @@ function onKeyEvent(key as string, press as boolean) as boolean
         while m.top.getChildCount() > 0
             m.top.removeChild(m.top.getChild(0))
         end while
+        m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "Menu"

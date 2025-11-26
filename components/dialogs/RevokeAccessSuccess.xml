@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="RevokeAccessSuccess" extends="Group" initialFocus="timeKeyboard">
+    <children>
+        <Rectangle id="background" color="#000000" />
+        <StandardProgressDialog id="progress" />
+        <RevokeAccess id="RevokeAccess" />
+    </children>
+    <script type="text/brightscript" uri="RevokeAccessSuccess.brs" />
+</component>
