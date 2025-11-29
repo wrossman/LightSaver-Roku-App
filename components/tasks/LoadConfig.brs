@@ -23,11 +23,9 @@ sub loadConfig()
 
     if m.registry.Exists("background")
         m.global.background = m.registry.Read("background")
-        m.global.background = "true"
         print "loaded background: " + m.global.background.ToStr()
     else
         m.registry.Write("background", "false")
-        m.global.background = "true"
         m.global.background = "false"
     end if
 
