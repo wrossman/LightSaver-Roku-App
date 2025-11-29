@@ -1,12 +1,15 @@
 
 sub init()
 
+    m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
+    m.fadeInAnimation = m.top.findNode("fadeInAnimation")
+
     m.sessionCode = m.top.findNode("sessionCode")
     m.sessionCode.width = m.global.deviceSize["w"]
     m.sessionCode.translation = [0, m.global.deviceSize["h"] / 5]
 
     m.getSessionCodeTask = m.top.findNode("GetSessionCodeTask")
-    m.getSessionCodeTask.observeField("result", "startPollTask")
+    m.getSessionCodeTask.observeField("result", "startSessionCheck")
 
     m.getResourcePackageTask = m.top.findNode("GetResourcePackageTask")
     m.pollLightSaverWebAppTask = m.top.findNode("PollLightSaverWebAppTask")
@@ -16,7 +19,7 @@ sub init()
 end sub
 
 
-sub startPollTask()
+sub startSessionCheck()
     if m.getSessionCodeTask.result = "fail"
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
@@ -25,6 +28,15 @@ sub startPollTask()
 
     m.getSessionCodeTask.unobserveField("result")
     m.sessionCode.text = m.global.sessionCode
+
+    m.fadeInAnimation.control = "start"
+    m.fadeInAnimation.observeField("state", "startPollTask")
+
+end sub
+
+sub startPollTask()
+
+    m.fadeInAnimation.unobserveField("state")
 
     m.pollLightSaverWebAppTask.observeField("result", "startGetResource")
     m.pollLightSaverWebAppTask.control = "run"
@@ -37,15 +49,25 @@ sub startGetResource()
     m.pollLightSaverWebAppTask.unobserveField("result")
 
     if m.pollLightSaverWebAppTask.result = "expired"
+        m.fadeOutAnimation.control = "start"
+        m.fadeOutAnimation.observeField("state", "animateOutFinished")
         print "Recieved expired"
-        menu = m.top.getParent()
-        menu.removeChild(m.top)
-        m.global.currScreen = ""
-        m.global.currScreen = "GetPhotos"
+        return
     end if
 
     m.getResourcePackageTask.observeField("result", "finishGetPhotosFlow")
     m.getResourcePackageTask.control = "run"
+
+end sub
+
+sub animateOutFinished()
+
+    m.fadeOutAnimation.unobserveField("state")
+
+    menu = m.top.getParent()
+    menu.removeChild(m.top)
+    m.global.currScreen = ""
+    m.global.currScreen = "GetPhotos"
 
 end sub
 

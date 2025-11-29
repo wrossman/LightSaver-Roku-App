@@ -3,10 +3,35 @@
     <children>
         <Label
             id="sessionCode"
-            text="Menu"
+            text=""
             horizAlign="center"
             color="#000000"
+            opacity="0"
         />
+        <Animation
+            id="fadeInAnimation"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="1.0">
+            <FloatFieldInterpolator
+                id="animateOutInterp"
+                key="[0.0,1.0]"
+                KeyValue="[0.0,1.0]"
+                fieldToInterp="sessionCode.opacity"
+            />
+        </Animation>
+        <Animation
+            id="fadeOutAnimation"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="1.0">
+            <FloatFieldInterpolator
+                id="animateInInterp"
+                key="[0.0,1.0]"
+                KeyValue="[1.0,0.0]"
+                fieldToInterp="sessionCode.opacity"
+            />
+        </Animation>
         <GetSessionCode id="GetSessionCodeTask" />
         <PollLightSaverWebApp id="PollLightSaverWebAppTask" />
         <GetResourcePackage id="GetResourcePackageTask" />
