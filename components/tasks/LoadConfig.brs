@@ -21,6 +21,14 @@ sub loadConfig()
         m.global.loaded = "false"
     end if
 
+    if m.registry.Exists("background")
+        m.global.background = m.registry.Read("background")
+        print "loaded background: " + m.global.background.ToStr()
+    else
+        m.registry.Write("background", "false")
+        m.global.background = "false"
+    end if
+
     if m.registry.Exists("displayTime")
         m.global.picDisplayTime = m.registry.Read("displayTime").ToInt()
         print "loaded picDisplayTime: " + m.global.picDisplayTime.ToStr()

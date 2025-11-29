@@ -18,6 +18,7 @@ sub Main()
     m.global.AddField("clientId", "string", true)
     m.global.AddField("imageUri", "string", true)
     m.global.AddField("loaded", "string", true)
+    m.global.AddField("background", "string", true)
 
     m.global.AddField("filenameCounter", "int", true)
     m.global.AddField("imageCount", "int", true)
