@@ -11,6 +11,13 @@ sub init()
     m.settingsSelection.observeField("itemSelected", "onSettingsSelection")
     m.settingsSelection.setFocus(true)
 
+    m.blurredSetting = m.top.findNode("blurred")
+    if m.global.background = "true"
+        m.blurredSetting.title = "Disable Blurred Image Background"
+    else
+        m.blurredSetting.title = "Enable Blurred Image Background"
+    end if
+
 end sub
 
 sub onSettingsSelection()
@@ -20,10 +27,24 @@ sub onSettingsSelection()
         mainScene.removeChild(m.top)
         m.global.currScreen = "ChangeTime"
     else if m.settingsSelection.itemSelected = 1
+
+        m.registry = CreateObject("roRegistrySection", "Config")
+
+        if m.global.background = "true"
+            m.global.background = "false"
+            m.registry.Write("background", "false")
+            m.blurredSetting.title = "Enable Blurred Image Background"
+        else
+            m.global.background = "true"
+            m.registry.Write("background", "true")
+            m.blurredSetting.title = "Disable Blurred Image Background"
+        end if
+
+    else if m.settingsSelection.itemSelected = 2
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "GetPhotos"
-    else if m.settingsSelection.itemSelected = 2
+    else if m.settingsSelection.itemSelected = 3
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "RevokeAccessSuccess"
