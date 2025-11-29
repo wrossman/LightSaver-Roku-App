@@ -22,6 +22,7 @@ sub Main()
     m.global.AddField("backgroundUri", "string", true)
     m.global.AddField("loaded", "string", true)
     m.global.AddField("background", "string", true)
+    m.global.AddField("lightroomUpdateKey", "string", true)
 
     m.global.AddField("filenameCounter", "int", true)
     m.global.AddField("imageCount", "int", true)

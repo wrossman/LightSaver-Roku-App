@@ -18,6 +18,14 @@ sub init()
     m.picTimer = m.top.findNode("picTimer")
     m.picTimer.duration = m.global.picDisplayTime
 
+    m.keyList = []
+    for each item in m.global.resourceLinks
+        m.keyList.Push(item)
+    end for
+    m.global.keyList = m.keyList
+
+    m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
+
     m.getNextImageTask = m.top.findNode("GetNextImageTask")
     m.getNextBackgroundTask = m.top.findNode("GetNextBackgroundTask")
 
@@ -27,13 +35,6 @@ sub init()
     else
         m.backgroundImg.opacity = 1.0
     end if
-
-    m.keyList = []
-    for each item in m.global.resourceLinks
-        m.keyList.Push(item)
-    end for
-
-    m.global.keyList = m.keyList
 
     m.currWallpaper = m.top.findNode("currWallpaper")
 
@@ -48,6 +49,8 @@ sub init()
     m.video.control = "play"
 
     m.video.observeField("state", "onVideoState")
+
+    m.pollLightroomUpdateTask = m.top.findNode("PollLightroomUpdateTask")
 
     m.initialGetResourceTask = m.top.findNode("InitialGetResourceTask")
     m.initialGetResourceTask.observeField("result", "getLinksFromRegistry")
@@ -64,9 +67,26 @@ sub getLinksFromRegistry()
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppError"
+    else if m.initialGetResourceTask.result = "update"
+        m.progressDialog.message = "Retrieving new images from Lightroom Album"
+        m.pollLightroomUpdateTask.observeField("result", "checkLightroomUpdate")
+        m.pollLightroomUpdateTask.control = "run"
+        return
     end if
 
-    m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
+    m.getLinksFromRegistry.observeField("result", "checkUriTask")
+    m.getLinksFromRegistry.control = "run"
+end sub
+
+sub checkLightroomUpdate()
+    m.pollLightroomUpdateTask.unobserveField("result")
+
+    m.keyList = []
+    for each item in m.global.resourceLinks
+        m.keyList.Push(item)
+    end for
+    m.global.keyList = m.keyList
+
     m.getLinksFromRegistry.observeField("result", "checkUriTask")
     m.getLinksFromRegistry.control = "run"
 end sub

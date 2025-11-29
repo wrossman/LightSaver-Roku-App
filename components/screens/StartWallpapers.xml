@@ -11,6 +11,7 @@
         <Rectangle id="fadeRect" opacity="100" color="0xFFFFFF" />
         <Timer id="picTimer" />
         <InitialGetResource id="InitialGetResourceTask" />
+        <PollLightroomUpdate id="PollLightroomUpdateTask" />
         <GetNextImage id="GetNextImageTask" />
         <GetNextBackground id="GetNextBackgroundTask" />
         <GetLinksFromRegistry id="GetLinksFromRegistryTask" />
