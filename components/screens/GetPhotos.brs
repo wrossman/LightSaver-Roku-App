@@ -36,6 +36,14 @@ sub startGetResource()
 
     m.pollLightSaverWebAppTask.unobserveField("result")
 
+    if m.pollLightSaverWebAppTask.result = "expired"
+        print "Recieved expired"
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = ""
+        m.global.currScreen = "GetPhotos"
+    end if
+
     m.getResourcePackageTask.observeField("result", "finishGetPhotosFlow")
     m.getResourcePackageTask.control = "run"
 

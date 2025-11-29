@@ -33,7 +33,9 @@ sub firstLaunch()
 end sub
 
 sub launchScreen()
-    m.screen = CreateObject("roSGNode", m.global.currScreen)
-    m.top.appendChild(m.screen)
-    m.screen.setFocus(true)
+    if m.global.currScreen <> ""
+        m.screen = CreateObject("roSGNode", m.global.currScreen)
+        m.top.appendChild(m.screen)
+        m.screen.setFocus(true)
+    end if
 end sub

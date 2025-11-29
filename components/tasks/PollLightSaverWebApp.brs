@@ -32,6 +32,11 @@ sub pollLightSaverWebApp()
             end if
         end if
 
+        if responseString = "Expired"
+            m.top.result = "expired"
+            return
+        end if
+
         Sleep(5000)
 
     end while
