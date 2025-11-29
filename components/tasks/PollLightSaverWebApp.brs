@@ -20,6 +20,9 @@ sub pollLightSaverWebApp()
     responseString = ""
 
     while responseString <> "Ready"
+
+        Sleep(5000)
+
         print "Polling Web App"
         ' needs to be updated to https once i get ssl set up
         post.AsyncPostFromString(jsonPostSessionBody)
@@ -36,8 +39,6 @@ sub pollLightSaverWebApp()
             m.top.result = "expired"
             return
         end if
-
-        Sleep(5000)
 
     end while
 
