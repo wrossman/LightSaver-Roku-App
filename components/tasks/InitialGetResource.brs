@@ -4,17 +4,9 @@ end sub
 
 sub initialGet()
 
-    ' this can be sent to a global variable so it doesnt run everytime
-    m.keyList = []
-
-    for each item in m.global.resourceLinks
-        m.keyList.Push(item)
-        exit for
-    end for
-
     m.currHeader = {
-        "Authorization": m.global.resourceLinks[m.keyList[0]],
-        "Location": m.keyList[0],
+        "Authorization": m.global.resourceLinks[m.global.keyList[0]],
+        "Location": m.global.keyList[0],
         "Device": m.global.clientId,
         "MaxScreenSize": m.global.maxScreenSize.ToStr()
     }

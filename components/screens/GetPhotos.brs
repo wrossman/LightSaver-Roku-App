@@ -81,7 +81,9 @@ sub finishGetPhotosFlow()
     m.settings.Write("imgLinks", linksStr)
     m.settings.Write("loaded", "true")
     m.settings.Flush()
+
     m.global.loaded = "true"
+
     menu = m.top.getParent()
     menu.removeChild(m.top)
     m.global.currScreen = "GetPhotosSuccess"

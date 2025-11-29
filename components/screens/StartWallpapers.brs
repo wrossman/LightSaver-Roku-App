@@ -19,6 +19,21 @@ sub init()
     m.picTimer.duration = m.global.picDisplayTime
 
     m.getNextImageTask = m.top.findNode("GetNextImageTask")
+    m.getNextBackgroundTask = m.top.findNode("GetNextBackgroundTask")
+
+    m.backgroundImg = m.top.findNode("backgroundImg")
+    if m.global.background = "false"
+        m.backgroundImg.opacity = 0.0
+    else
+        m.backgroundImg.opacity = 1.0
+    end if
+
+    m.keyList = []
+    for each item in m.global.resourceLinks
+        m.keyList.Push(item)
+    end for
+
+    m.global.keyList = m.keyList
 
     m.currWallpaper = m.top.findNode("currWallpaper")
 
@@ -87,11 +102,32 @@ end sub
 sub getNextImage()
     m.fadeOutAnimation.unobserveField("state")
     m.getNextImageTask.control = "run"
-    m.getNextImageTask.observeField("result", "getPoster")
+    if m.global.background = "false"
+        m.getNextImageTask.observeField("result", "getPoster")
+    else
+        m.getNextImageTask.observeField("result", "getNextBackground")
+    end if
+end sub
+
+sub getNextBackground()
+    m.getNextImageTask.unobserveField("result")
+
+    m.getNextBackgroundTask.observeField("result", "getPoster")
+    m.getNextBackgroundTask.control = "run"
+
 end sub
 
 sub getPoster()
-    m.getNextImageTask.unobserveField("result")
+
+    if m.global.background = "false"
+        m.getNextImageTask.unobserveField("result")
+    else
+        m.getNextBackgroundTask.unobserveField("result")
+        if m.getNextBackgroundTask.result <> "fail" and m.getNextBackgroundTask.result <> "401"
+            m.backgroundImg.uri = m.global.backgroundUri
+        end if
+    end if
+
 
     if m.getNextImageTask.result = "401"
         m.top.removeChild(m.progressDialog)

@@ -6,11 +6,13 @@
             visible="false"
             enableUI="false"
             loop="true" />
+        <Poster id="backgroundImg" loadDisplayMode="scaleToFit" />
         <Poster id="currWallpaper" loadDisplayMode="scaleToFit" />
         <Rectangle id="fadeRect" opacity="100" color="0xFFFFFF" />
         <Timer id="picTimer" />
         <InitialGetResource id="InitialGetResourceTask" />
         <GetNextImage id="GetNextImageTask" />
+        <GetNextBackground id="GetNextBackgroundTask" />
         <GetLinksFromRegistry id="GetLinksFromRegistryTask" />
         <RemoveTempFiles id="RemoveTempFilesTask" />
         <Animation

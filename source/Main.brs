@@ -8,6 +8,8 @@ sub Main()
     m.global = screen.getGlobalNode()
     m.global.AddField("deviceSize", "assocarray", true)
     m.global.AddField("resourceLinks", "assocarray", true)
+
+    m.global.AddField("keyList", "array", true)
     m.global.AddField("imageUriArr", "array", true)
 
     m.global.AddField("sessionCode", "string", true)
@@ -17,6 +19,7 @@ sub Main()
     m.global.AddField("certificates", "string", true)
     m.global.AddField("clientId", "string", true)
     m.global.AddField("imageUri", "string", true)
+    m.global.AddField("backgroundUri", "string", true)
     m.global.AddField("loaded", "string", true)
     m.global.AddField("background", "string", true)
 

@@ -1,30 +1,30 @@
 sub init()
 
-    m.top.functionName = "getNextImage"
+    m.top.functionName = "GetNextBackground"
 
 end sub
 
-sub getNextImage()
+sub GetNextBackground()
 
-    print "Running Get Next Image"
+    print "Running Get Next Background"
     fs = CreateObject("roFileSystem")
-    fs.Delete(m.global.imageUri)
+    fs.Delete(m.global.backgroundUri)
 
-    m.global.imgIndex++
-
-    if m.global.imgIndex >= m.global.keyList.Count()
-        m.global.imgIndex = 0
-    end if
+    ' if m.global.imgIndex >= m.global.keyList.Count()
+    '     m.global.imgIndex = 0
+    ' end if
 
     m.currHeader = {
         "Authorization": m.global.resourceLinks[m.global.keyList[m.global.imgIndex]],
         "Location": m.global.keyList[m.global.imgIndex],
         "Device": m.global.clientId,
+        "Height": m.global.deviceSize["h"].ToStr(),
+        "Width": m.global.deviceSize["w"].ToStr()
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
     m.imageHttp.SetHeaders(m.currHeader)
-    m.imageHttp.SetUrl("http://10.0.0.15:8080/roku/get-resource")
+    m.imageHttp.SetUrl("http://10.0.0.15:8080/roku/background")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToFile("tmp:/" + m.global.filenameCounter.ToStr())
@@ -61,19 +61,17 @@ sub getNextImage()
         return
     end if
 
-    m.finalImgName = "tmp:/img" + m.global.filenameCounter.ToStr() + "." + m.cleanType
+    m.finalImgName = "tmp:/background" + m.global.filenameCounter.ToStr() + "." + m.cleanType
 
     success = fs.CopyFile("tmp:/" + m.global.filenameCounter.ToStr(), m.finalImgName)
     fs.Delete("tmp:/" + m.global.filenameCounter.ToStr())
 
-    m.global.filenameCounter++
-
     if success
-        m.global.imageUri = m.finalImgName
+        m.global.backgroundUri = m.finalImgName
         m.top.result = m.finalImgName
     else
-        print "failed to rename the img file"
+        print "failed to rename the background file"
     end if
 
-    print "Finish get next image"
+    print "Finish get next background"
 end sub
