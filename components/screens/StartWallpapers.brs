@@ -67,6 +67,13 @@ sub getLinksFromRegistry()
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppError"
+    else if m.initialGetResourceTask.result = "overflow"
+        m.global.maxImages = m.initialGetResourceTask.maxImages
+        m.top.removeChild(m.progressDialog)
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "LightroomAlbumOverflow"
+        return
     else if m.initialGetResourceTask.result = "update"
         m.progressDialog.message = "Retrieving new images from Lightroom Album"
         m.pollLightroomUpdateTask.observeField("result", "checkLightroomUpdate")

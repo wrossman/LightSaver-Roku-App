@@ -75,6 +75,12 @@ sub finishGetPhotosFlow()
 
     m.getResourcePackageTask.unobserveField("result")
 
+    if m.getResourcePackageTask.result = "fail"
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "GetPhotosSuccess"
+    end if
+
     linksStr = FormatJson(m.global.resourceLinks)
 
     m.settings = CreateObject("roRegistrySection", "Config")

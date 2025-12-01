@@ -33,6 +33,10 @@ sub getResourcePackage()
             print link
             print linksJson[link]
         end for
+    else
+        m.top.result = "fail"
+        print "failed to get resource package"
+        return
     end if
 
     m.global.resourceLinks = linksJson

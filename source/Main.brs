@@ -24,6 +24,7 @@ sub Main()
     m.global.AddField("background", "string", true)
     m.global.AddField("lightroomUpdateKey", "string", true)
 
+    m.global.AddField("maxImages", "int", true)
     m.global.AddField("filenameCounter", "int", true)
     m.global.AddField("imageCount", "int", true)
     m.global.AddField("imgIndex", "int", true)

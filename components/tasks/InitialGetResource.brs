@@ -35,6 +35,16 @@ sub initialGet()
         return
     else
         print "body was not empty"
+
+        parsedBody = ParseJson(m.body)
+
+        if parsedBody <> invalid
+            print "overflow key from body was parsed"
+            m.top.maxImages = parsedBody["maxImages"]
+            m.top.result = "overflow"
+            return
+        end if
+
         m.top.result = "update"
         m.global.lightroomUpdateKey = m.body
         return
