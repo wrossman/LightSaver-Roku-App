@@ -13,7 +13,7 @@ sub getSessionCode()
     serialJson = FormatJson(serialArr)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/roku/code")
+    post.SetUrl("http://10.0.0.15:8080/link/code")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
     post.AsyncPostFromString(serialJson)
@@ -27,8 +27,11 @@ sub getSessionCode()
         m.top.result = "fail"
         'Retry for a little bit and then display that the server is down
     else
-        sessionCode = sessionCodeJson.RokuSessionCode
+        print postResponse
+        sessionCode = sessionCodeJson.LinkSessionCode
+        linkSessionId = sessionCodeJson.LinkSessionId
         m.global.sessionCode = sessionCode
+        m.global.linkSessionId = linkSessionId
         print "finished getting session code"
         m.top.result = "done"
     end if

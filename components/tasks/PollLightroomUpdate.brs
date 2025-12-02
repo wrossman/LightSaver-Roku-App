@@ -14,7 +14,7 @@ sub pollLightroomUpdate()
     jsonPostBody = FormatJson(postBody)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/roku/update")
+    post.SetUrl("http://10.0.0.15:8080/link/update")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
     responseString = "Media is not ready to be transfered."

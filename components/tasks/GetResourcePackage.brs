@@ -7,14 +7,15 @@ sub getResourcePackage()
     print "Retrieving resource package"
 
     sessionCodeIdJson = {
-        "RokuSessionCode": m.global.sessionCode
+        "SessionId": m.global.linkSessionId,
+        "SessionCode": m.global.sessionCode
         "RokuId": m.global.clientId
     }
 
     postPayload = FormatJson(sessionCodeIdJson)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/roku/resource-package")
+    post.SetUrl("http://10.0.0.15:8080/link/resource-package")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
     post.AsyncPostFromString(postPayload)

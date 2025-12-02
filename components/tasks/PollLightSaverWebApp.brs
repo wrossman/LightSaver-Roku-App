@@ -7,6 +7,7 @@ sub pollLightSaverWebApp()
     print "Start Polling LightSaver Web App"
 
     sessionCodeArr = {
+        "SessionId": m.global.linkSessionId,
         "SessionCode": m.global.sessionCode,
         "RokuId": m.global.clientId
     }
@@ -14,7 +15,7 @@ sub pollLightSaverWebApp()
     jsonPostSessionBody = FormatJson(sessionCodeArr)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/roku/reception")
+    post.SetUrl("http://10.0.0.15:8080/link/reception")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
     responseString = ""

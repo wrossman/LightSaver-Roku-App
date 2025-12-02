@@ -23,6 +23,7 @@ sub Main()
     m.global.AddField("loaded", "string", true)
     m.global.AddField("background", "string", true)
     m.global.AddField("lightroomUpdateKey", "string", true)
+    m.global.AddField("linkSessionId", "string", true)
 
     m.global.AddField("maxImages", "int", true)
     m.global.AddField("filenameCounter", "int", true)

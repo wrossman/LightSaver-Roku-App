@@ -16,7 +16,7 @@ sub revokeAccess()
     m.revokeTransfer = CreateObject("roUrlTransfer")
     m.revokeTransferPort = CreateObject("roMessagePort")
 
-    m.revokeTransfer.SetUrl("http://10.0.0.15:8080/roku/revoke")
+    m.revokeTransfer.SetUrl("http://10.0.0.15:8080/link/revoke")
     m.revokeTransfer.AddHeader("Content-Type", "application/json")
     m.revokeTransfer.SetPort(m.revokeTransferPort)
     response = m.revokeTransfer.PostFromString(m.payloadJson)

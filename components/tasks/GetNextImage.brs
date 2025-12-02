@@ -18,13 +18,13 @@ sub getNextImage()
 
     m.currHeader = {
         "Authorization": m.global.resourceLinks[m.global.keyList[m.global.imgIndex]],
-        "Location": m.global.keyList[m.global.imgIndex],
+        "ResourceId": m.global.keyList[m.global.imgIndex],
         "Device": m.global.clientId,
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
     m.imageHttp.SetHeaders(m.currHeader)
-    m.imageHttp.SetUrl("http://10.0.0.15:8080/roku/get-resource")
+    m.imageHttp.SetUrl("http://10.0.0.15:8080/link/get-resource")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToFile("tmp:/" + m.global.filenameCounter.ToStr())

@@ -16,7 +16,7 @@ sub GetNextBackground()
 
     m.currHeader = {
         "Authorization": m.global.resourceLinks[m.global.keyList[m.global.imgIndex]],
-        "Location": m.global.keyList[m.global.imgIndex],
+        "ResourceId": m.global.keyList[m.global.imgIndex],
         "Device": m.global.clientId,
         "Height": m.global.deviceSize["h"].ToStr(),
         "Width": m.global.deviceSize["w"].ToStr()
@@ -24,7 +24,7 @@ sub GetNextBackground()
 
     m.imageHttp = CreateObject("roUrlTransfer")
     m.imageHttp.SetHeaders(m.currHeader)
-    m.imageHttp.SetUrl("http://10.0.0.15:8080/roku/background")
+    m.imageHttp.SetUrl("http://10.0.0.15:8080/link/background")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToFile("tmp:/" + m.global.filenameCounter.ToStr())

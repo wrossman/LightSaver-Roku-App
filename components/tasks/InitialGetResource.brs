@@ -7,14 +7,14 @@ sub initialGet()
 
     m.currHeader = {
         "Authorization": m.global.resourceLinks[m.global.keyList[0]],
-        "Location": m.global.keyList[0],
+        "ResourceId": m.global.keyList[0],
         "Device": m.global.clientId,
         "MaxScreenSize": m.global.maxScreenSize.ToStr()
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
     m.imageHttp.SetHeaders(m.currHeader)
-    m.imageHttp.SetUrl("http://10.0.0.15:8080/roku/initial")
+    m.imageHttp.SetUrl("http://10.0.0.15:8080/link/initial")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToString()
