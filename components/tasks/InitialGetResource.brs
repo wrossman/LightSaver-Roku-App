@@ -33,47 +33,31 @@ sub initialGet()
         print "body was empty"
         m.top.result = "empty"
         return
-    else if m.body.StartsWith("overflow")
-        print "overflow value from body was parsed"
-        maxImages = m.body.Mid(10)
-        m.top.maxImages = maxImages
-        m.top.result = "overflow"
-        return
     else
         print "body was not empty"
 
         parsedBody = ParseJson(m.body)
+
+        if parsedBody = invalid
+            return
+        end if
+
+        for each item in parsedBody
+            print item
+            if item = "maxImages"
+                print "overflow value from body was parsed"
+                maxImages = parsedBody["maxImages"]
+                m.top.maxImages = maxImages
+                m.top.result = "overflow"
+                return
+            end if
+        end for
+
         m.top.result = "update"
         m.global.lightroomUpdateKey = parsedBody["sessionKey"]
         m.global.lightroomUpdateId = parsedBody["sessionId"]
+
         return
     end if
-
-    ' print "current links"
-    ' for each item in m.global.resourceLinks
-    '     print item
-    ' end for
-
-    ' m.bodyJson = ParseJson(m.body)
-
-    ' print "Links from response"
-    ' for each item in m.bodyJson
-    '     print item
-    ' end for
-
-    ' m.global.resourceLinks = m.bodyJson
-
-    ' print "new links"
-    ' for each item in m.global.resourceLinks
-    '     print item
-    ' end for
-
-    ' m.registry = CreateObject("roRegistrySection", "Config")
-    ' m.registry.Write("imgLinks", FormatJson(m.bodyJson))
-    ' m.registry.Write("loaded", "true")
-    ' m.registry.Flush()
-
-    ' m.top.result = "done"
-
 end sub
 
