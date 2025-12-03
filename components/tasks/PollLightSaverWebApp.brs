@@ -4,7 +4,10 @@ end sub
 
 sub pollLightSaverWebApp()
 
-    print "Start Polling LightSaver Web App"
+    if m.global.linkSessionId = invalid or m.global.sessionCode = invalid
+        m.top.result = "fail"
+        return
+    end if
 
     sessionCodeArr = {
         "SessionId": m.global.linkSessionId,
@@ -18,23 +21,29 @@ sub pollLightSaverWebApp()
     post.SetUrl(m.global.webappUrl + "/link/reception")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
-    responseString = ""
+    post.AsyncPostFromString(jsonPostSessionBody)
+    responseEvent = Wait(5000, postPort)
+
+    if responseEvent = invalid
+        m.top.result = "fail"
+        return
+    end if
+
+    responseString = responseEvent.GetString()
 
     while responseString <> "Ready"
 
         Sleep(5000)
 
-        print "Polling Web App"
-        ' needs to be updated to https once i get ssl set up
         post.AsyncPostFromString(jsonPostSessionBody)
         responseEvent = Wait(5000, postPort)
 
-        if responseEvent <> invalid
-            if responseEvent.GetString() <> ""
-                responseString = responseEvent.GetString()
-                print responseEvent.GetString()
-            end if
+        if responseEvent = invalid
+            m.top.result = "fail"
+            return
         end if
+
+        responseString = responseEvent.GetString()
 
         if responseString = "Expired"
             m.top.result = "expired"
@@ -43,8 +52,6 @@ sub pollLightSaverWebApp()
 
     end while
 
-    print "Roku Ready to receive photos."
-
-    m.top.result = "done"
+    m.top.result = "success"
 
 end sub

@@ -4,7 +4,10 @@ end sub
 
 sub getResourcePackage()
 
-    print "Retrieving resource package"
+    if m.global.linkSessionId = invalid or m.global.sessionCode = invalid
+        m.top.result = "fail"
+        return
+    end if
 
     sessionCodeIdJson = {
         "SessionId": m.global.linkSessionId,
@@ -21,28 +24,31 @@ sub getResourcePackage()
     post.AsyncPostFromString(postPayload)
     responseEvent = Wait(5000, postPort)
 
-    if responseEvent <> invalid
-        linksJsonString = responseEvent.GetString()
-    end if
-
-    if linksJsonString <> invalid
-        linksJson = ParseJson(linksJsonString)
-    end if
-
-    if linksJson <> invalid
-        for each link in linksJson
-            print link
-            print linksJson[link]
-        end for
-    else
+    if responseEvent = invalid
         m.top.result = "fail"
-        print "failed to get resource package"
+        return
+    end if
+
+    linksJsonString = responseEvent.GetString()
+
+    if linksJsonString = invalid
+        m.top.result = "fail"
+        return
+    end if
+
+    linksJson = ParseJson(linksJsonString)
+
+    if linksJson = invalid
+        m.top.result = "fail"
+        return
+    end if
+
+    if linksJson.Count() < 1
+        m.top.result = "fail"
         return
     end if
 
     m.global.resourceLinks = linksJson
-    m.top.result = "done"
 
-    print "Finished Retrieving Resource Package"
-
+    m.top.result = "success"
 end sub
