@@ -4,12 +4,11 @@ end sub
 
 sub getSessionCode()
 
-    print "in getSessionCode"
-
     serialArr = {
         "RokuId": m.global.clientId,
         "MaxScreenSize": m.global.maxScreenSize
     }
+
     serialJson = FormatJson(serialArr)
 
     post = CreateObject("roUrlTransfer")
@@ -19,21 +18,33 @@ sub getSessionCode()
     post.AsyncPostFromString(serialJson)
     postEvent = Wait(5000, postPort)
 
+    if postEvent = invalid
+        m.top.result = "fail"
+        return
+    end if
+
     postResponse = postEvent.GetString()
+
+    if postResponse = invalid
+        m.top.result = "fail"
+        return
+    end if
+
     sessionCodeJson = ParseJson(postResponse)
 
     if sessionCodeJson = invalid
-        print "Unable to retrieve session code"
         m.top.result = "fail"
-        'Retry for a little bit and then display that the server is down
-    else
-        print postResponse
-        sessionCode = sessionCodeJson.LinkSessionCode
-        linkSessionId = sessionCodeJson.LinkSessionId
-        m.global.sessionCode = sessionCode
-        m.global.linkSessionId = linkSessionId
-        print "finished getting session code"
-        m.top.result = "done"
+        return
     end if
+
+    if sessionCodeJson.LinkSessionCode = invalid or sessionCodeJson.linkSessionId = invalid
+        m.top.result = "fail"
+        return
+    end if
+
+    m.global.sessionCode = sessionCodeJson.LinkSessionCode
+    m.global.linkSessionId = sessionCodeJson.LinkSessionId
+
+    m.top.result = "success"
 
 end sub
