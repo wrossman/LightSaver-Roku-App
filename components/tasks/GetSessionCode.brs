@@ -13,7 +13,7 @@ sub getSessionCode()
     serialJson = FormatJson(serialArr)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/link/code")
+    post.SetUrl(m.global.webappUrl + "/link/code")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
     post.AsyncPostFromString(serialJson)

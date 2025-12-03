@@ -41,11 +41,11 @@ sub init()
     m.posterStage = CreateObject("roSGNode", "Poster")
     m.posterStage.loadDisplayMode = "scaleToFit"
 
-    m.videocontent = createObject("RoSGNode", "ContentNode")
-    m.videocontent.streamformat = "mp4"
-    m.videocontent.url = "pkg:/images/blank_5min.mp4"
+    m.videoContent = createObject("RoSGNode", "ContentNode")
+    m.videoContent.streamFormat = "mp4"
+    m.videoContent.url = "pkg:/images/blank_5min.mp4"
     m.video = m.top.findNode("bgVideo")
-    m.video.content = m.videocontent
+    m.video.content = m.videoContent
     m.video.control = "play"
 
     m.video.observeField("state", "onVideoState")
@@ -56,17 +56,17 @@ sub init()
     m.initialGetResourceTask.observeField("result", "getLinksFromRegistry")
     m.initialGetResourceTask.control = "run"
 
-    print "end start wallpapers init"
 end sub
 
 sub getLinksFromRegistry()
     m.initialGetResourceTask.unobserveField("result")
 
-    if m.initialGetResourceTask.result = "failed to connect"
+    if m.initialGetResourceTask.result = "fail"
         m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppError"
+        return
     else if m.initialGetResourceTask.result = "overflow"
         m.global.maxImages = m.initialGetResourceTask.maxImages
         m.top.removeChild(m.progressDialog)
@@ -88,6 +88,15 @@ end sub
 sub checkLightroomUpdate()
     m.pollLightroomUpdateTask.unobserveField("result")
 
+    if m.pollLightroomUpdateTask.result <> "success"
+        m.top.removeChild(m.progressDialog)
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "WebAppError"
+        return
+    end if
+
+    'update the key list now that we got new links from lightroom update
     m.keyList = []
     for each item in m.global.resourceLinks
         m.keyList.Push(item)
@@ -99,9 +108,7 @@ sub checkLightroomUpdate()
 end sub
 
 sub onVideoState()
-    print "in onvideostate"
     if m.video.state = "finished"
-        print "replaying video"
         m.video.control = "play"
     end if
 end sub
@@ -110,13 +117,11 @@ sub checkUriTask()
     m.getLinksFromRegistry.unobserveField("result")
     if m.getLinksFromRegistry.result = "success"
         getNextImage()
-    else
-        ' ADD FAILURE DIALOG
+    else if m.getLinksFromRegistry.result = "fail"
         m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "Menu"
-        print "Get URI Task Failed with result: "m.getLinksFromRegistry.result
+        m.global.currScreen = "WebAppKeyError"
     end if
 end sub
 
@@ -128,35 +133,20 @@ end sub
 
 sub getNextImage()
     m.fadeOutAnimation.unobserveField("state")
-    m.getNextImageTask.control = "run"
+
     if m.global.background = "false"
         m.getNextImageTask.observeField("result", "getPoster")
     else
         m.getNextImageTask.observeField("result", "getNextBackground")
     end if
+
+    m.getNextImageTask.control = "run"
 end sub
 
 sub getNextBackground()
     m.getNextImageTask.unobserveField("result")
 
-    m.getNextBackgroundTask.observeField("result", "getPoster")
-    m.getNextBackgroundTask.control = "run"
-
-end sub
-
-sub getPoster()
-
-    if m.global.background = "false"
-        m.getNextImageTask.unobserveField("result")
-    else
-        m.getNextBackgroundTask.unobserveField("result")
-        if m.getNextBackgroundTask.result <> "fail" and m.getNextBackgroundTask.result <> "401"
-            m.backgroundImg.uri = m.global.backgroundUri
-        end if
-    end if
-
-
-    if m.getNextImageTask.result = "401"
+    if m.getNextImageTask.result = "keyFail"
         m.top.removeChild(m.progressDialog)
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
@@ -168,7 +158,38 @@ sub getPoster()
         m.global.currScreen = "WebAppError"
     end if
 
-    print "setting posterstage uri to " + m.global.imageUri
+    m.getNextBackgroundTask.observeField("result", "getPoster")
+    m.getNextBackgroundTask.control = "run"
+
+end sub
+
+sub getPoster()
+
+    if m.global.background = "false"
+        m.getNextImageTask.unobserveField("result")
+
+        if m.getNextImageTask.result = "keyFail"
+            m.top.removeChild(m.progressDialog)
+            mainScene = m.top.getParent()
+            mainScene.removeChild(m.top)
+            m.global.currScreen = "WebAppKeyError"
+        else if m.getNextImageTask.result = "fail"
+            m.top.removeChild(m.progressDialog)
+            mainScene = m.top.getParent()
+            mainScene.removeChild(m.top)
+            m.global.currScreen = "WebAppError"
+        end if
+
+    else
+        m.getNextBackgroundTask.unobserveField("result")
+        if m.getNextBackgroundTask.result <> "fail" and m.getNextBackgroundTask.result <> "keyFail"
+            m.backgroundImg.uri = m.global.backgroundUri
+        else
+            'HOW SHOULD I HANDLE THIS?
+            print "FAILED TO LOAD BACKGROUND IMAGE"
+        end if
+    end if
+
     m.posterStage.uri = m.global.imageUri
 
     if m.posterStage.loadStatus = "loading"
@@ -211,7 +232,7 @@ sub onPosterLoaded()
         m.currWallpaper.height = m.global.deviceSize["h"]
         m.currWallpaper.translation = [0, 0]
     end if
-    print "setting currwallpaper uri to " + m.global.imageUri
+
     m.currWallpaper.uri = m.global.imageUri
 
     if m.currWallpaper.loadStatus = "loading"
@@ -246,6 +267,9 @@ function onKeyEvent(key as string, press as boolean) as boolean
         if m.global.imageCount > 1
             m.picTimer.control = "stop"
         end if
+
+        'stop polling task in case it is running
+        m.pollLightroomUpdateTask.state = "stop"
 
         m.global.filenameCounter++
         m.currWallpaper.uri = ""

@@ -4,7 +4,10 @@ end sub
 
 sub pollLightroomUpdate()
 
-    print "Start Polling lightroom update"
+    if m.global.lightroomUpdateId = invalid or m.global.lightroomUpdateKey = invalid
+        m.top.result = "fail"
+        return
+    end if
 
     postBody = {
         "Id": m.global.lightroomUpdateId,
@@ -15,54 +18,50 @@ sub pollLightroomUpdate()
     jsonPostBody = FormatJson(postBody)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/link/update")
+    post.SetUrl(m.global.webappUrl + "/link/update")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
-    responseString = "Media is not ready to be transferred."
+    post.AsyncPostFromString(jsonPostBody)
+    responseEvent = Wait(5000, postPort)
+
+    if responseEvent = invalid
+        m.top.result = "fail"
+        return
+    end if
+
+    responseString = responseEvent.GetString()
 
     while responseString = "Media is not ready to be transferred."
 
         Sleep(2000)
-
-        print "Polling Web App"
-        ' needs to be updated to https once i get ssl set up
         post.AsyncPostFromString(jsonPostBody)
         responseEvent = Wait(5000, postPort)
 
-        if responseEvent <> invalid
-            if responseEvent.GetString() <> ""
-                responseString = responseEvent.GetString()
-            end if
+        if responseEvent = invalid
+            m.top.result = "fail"
+            return
         end if
+
+        responseString = responseEvent.GetString()
 
         print "Response string in pollLightroomUpdate was: " + responseString
 
     end while
 
-    ' print "current links"
-    ' for each item in m.global.resourceLinks
-    '     print item
-    ' end for
-
     m.bodyJson = ParseJson(responseString)
 
-    ' print "Links from response"
-    ' for each item in m.bodyJson
-    '     print item
-    ' end for
+    if m.bodyJson = invalid or m.bodyJson.Count() < 1
+        m.top.result = "fail"
+        return
+    end if
 
     m.global.resourceLinks = m.bodyJson
-
-    print "new links in m.global.resourceLinks"
-    for each item in m.global.resourceLinks
-        print item
-    end for
 
     m.registry = CreateObject("roRegistrySection", "Config")
     m.registry.Write("imgLinks", FormatJson(m.bodyJson))
     m.registry.Write("loaded", "true")
     m.registry.Flush()
 
-    m.top.result = "done"
+    m.top.result = "success"
 
 end sub

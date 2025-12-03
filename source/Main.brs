@@ -12,6 +12,7 @@ sub Main()
     m.global.AddField("keyList", "array", true)
     m.global.AddField("imageUriArr", "array", true)
 
+    m.global.AddField("webappUrl", "string", true)
     m.global.AddField("sessionCode", "string", true)
     m.global.AddField("folderPath", "string", true)
     m.global.AddField("currScreen", "string", true)

@@ -1,17 +1,5 @@
 sub init()
-
-    m.global.filenameCounter = 0
-    m.global.imgIndex = 0
-    m.global.imageUri = ""
-    m.global.certificates = "common:/certs/ca-bundle.crt"
-    m.global.folderPath = "pkg:/images/wallpapers/"
-    m.global.backgroundColor = "#FFFFFF"
-
-    m.top.backgroundUri = ""
-    m.top.backgroundColor = m.global.backgroundColor
-
     getConfig()
-
 end sub
 
 sub getConfig()
@@ -21,6 +9,9 @@ sub getConfig()
 end sub
 
 sub firstLaunch()
+    m.top.backgroundUri = ""
+    m.top.backgroundColor = m.global.backgroundColor
+
     if m.global.loaded = "true"
         m.global.currScreen = "StartWallpapers"
     else

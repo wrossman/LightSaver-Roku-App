@@ -15,7 +15,7 @@ sub getResourcePackage()
     postPayload = FormatJson(sessionCodeIdJson)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/link/resource-package")
+    post.SetUrl(m.global.webappUrl + "/link/resource-package")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
     post.AsyncPostFromString(postPayload)

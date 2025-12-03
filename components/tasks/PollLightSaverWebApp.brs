@@ -15,7 +15,7 @@ sub pollLightSaverWebApp()
     jsonPostSessionBody = FormatJson(sessionCodeArr)
 
     post = CreateObject("roUrlTransfer")
-    post.SetUrl("http://10.0.0.15:8080/link/reception")
+    post.SetUrl(m.global.webappUrl + "/link/reception")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
     responseString = ""

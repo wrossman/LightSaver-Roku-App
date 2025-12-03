@@ -7,7 +7,6 @@ sub removeTempFiles()
     m.tempDir = m.fs.GetDirectoryListing("tmp:/")
     print "Removing temp files"
     for each item in m.tempDir
-        print item " deleted?"
-        print m.fs.Delete("tmp:/" + item)
+        print item " deleted: " + m.fs.Delete("tmp:/" + item).ToStr()
     end for
 end sub

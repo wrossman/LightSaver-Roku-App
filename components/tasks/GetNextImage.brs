@@ -1,16 +1,21 @@
 sub init()
-
     m.top.functionName = "getNextImage"
-
 end sub
 
 sub getNextImage()
 
-    print "Running Get Next Image"
     fs = CreateObject("roFileSystem")
     fs.Delete(m.global.imageUri)
 
     m.global.imgIndex++
+
+    if m.global.resourceLinks = invalid or m.global.keyList = invalid
+        m.top.result = "fail"
+        return
+    else if m.global.resourceLinks.Count() = 0 or m.global.keyList.Count() = 0
+        m.top.result = "fail"
+        return
+    end if
 
     if m.global.imgIndex >= m.global.keyList.Count()
         m.global.imgIndex = 0
@@ -24,23 +29,22 @@ sub getNextImage()
 
     m.imageHttp = CreateObject("roUrlTransfer")
     m.imageHttp.SetHeaders(m.currHeader)
-    m.imageHttp.SetUrl("http://10.0.0.15:8080/link/get-resource")
+    m.imageHttp.SetUrl(m.global.webappUrl + "/link/get-resource")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToFile("tmp:/" + m.global.filenameCounter.ToStr())
     m.imgResponse = Wait(5000, m.imgHttpPort)
 
-    ' handle if the keys did not work at the web app
+    if m.imgResponse = invalid
+        m.top.result = "fail"
+        return
+    end if
 
     m.responseCode = m.imgResponse.GetResponseCode()
 
-    if m.responseCode <> invalid
-        print "response code valid " + m.responseCode.ToStr()
-        if m.responseCode = 401
-            print "response code equals 401"
-            m.top.result = "401"
-            return
-        end if
+    if m.responseCode = 401
+        m.top.result = "keyFail"
+        return
     end if
 
     if m.responseCode <> 200
@@ -48,32 +52,27 @@ sub getNextImage()
         return
     end if
 
-    if m.imgResponse <> invalid
-        m.responseHeaders = m.imgResponse.GetResponseHeaders()
-        for each item in m.responseHeaders
-            if item = "content-type"
-                m.fileType = m.responseHeaders[item]
-                m.cleanType = Mid(m.fileType, Len("image/j"))
-            end if
-        end for
+    m.responseHeaders = m.imgResponse.GetResponseHeaders()
+
+    if m.responseHeaders.Lookup("content-type") <> invalid
+        m.fileType = m.responseHeaders["content-type"]
+        m.cleanType = "." + Mid(m.fileType, Len("image/j"))
+        if m.cleanType = "."
+            m.cleanType = ""
+        end if
+    else
+        m.cleanType = ""
+    end if
+
+    m.finalImgName = "tmp:/img" + m.global.filenameCounter.ToStr() + m.cleanType
+
+    if fs.CopyFile("tmp:/" + m.global.filenameCounter.ToStr(), m.finalImgName)
+        fs.Delete("tmp:/" + m.global.filenameCounter.ToStr())
+        m.global.filenameCounter++
+        m.global.imageUri = m.finalImgName
+        m.top.result = m.finalImgName
     else
         m.top.result = "fail"
         return
     end if
-
-    m.finalImgName = "tmp:/img" + m.global.filenameCounter.ToStr() + "." + m.cleanType
-
-    success = fs.CopyFile("tmp:/" + m.global.filenameCounter.ToStr(), m.finalImgName)
-    fs.Delete("tmp:/" + m.global.filenameCounter.ToStr())
-
-    m.global.filenameCounter++
-
-    if success
-        m.global.imageUri = m.finalImgName
-        m.top.result = m.finalImgName
-    else
-        print "failed to rename the img file"
-    end if
-
-    print "Finish get next image"
 end sub

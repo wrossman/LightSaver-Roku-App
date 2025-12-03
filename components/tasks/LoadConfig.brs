@@ -62,6 +62,14 @@ sub loadConfig()
 
     m.registry.Flush()
 
+    m.global.filenameCounter = 0
+    m.global.imgIndex = 0
+    m.global.imageUri = ""
+    m.global.certificates = "common:/certs/ca-bundle.crt"
+    m.global.folderPath = "pkg:/images/wallpapers/"
+    m.global.backgroundColor = "#FFFFFF"
+    m.global.webappUrl = "http://10.0.0.15:8080"
+
     print "Finished loading config"
 
     m.top.result = "done"
