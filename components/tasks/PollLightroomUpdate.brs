@@ -7,6 +7,7 @@ sub pollLightroomUpdate()
     print "Start Polling lightroom update"
 
     postBody = {
+        "Id": m.global.lightroomUpdateId,
         "Key": m.global.lightroomUpdateKey,
         "RokuId": m.global.clientId
     }
@@ -17,9 +18,9 @@ sub pollLightroomUpdate()
     post.SetUrl("http://10.0.0.15:8080/link/update")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)
-    responseString = "Media is not ready to be transfered."
+    responseString = "Media is not ready to be transferred."
 
-    while responseString = "Media is not ready to be transfered."
+    while responseString = "Media is not ready to be transferred."
 
         Sleep(2000)
 

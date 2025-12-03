@@ -33,20 +33,19 @@ sub initialGet()
         print "body was empty"
         m.top.result = "empty"
         return
+    else if m.body.StartsWith("overflow")
+        print "overflow value from body was parsed"
+        maxImages = m.body.Mid(10)
+        m.top.maxImages = maxImages
+        m.top.result = "overflow"
+        return
     else
         print "body was not empty"
 
         parsedBody = ParseJson(m.body)
-
-        if parsedBody <> invalid
-            print "overflow key from body was parsed"
-            m.top.maxImages = parsedBody["maxImages"]
-            m.top.result = "overflow"
-            return
-        end if
-
         m.top.result = "update"
-        m.global.lightroomUpdateKey = m.body
+        m.global.lightroomUpdateKey = parsedBody["sessionKey"]
+        m.global.lightroomUpdateId = parsedBody["sessionId"]
         return
     end if
 
