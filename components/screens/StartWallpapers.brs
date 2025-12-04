@@ -1,4 +1,5 @@
 sub init()
+    print m.global.picDisplayTime
     m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
     m.progressDialog.message = "Starting Wallpapers"
     m.top.appendChild(m.progressDialog)
@@ -43,7 +44,7 @@ sub init()
 
     m.videoContent = createObject("RoSGNode", "ContentNode")
     m.videoContent.streamFormat = "mp4"
-    m.videoContent.url = "pkg:/images/blank_5min.mp4"
+    m.videoContent.url = "pkg:/components/data/images/blank_5min.mp4"
     m.video = m.top.findNode("bgVideo")
     m.video.content = m.videoContent
     m.video.control = "play"

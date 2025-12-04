@@ -5,12 +5,12 @@ minor_version=1
 build_version=1
 
 # Channel Assets
-mm_icon_focus_hd=pkg:/images/port-break_540x405.png
-mm_icon_focus_sd=pkg:/images/port-break_290x218.png
+mm_icon_focus_hd=pkg:/components/data/images/port-break_540x405.png
+mm_icon_focus_sd=pkg:/components/data/images/port-break_290x218.png
 
 # Splash Screen + Loading Screen Artwork
-splash_screen_hd=pkg:/images/train-station_1280x720.jpg
-splash_screen_sd=pkg:/images/train-station_720x480.jpg
+splash_screen_hd=pkg:/components/data/images/train-station_1280x720.jpg
+splash_screen_sd=pkg:/components/data/images/train-station_720x480.jpg
 splash_color=#FFFFFF
 splash_min_time=0
 

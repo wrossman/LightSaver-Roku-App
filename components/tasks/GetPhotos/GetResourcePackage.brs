@@ -11,7 +11,7 @@ sub getResourcePackage()
 
     sessionCodeIdJson = {
         "SessionId": m.global.linkSessionId,
-        "SessionCode": m.global.sessionCode
+        "SessionCode": m.global.sessionCode,
         "RokuId": m.global.clientId
     }
 
