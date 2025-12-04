@@ -45,11 +45,12 @@ sub pollLightSaverWebApp()
 
         responseString = responseEvent.GetString()
 
+        print responseString
+
         if responseString = "Expired"
             m.top.result = "expired"
             return
         end if
-
     end while
 
     m.top.result = "success"

@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="GetPhotos" extends="Group">
     <children>
+        <Rectangle id="left" color="#FFFFFF" />
+        <Rectangle id="right" color="#001f3f" />
         <Label
             id="sessionCode"
             text=""
             horizAlign="center"
-            color="#000000"
+            color="#FFFFFF"
             opacity="0"
+        />
+        <Label
+            id="title"
+            text="LightSaver"
+            horizAlign="center"
+            color="#001f3f"
+        />
+        <Label
+            id="directions1"
+            text="1. SCAN THE QR CODE"
+            horizAlign="center"
+            color="#001f3f"
+        />
+        <Label
+            id="or"
+            text="or"
+            horizAlign="center"
+            color="#001f3f"
+        />
+        <Label
+            id="navigate"
+            text="NAVIGATE TO"
+            horizAlign="center"
+            color="#001f3f"
+        />
+        <Label
+            id="link"
+            text="https://lightsaver.app"
+            horizAlign="center"
+            color="#001f3f"
+        />
+        <Label
+            id="directions2"
+            text="2. Enter your Session Code"
+            horizAlign="center"
+            color="#001f3f"
         />
         <Animation
             id="fadeInAnimation"

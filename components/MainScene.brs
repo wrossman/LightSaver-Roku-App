@@ -1,5 +1,25 @@
 sub init()
     getConfig()
+
+    m.bluePalette = CreateObject("roSGNode", "RSGPalette")
+    m.bluePalette.colors = {
+        DialogBackgroundColor: "0xF0F0F0FF", ' inverted: dark navy → soft white
+        DialogItemColor: "0x001F3FFF", ' inverted: white → favorite blue
+        DialogTextColor: "0x001F3FFF", ' inverted: white → favorite blue
+
+        DialogFocusColor: "0x001A36FF", ' inverted: soft white → soft blue
+        DialogFocusItemColor: "0xFFFFFFFF", ' inverted: your blue → white
+
+        DialogSecondaryTextColor: "0x001F3FFF", ' inverted: white → favorite blue
+        DialogSecondaryItemColor: "0x001F3F66", ' inverted: semi white → semi blue
+
+        DialogInputFieldColor: "0x001A36FF", ' inverted: soft white → soft blue
+        DialogKeyboardColor: "0x001F3FFF", ' inverted: white → favorite blue
+        DialogFootprintColor: "0x001F3F80" ' inverted: semi white → semi blue
+    }
+
+    m.top.palette = m.bluePalette
+
 end sub
 
 sub getConfig()

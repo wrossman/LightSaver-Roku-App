@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="ChangeTime" extends="Group" initialFocus="pinpad">
     <children>
-        <Rectangle id="background" color="#000000" />
+        <Rectangle id="background" />
         <CustomPinPad id="pinpad" />
     </children>
     <script type="text/brightscript" uri="ChangeTime.brs" />

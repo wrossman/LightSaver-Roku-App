@@ -1,5 +1,6 @@
 sub init()
     m.background = m.top.findNode("background")
+    m.background.color = m.global.backgroundColor
     m.background.width = m.global.deviceSize["w"]
     m.background.height = m.global.deviceSize["h"]
 

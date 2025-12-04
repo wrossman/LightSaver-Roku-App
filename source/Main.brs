@@ -26,6 +26,7 @@ sub Main()
     m.global.AddField("lightroomUpdateKey", "string", true)
     m.global.AddField("lightroomUpdateId", "string", true)
     m.global.AddField("linkSessionId", "string", true)
+    m.global.AddField("fadeColor", "string", true)
 
     m.global.AddField("maxImages", "int", true)
     m.global.AddField("filenameCounter", "int", true)

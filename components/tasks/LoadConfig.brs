@@ -67,8 +67,9 @@ sub loadConfig()
     m.global.imageUri = ""
     m.global.certificates = "common:/certs/ca-bundle.crt"
     m.global.folderPath = "pkg:/images/wallpapers/"
-    m.global.backgroundColor = "#FFFFFF"
+    m.global.backgroundColor = "#001F3F"
     m.global.webappUrl = "http://10.0.0.15:8080"
+    m.global.fadeColor = "#FFFFFF"
 
     print "Finished loading config"
 

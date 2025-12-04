@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="DisplayTimeRangeError" extends="Group" initialFocus="error">
-    <children>
-        <Rectangle id="background" color="#000000" />
-        <StandardMessageDialog id="error" />
-    </children>
-    <script type="text/brightscript" uri="DisplayTimeRangeError.brs" />
-</component>

@@ -1,5 +1,5 @@
 sub init()
-    print m.global.picDisplayTime
+
     m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
     m.progressDialog.message = "Starting Wallpapers"
     m.top.appendChild(m.progressDialog)
@@ -11,7 +11,7 @@ sub init()
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
     m.fadeRect.width = m.global.deviceSize["w"]
-    m.fadeRect.color = m.global.backgroundColor
+    m.fadeRect.color = m.global.fadeColor
 
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
     m.fadeInAnimation = m.top.findNode("fadeInAnimation")
