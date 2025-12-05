@@ -11,7 +11,7 @@ sub init()
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
     m.fadeRect.width = m.global.deviceSize["w"]
-    m.fadeRect.color = m.global.fadeColor
+    m.fadeRect.color = m.global.backgroundColor
 
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
     m.fadeInAnimation = m.top.findNode("fadeInAnimation")
@@ -247,7 +247,6 @@ end sub
 sub animateIn()
     if m.firstFire
         m.top.removeChild(m.progressDialog)
-        m.firstFire = false
     end if
     m.currWallpaper.unobserveField("loadStatus")
     m.fadeInAnimation.control = "start"
@@ -256,6 +255,10 @@ end sub
 
 sub finishAnimateIn()
     m.fadeInAnimation.unobserveField("state")
+    if m.firstFire
+        m.fadeRect.color = m.global.fadeColor
+        m.firstFire = false
+    end if
     if m.global.imageCount > 1
         m.picTimer.observeField("fire", "onTimerFire")
         m.picTimer.control = "start"

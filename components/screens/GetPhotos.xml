@@ -18,7 +18,7 @@
         />
         <Label
             id="directions1"
-            text="1. SCAN THE QR CODE"
+            text="SCAN THE QR CODE"
             horizAlign="center"
             color="#001f3f"
         />
@@ -42,7 +42,7 @@
         />
         <Label
             id="directions2"
-            text="2. Enter your Session Code"
+            text="Enter your Session Code"
             horizAlign="center"
             color="#001f3f"
         />
