@@ -59,6 +59,10 @@ sub init()
     m.sessionCode.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 5]
     m.sessionCode.font.size = 80
 
+    m.qrCode = m.top.findNode("qrCode")
+    m.qrCode.width = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
+    m.qrCode.height = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
+    m.qrCode.translation = [m.global.deviceSize["w"] / 2 + m.global.deviceSize["w"] / 8, m.global.deviceSize["h"] / 5 + 100]
 
     m.getSessionCodeTask.observeField("result", "startSessionCheck")
     m.getSessionCodeTask.control = "run"

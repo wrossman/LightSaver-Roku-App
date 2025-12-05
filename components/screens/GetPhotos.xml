@@ -46,6 +46,7 @@
             horizAlign="center"
             color="#001f3f"
         />
+        <Poster id="qrCode" uri="pkg:/components/data/qr-code.png" />
         <Animation
             id="fadeInAnimation"
             repeat="false"
