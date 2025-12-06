@@ -28,6 +28,8 @@ sub getNextImage()
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
+    print m.imageHttp.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
+    m.imageHttp.InitClientCertificates()
     m.imageHttp.SetHeaders(m.currHeader)
     m.imageHttp.SetUrl(m.global.webappUrl + "/link/get-resource")
     m.imgHttpPort = CreateObject("roMessagePort")

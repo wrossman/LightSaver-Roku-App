@@ -18,6 +18,8 @@ sub pollLightSaverWebApp()
     jsonPostSessionBody = FormatJson(sessionCodeArr)
 
     post = CreateObject("roUrlTransfer")
+    print post.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
+    post.InitClientCertificates()
     post.SetUrl(m.global.webappUrl + "/link/reception")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)

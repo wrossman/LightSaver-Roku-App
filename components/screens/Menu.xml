@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="Menu" extends="Group">
     <children>
+        <Rectangle id="left" color="#FFFFFF" />
+        <Rectangle id="right" color="#001f3f" />
         <Label
-            id="titleLabel"
-            text="Menu"
+            id="title"
+            text="LightSaver"
             horizAlign="center"
-            color="#000000"
+            color="#001f3f"
         />
         <LabelList
             id="menuSelection"
-            itemSize="[500,100]"
             color="#000000"
             vertFocusAnimationStyle="floatingFocus"
-            drawFocusFeedback="false"
         >
             <ContentNode id="menuContent" role="content">
                 <ContentNode title="Start Wallpaper" />
