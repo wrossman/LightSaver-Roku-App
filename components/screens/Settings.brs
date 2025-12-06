@@ -1,15 +1,10 @@
 sub init()
 
     m.leftRect = m.top.findNode("left")
-    m.rightRect = m.top.findNode("right")
     m.title = m.top.findNode("title")
 
     m.leftRect.height = m.global.deviceSize["h"]
     m.leftRect.width = m.global.deviceSize["w"] / 2
-
-    m.rightRect.height = m.global.deviceSize["h"]
-    m.rightRect.width = m.global.deviceSize["w"] / 2
-    m.rightRect.translation = [m.global.deviceSize["w"] / 2, 0]
 
     m.title.width = m.global.deviceSize["w"] / 2
     m.title.font.uri = "pkg:/components/data/fonts/" + m.global.titleFont
@@ -52,12 +47,9 @@ sub onSettingsSelection()
         end if
 
     else if m.settingsSelection.itemSelected = 2
-        mainScene = m.top.getParent()
-        mainScene.removeChild(m.top)
-        m.global.currScreen = "GetPhotos"
-    else if m.settingsSelection.itemSelected = 3
-        mainScene = m.top.getParent()
-        mainScene.removeChild(m.top)
+        menu = m.top.getParent()
+        mainScene = menu.getParent()
+        mainScene.removeChild(menu)
         m.global.currScreen = "RevokeAccessSuccess"
     end if
 
@@ -67,7 +59,8 @@ function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "Menu"
+        menuSelection = menu.findNode("menuSelection")
+        menuSelection.setFocus(true)
         return true
     end if
     return false

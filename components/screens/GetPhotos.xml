@@ -2,7 +2,7 @@
 <component name="GetPhotos" extends="Group">
     <children>
         <Rectangle id="left" color="#FFFFFF" />
-        <Rectangle id="right" color="#001f3f" />
+        <Rectangle id="right" color="#001C30" />
         <Label
             id="sessionCode"
             text=""
@@ -14,39 +14,52 @@
             id="title"
             text="LightSaver"
             horizAlign="center"
-            color="#001f3f"
+            color="#001C30"
         />
         <Label
             id="directions1"
             text="SCAN THE QR CODE"
             horizAlign="center"
-            color="#001f3f"
+            color="#001C30"
         />
         <Label
             id="or"
             text="or"
             horizAlign="center"
-            color="#001f3f"
+            color="#001C30"
         />
         <Label
             id="navigate"
             text="NAVIGATE TO"
             horizAlign="center"
-            color="#001f3f"
+            color="#001C30"
         />
         <Label
             id="link"
             text="https://lightsaver.app"
             horizAlign="center"
-            color="#001f3f"
+            color="#001C30"
         />
         <Label
             id="directions2"
             text="Enter your Session Code"
             horizAlign="center"
-            color="#001f3f"
+            color="#001C30"
         />
         <Poster id="qrCode" uri="pkg:/components/data/qr-code.png" />
+        <Rectangle id="fadeRect" opacity="0" color="0xFFFFFF" />
+        <Animation
+            id="screenFadeInAnimation"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="1.5">
+            <FloatFieldInterpolator
+                id="screenAnimateOutInterp"
+                key="[0.0,1.0]"
+                KeyValue="[1.0,0.0]"
+                fieldToInterp="fadeRect.opacity"
+            />
+        </Animation>
         <Animation
             id="fadeInAnimation"
             repeat="false"

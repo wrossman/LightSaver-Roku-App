@@ -23,9 +23,11 @@ function keySelected(key as string) as boolean
         m.registry.Flush()
 
         changeTime = m.top.getParent()
-        mainScene = changeTime.getParent()
-        mainScene.removeChild(changeTime)
-        m.global.currScreen = "Settings"
+
+        settings = changeTime.getParent()
+        settings.removeChild(changeTime)
+        settingsSelection = settings.findNode("settingsSelection")
+        settingsSelection.setFocus(true)
         return true ' key selection is handled, return true
     end if
     ' if not handled, return false to use default DynamicCustomKeyboard keySelected handlers

@@ -58,10 +58,29 @@ sub init()
 
     m.pollLightroomUpdateTask = m.top.findNode("PollLightroomUpdateTask")
 
+    if m.global.firstLaunch = "true"
+        print "in first launch true"
+        m.startFadeRect = m.top.findNode("startFadeRect")
+        m.startFadeRect.opacity = 100
+        m.startFadeRect.width = m.global.deviceSize["w"]
+        m.startFadeRect.height = m.global.deviceSize["h"]
+        m.screenFadeInAnimation = m.top.findNode("screenFadeInAnimation")
+        m.screenFadeInAnimation.control = "start"
+        m.screenFadeInAnimation.observeField("state", "startGetLinksFromRegistry")
+    else if m.global.firstLaunch = "false"
+        m.initialGetResourceTask = m.top.findNode("InitialGetResourceTask")
+        m.initialGetResourceTask.observeField("result", "getLinksFromRegistry")
+        m.initialGetResourceTask.control = "run"
+    end if
+
+end sub
+
+sub startGetLinksFromRegistry()
+    m.screenFadeInAnimation.unobserveField("state")
+    m.global.firstLaunch = "false"
     m.initialGetResourceTask = m.top.findNode("InitialGetResourceTask")
     m.initialGetResourceTask.observeField("result", "getLinksFromRegistry")
     m.initialGetResourceTask.control = "run"
-
 end sub
 
 sub getLinksFromRegistry()

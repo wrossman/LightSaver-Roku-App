@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="ChangeTime" extends="Group" initialFocus="pinpad">
     <children>
+        <Rectangle id="right" color="#001C30" />
         <Label
             id="enterTime"
             text="Enter Time in Seconds"

@@ -29,6 +29,7 @@ sub Main()
     m.global.AddField("fadeColor", "string", true)
     m.global.AddField("titleFont", "string", true)
     m.global.AddField("baseFont", "string", true)
+    m.global.AddField("firstLaunch", "string", true)
 
     m.global.AddField("maxImages", "int", true)
     m.global.AddField("filenameCounter", "int", true)

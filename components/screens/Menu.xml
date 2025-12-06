@@ -2,12 +2,13 @@
 <component name="Menu" extends="Group">
     <children>
         <Rectangle id="left" color="#FFFFFF" />
-        <Rectangle id="right" color="#001f3f" />
+        <Rectangle id="right" color="#001C30" />
+        <MenuWallpapers id="menuWallpapers" />
         <Label
             id="title"
             text="LightSaver"
             horizAlign="center"
-            color="#001f3f"
+            color="#001C30"
         />
         <LabelList
             id="menuSelection"
@@ -16,6 +17,7 @@
         >
             <ContentNode id="menuContent" role="content">
                 <ContentNode title="Start Wallpaper" />
+                <ContentNode title="Select Images" />
                 <ContentNode title="Settings" />
             </ContentNode>
         </LabelList>

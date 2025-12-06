@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="MainScene" extends="Scene">
     <children>
+        <Rectangle id="fadeRect" opacity="0" color="0xFFFFFF" />
+        <Animation
+            id="fadeOutAnimation"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="0.5">
+            <FloatFieldInterpolator
+                id="animateOutInterp"
+                key="[0.0,1.0]"
+                KeyValue="[0.0,1.0]"
+                fieldToInterp="fadeRect.opacity"
+            />
+        </Animation>
         <LoadConfig id="LoadConfigTask" />
     </children>
     <interface>

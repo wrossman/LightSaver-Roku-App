@@ -1,9 +1,6 @@
 sub init()
 
-    m.solidBackground = m.top.findNode("solidBackground")
-    m.solidBackground.width = m.global.deviceSize["w"] / 2
-    m.solidBackground.height = m.global.deviceSize["h"]
-    m.solidBackground.opacity = 0
+    m.top.translation = [m.global.deviceSize["w"] / 2 + m.global.deviceSize["w"] / 12, 0]
 
     m.firstFire = true
 
@@ -19,7 +16,7 @@ sub init()
     m.fadeInAnimation = m.top.findNode("fadeInAnimation")
 
     m.picTimer = m.top.findNode("picTimer")
-    m.picTimer.duration = m.global.picDisplayTime
+    m.picTimer.duration = 2
 
     m.keyList = []
     for each item in m.global.resourceLinks
@@ -32,26 +29,10 @@ sub init()
     m.getNextImageTask = m.top.findNode("GetNextImageTask")
     m.getNextBackgroundTask = m.top.findNode("GetNextBackgroundTask")
 
-    m.backgroundImg = m.top.findNode("backgroundImg")
-    if m.global.background = "false"
-        m.backgroundImg.opacity = 0.0
-    else
-        m.backgroundImg.opacity = 1.0
-    end if
-
     m.currWallpaper = m.top.findNode("currWallpaper")
 
     m.posterStage = CreateObject("roSGNode", "Poster")
     m.posterStage.loadDisplayMode = "scaleToFit"
-
-    m.videoContent = createObject("RoSGNode", "ContentNode")
-    m.videoContent.streamFormat = "mp4"
-    m.videoContent.url = "pkg:/components/data/images/blank_5min.mp4"
-    m.video = m.top.findNode("bgVideo")
-    m.video.content = m.videoContent
-    m.video.control = "play"
-
-    m.video.observeField("state", "onVideoState")
 
     m.pollLightroomUpdateTask = m.top.findNode("PollLightroomUpdateTask")
 
@@ -106,12 +87,6 @@ sub checkLightroomUpdate()
     m.getLinksFromRegistry.control = "run"
 end sub
 
-sub onVideoState()
-    if m.video.state = "finished"
-        m.video.control = "play"
-    end if
-end sub
-
 sub checkUriTask()
     m.getLinksFromRegistry.unobserveField("result")
     if m.getLinksFromRegistry.result = "success"
@@ -161,27 +136,16 @@ end sub
 
 sub getPoster()
 
-    if m.global.background = "false"
-        m.getNextImageTask.unobserveField("result")
+    m.getNextImageTask.unobserveField("result")
 
-        if m.getNextImageTask.result = "keyFail"
-            mainScene = m.top.getParent()
-            mainScene.removeChild(m.top)
-            m.global.currScreen = "WebAppKeyError"
-        else if m.getNextImageTask.result = "fail"
-            mainScene = m.top.getParent()
-            mainScene.removeChild(m.top)
-            m.global.currScreen = "WebAppError"
-        end if
-
-    else
-        m.getNextBackgroundTask.unobserveField("result")
-        if m.getNextBackgroundTask.result <> "fail" and m.getNextBackgroundTask.result <> "keyFail"
-            m.backgroundImg.uri = m.global.backgroundUri
-        else
-            'HOW SHOULD I HANDLE THIS?
-            print "FAILED TO LOAD BACKGROUND IMAGE"
-        end if
+    if m.getNextImageTask.result = "keyFail"
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "WebAppKeyError"
+    else if m.getNextImageTask.result = "fail"
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "WebAppError"
     end if
 
     m.posterStage.uri = m.global.imageUri
@@ -204,11 +168,11 @@ sub onPosterLoaded()
         currPicHeight = m.posterStage.bitmapHeight
         currPicRatio = currPicWidth / currPicHeight
 
-        currDevRatio = m.global.deviceSize["w"] / 2 / m.global.deviceSize["h"]
+        currDevRatio = m.global.deviceSize["w"] / 3 / m.global.deviceSize["h"]
 
         if currPicRatio > currDevRatio
-            m.currWallpaper.width = m.global.deviceSize["w"] / 2
-            m.currWallpaper.height = m.global.deviceSize["w"] / 2 / currPicRatio
+            m.currWallpaper.width = m.global.deviceSize["w"] / 3
+            m.currWallpaper.height = m.global.deviceSize["w"] / 3 / currPicRatio
 
             moveDown = (m.global.deviceSize["h"] - m.currWallpaper.height) / 2
 
@@ -217,12 +181,12 @@ sub onPosterLoaded()
             m.currWallpaper.height = m.global.deviceSize["h"]
             m.currWallpaper.width = m.global.deviceSize["h"] * currPicRatio
 
-            moveRight = (m.global.deviceSize["w"] / 2 - m.currWallpaper.width) / 2
+            moveRight = (m.global.deviceSize["w"] / 3 - m.currWallpaper.width) / 2
 
             m.currWallpaper.translation = [moveRight, 0]
         end if
     else
-        m.currWallpaper.width = m.global.deviceSize["w"] / 2
+        m.currWallpaper.width = m.global.deviceSize["w"] / 3
         m.currWallpaper.height = m.global.deviceSize["h"]
         m.currWallpaper.translation = [0, 0]
     end if
@@ -238,9 +202,6 @@ sub onPosterLoaded()
 end sub
 
 sub animateIn()
-    if m.firstFire
-        m.solidBackground.opacity = 100
-    end if
     m.currWallpaper.unobserveField("loadStatus")
     m.fadeInAnimation.control = "start"
     m.fadeInAnimation.observeField("state", "finishAnimateIn")
@@ -257,29 +218,29 @@ sub finishAnimateIn()
     end if
 end sub
 
-function onKeyEvent(key as string, press as boolean) as boolean
-    if key = "back" and press = true
-        'remove all children of wallpapers then remove wallpaper from parent
-        if m.global.imageCount > 1
-            m.picTimer.control = "stop"
-        end if
+' function onKeyEvent(key as string, press as boolean) as boolean
+'     if key = "back" and press = true
+'         'remove all children of wallpapers then remove wallpaper from parent
+'         if m.global.imageCount > 1
+'             m.picTimer.control = "stop"
+'         end if
 
-        'stop polling task in case it is running
-        m.pollLightroomUpdateTask.state = "stop"
+'         'stop polling task in case it is running
+'         m.pollLightroomUpdateTask.state = "stop"
 
-        m.global.filenameCounter++
-        m.currWallpaper.uri = ""
-        m.posterStage.uri = ""
-        m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
-        m.removeTempFilesTask.control = "run"
+'         m.global.filenameCounter++
+'         m.currWallpaper.uri = ""
+'         m.posterStage.uri = ""
+'         m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
+'         m.removeTempFilesTask.control = "run"
 
-        while m.top.getChildCount() > 0
-            m.top.removeChild(m.top.getChild(0))
-        end while
-        menu = m.top.getParent()
-        menu.removeChild(m.top)
-        m.global.currScreen = "Menu"
-        return true
-    end if
-    return false
-end function
+'         while m.top.getChildCount() > 0
+'             m.top.removeChild(m.top.getChild(0))
+'         end while
+'         menu = m.top.getParent()
+'         menu.removeChild(m.top)
+'         m.global.currScreen = "Menu"
+'         return true
+'     end if
+'     return false
+' end function

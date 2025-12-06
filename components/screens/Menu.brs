@@ -33,7 +33,11 @@ sub onMenuSelection()
     else if m.menuSelection.itemSelected = 1
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
-        m.global.currScreen = "Settings"
+        m.global.currScreen = "GetPhotos"
+    else if m.menuSelection.itemSelected = 2
+        m.settings = CreateObject("roSGNode", "Settings")
+        m.top.appendChild(m.settings)
+        m.settings.setFocus(true)
     end if
 
 end sub

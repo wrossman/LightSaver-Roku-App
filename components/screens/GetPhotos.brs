@@ -63,12 +63,32 @@ sub init()
     m.qrCode.height = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
     m.qrCode.translation = [m.global.deviceSize["w"] / 2 + m.global.deviceSize["w"] / 8, m.global.deviceSize["h"] / 5 + 100]
 
-    m.getSessionCodeTask.observeField("result", "startSessionCheck")
-    m.getSessionCodeTask.control = "run"
+    if m.global.firstLaunch = "true"
+        print "in first launch true"
+        m.fadeRect = m.top.findNode("fadeRect")
+        m.fadeRect.opacity = 100
+        m.fadeRect.width = m.global.deviceSize["w"]
+        m.fadeRect.height = m.global.deviceSize["h"]
+        m.screenFadeInAnimation = m.top.findNode("screenFadeInAnimation")
+        m.screenFadeInAnimation.control = "start"
+        m.screenFadeInAnimation.observeField("state", "startGetSessionCodeTask")
+    else if m.global.firstLaunch = "false"
+        m.getSessionCodeTask.observeField("result", "startSessionCheck")
+        m.getSessionCodeTask.control = "run"
+    end if
 
 end sub
 
+sub startGetSessionCodeTask()
+    print "in start get session code task"
+    m.screenFadeInAnimation.unobserveField("state")
+    m.global.firstLaunch = "false"
+    m.getSessionCodeTask.observeField("result", "startSessionCheck")
+    m.getSessionCodeTask.control = "run"
+end sub
+
 sub startSessionCheck()
+    print "in start session check"
     m.getSessionCodeTask.unobserveField("result")
 
     if m.getSessionCodeTask.result = "fail"
@@ -157,7 +177,7 @@ function onKeyEvent(key as string, press as boolean) as boolean
 
         menu = m.top.getParent()
         menu.removeChild(m.top)
-        m.global.currScreen = "Settings"
+        m.global.currScreen = "Menu"
         return true
     end if
     return false
