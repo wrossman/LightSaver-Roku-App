@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component name="Settings" extends="Group">
     <children>
+        <Rectangle id="left" color="#FFFFFF" />
+        <Rectangle id="right" color="#001f3f" />
         <Label
-            id="settingsLabel"
-            text="Settings"
+            id="title"
+            text="LightSaver"
             horizAlign="center"
-            color="#000000"
+            color="#001f3f"
         />
         <LabelList
             id="settingsSelection"
-            itemSize="[500,100]"
             color="#000000"
-            vertFocusAnimationStyle="floatingFocus"
-            drawFocusFeedback="false">
+            vertFocusAnimationStyle="floatingFocus">
             <ContentNode id="settingsContent" role="content">
                 <ContentNode title="Change Picture Display Time" />
                 <ContentNode id="blurred" title="" />

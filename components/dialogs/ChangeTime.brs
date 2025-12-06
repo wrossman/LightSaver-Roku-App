@@ -1,11 +1,12 @@
 sub init()
-    m.background = m.top.findNode("background")
-    m.background.color = m.global.backgroundColor
-    m.background.width = m.global.deviceSize["w"]
-    m.background.height = m.global.deviceSize["h"]
+
+    m.enterTime = m.top.findNode("enterTime")
+    m.enterTime.font.size = 30
+    m.enterTime.width = m.global.deviceSize["w"] / 2
+    m.enterTime.translation = [m.global.deviceSize["w"] / 2, (m.global.deviceSize["h"] - 200) / 2 - 60]
 
     m.pinpad = m.top.findNode("pinpad")
-    selectionX = (m.global.deviceSize["w"] - 324) / 2
+    selectionX = m.global.deviceSize["w"] / 2 + (m.global.deviceSize["w"] / 2 - 324) / 2
     selectionY = (m.global.deviceSize["h"] - 200) / 2
     m.pinpad.translation = [selectionX, selectionY]
 

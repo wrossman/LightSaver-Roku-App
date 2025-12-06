@@ -19,7 +19,6 @@ sub pollLightroomUpdate()
 
     post = CreateObject("roUrlTransfer")
     print post.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
-    post.InitClientCertificates()
     post.SetUrl(m.global.webappUrl + "/link/update")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)

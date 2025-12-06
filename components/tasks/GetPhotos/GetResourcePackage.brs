@@ -19,7 +19,6 @@ sub getResourcePackage()
 
     post = CreateObject("roUrlTransfer")
     print post.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
-    post.InitClientCertificates()
     post.SetUrl(m.global.webappUrl + "/link/resource-package")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)

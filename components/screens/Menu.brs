@@ -14,11 +14,11 @@ sub init()
     m.title.width = m.global.deviceSize["w"] / 2
     m.title.font.uri = "pkg:/components/data/fonts/" + m.global.titleFont
     m.title.font.size = 100
-    m.title.translation = [0,]
+    m.title.translation = [0, m.global.deviceSize["h"] / 7]
 
     m.menuSelection = m.top.findNode("menuSelection")
-    m.menuSelection.translation = [0, m.global.deviceSize["h"] / 7 + 200]
-    m.menuSelection.itemSize = [m.global.deviceSize["w"] / 2, 50]
+    m.menuSelection.translation = [m.global.deviceSize["w"] / 12, m.global.deviceSize["h"] / 7 + 200]
+    m.menuSelection.itemSize = [m.global.deviceSize["w"] / 3, 70]
     m.menuSelection.observeField("itemSelected", "onMenuSelection")
     m.menuSelection.setFocus(true)
 

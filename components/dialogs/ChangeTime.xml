@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="ChangeTime" extends="Group" initialFocus="pinpad">
     <children>
-        <Rectangle id="background" />
+        <Label
+            id="enterTime"
+            text="Enter Time in Seconds"
+            horizAlign="center" />
         <CustomPinPad id="pinpad" />
     </children>
     <script type="text/brightscript" uri="ChangeTime.brs" />

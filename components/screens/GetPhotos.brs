@@ -30,31 +30,26 @@ sub init()
     m.title.translation = [0, m.global.deviceSize["h"] / 7]
 
     m.directions1.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.directions1.font.uri = "pkg:/components/data/fonts/" + m.global.baseFont
     m.directions1.font.size = 30
     m.directions1.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 50]
     m.directions1.wrap = true
 
     m.orLabel.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.orLabel.font.uri = "pkg:/components/data/fonts/" + m.global.baseFont
     m.orLabel.font.size = 30
     m.orLabel.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 100]
     m.orLabel.wrap = true
 
     m.navigateLabel.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.navigateLabel.font.uri = "pkg:/components/data/fonts/" + m.global.baseFont
     m.navigateLabel.font.size = 30
     m.navigateLabel.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 150]
     m.navigateLabel.wrap = true
 
     m.linkLabel.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.linkLabel.font.uri = "pkg:/components/data/fonts/" + m.global.baseFont
     m.linkLabel.font.size = 30
     m.linkLabel.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 200]
     m.linkLabel.wrap = true
 
     m.directions2.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.directions2.font.uri = "pkg:/components/data/fonts/" + m.global.baseFont
     m.directions2.font.size = 30
     m.directions2.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 300]
     m.directions2.wrap = true

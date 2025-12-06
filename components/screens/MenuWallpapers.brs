@@ -1,13 +1,10 @@
 sub init()
 
     m.solidBackground = m.top.findNode("solidBackground")
-    m.solidBackground.width = m.global.deviceSize["w"]
+    m.solidBackground.width = m.global.deviceSize["w"] / 2
     m.solidBackground.height = m.global.deviceSize["h"]
     m.solidBackground.opacity = 0
 
-    m.progressDialog = CreateObject("roSGNode", "StandardProgressDialog")
-    m.progressDialog.message = "Starting Wallpapers"
-    m.top.appendChild(m.progressDialog)
     m.firstFire = true
 
     m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
@@ -15,7 +12,7 @@ sub init()
 
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
-    m.fadeRect.width = m.global.deviceSize["w"]
+    m.fadeRect.width = m.global.deviceSize["w"] / 2
     m.fadeRect.color = m.global.backgroundColor
 
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
@@ -68,20 +65,17 @@ sub getLinksFromRegistry()
     m.initialGetResourceTask.unobserveField("result")
 
     if m.initialGetResourceTask.result = "fail"
-        m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppError"
         return
     else if m.initialGetResourceTask.result = "overflow"
         m.global.maxImages = m.initialGetResourceTask.maxImages
-        m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "LightroomAlbumOverflow"
         return
     else if m.initialGetResourceTask.result = "update"
-        m.progressDialog.message = "Retrieving new images from Lightroom Album"
         m.pollLightroomUpdateTask.observeField("result", "checkLightroomUpdate")
         m.pollLightroomUpdateTask.control = "run"
         return
@@ -95,7 +89,6 @@ sub checkLightroomUpdate()
     m.pollLightroomUpdateTask.unobserveField("result")
 
     if m.pollLightroomUpdateTask.result <> "success"
-        m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppError"
@@ -124,7 +117,6 @@ sub checkUriTask()
     if m.getLinksFromRegistry.result = "success"
         getNextImage()
     else if m.getLinksFromRegistry.result = "fail"
-        m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppKeyError"
@@ -153,12 +145,10 @@ sub getNextBackground()
     m.getNextImageTask.unobserveField("result")
 
     if m.getNextImageTask.result = "keyFail"
-        m.top.removeChild(m.progressDialog)
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "WebAppKeyError"
     else if m.getNextImageTask.result = "fail"
-        m.top.removeChild(m.progressDialog)
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "WebAppError"
@@ -175,12 +165,10 @@ sub getPoster()
         m.getNextImageTask.unobserveField("result")
 
         if m.getNextImageTask.result = "keyFail"
-            m.top.removeChild(m.progressDialog)
             mainScene = m.top.getParent()
             mainScene.removeChild(m.top)
             m.global.currScreen = "WebAppKeyError"
         else if m.getNextImageTask.result = "fail"
-            m.top.removeChild(m.progressDialog)
             mainScene = m.top.getParent()
             mainScene.removeChild(m.top)
             m.global.currScreen = "WebAppError"
@@ -216,11 +204,11 @@ sub onPosterLoaded()
         currPicHeight = m.posterStage.bitmapHeight
         currPicRatio = currPicWidth / currPicHeight
 
-        currDevRatio = m.global.deviceSize["w"] / m.global.deviceSize["h"]
+        currDevRatio = m.global.deviceSize["w"] / 2 / m.global.deviceSize["h"]
 
         if currPicRatio > currDevRatio
-            m.currWallpaper.width = m.global.deviceSize["w"]
-            m.currWallpaper.height = m.global.deviceSize["w"] / currPicRatio
+            m.currWallpaper.width = m.global.deviceSize["w"] / 2
+            m.currWallpaper.height = m.global.deviceSize["w"] / 2 / currPicRatio
 
             moveDown = (m.global.deviceSize["h"] - m.currWallpaper.height) / 2
 
@@ -229,12 +217,12 @@ sub onPosterLoaded()
             m.currWallpaper.height = m.global.deviceSize["h"]
             m.currWallpaper.width = m.global.deviceSize["h"] * currPicRatio
 
-            moveRight = (m.global.deviceSize["w"] - m.currWallpaper.width) / 2
+            moveRight = (m.global.deviceSize["w"] / 2 - m.currWallpaper.width) / 2
 
             m.currWallpaper.translation = [moveRight, 0]
         end if
     else
-        m.currWallpaper.width = m.global.deviceSize["w"]
+        m.currWallpaper.width = m.global.deviceSize["w"] / 2
         m.currWallpaper.height = m.global.deviceSize["h"]
         m.currWallpaper.translation = [0, 0]
     end if
@@ -251,7 +239,6 @@ end sub
 
 sub animateIn()
     if m.firstFire
-        m.top.removeChild(m.progressDialog)
         m.solidBackground.opacity = 100
     end if
     m.currWallpaper.unobserveField("loadStatus")
@@ -262,7 +249,6 @@ end sub
 sub finishAnimateIn()
     m.fadeInAnimation.unobserveField("state")
     if m.firstFire
-        m.fadeRect.color = m.global.fadeColor
         m.firstFire = false
     end if
     if m.global.imageCount > 1
@@ -290,7 +276,6 @@ function onKeyEvent(key as string, press as boolean) as boolean
         while m.top.getChildCount() > 0
             m.top.removeChild(m.top.getChild(0))
         end while
-        m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "Menu"

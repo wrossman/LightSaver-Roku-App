@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component name="StartWallpapers" extends="Group">
+<component name="MenuWallpapers" extends="Group">
     <children>
         <Video
             id="bgVideo"
@@ -42,5 +42,5 @@
             />
         </Animation>
     </children>
-    <script type="text/brightscript" uri="StartWallpapers.brs" />
+    <script type="text/brightscript" uri="MenuWallpapers.brs" />
 </component>
