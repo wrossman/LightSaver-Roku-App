@@ -13,9 +13,14 @@ sub init()
     m.navigateLabel = m.top.findNode("navigate")
     m.linkLabel = m.top.findNode("link")
     m.directions2 = m.top.findNode("directions2")
-
+    m.screenFadeInAnimation = m.top.findNode("screenFadeInAnimation")
+    m.fadeRect = m.top.findNode("fadeRect")
     m.leftRect = m.top.findNode("left")
     m.rightRect = m.top.findNode("right")
+    m.fromMenuFadeIn = m.top.findNode("fromMenuFadeIn")
+    m.qrCode = m.top.findNode("qrCode")
+    m.fromMenuFade = m.top.findNode("fromMenuFade")
+
 
     m.leftRect.height = m.global.deviceSize["h"]
     m.leftRect.width = m.global.deviceSize["w"] / 2
@@ -58,29 +63,27 @@ sub init()
     m.sessionCode.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 5]
     m.sessionCode.font.size = 80
 
-    m.qrCode = m.top.findNode("qrCode")
     m.qrCode.width = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
     m.qrCode.height = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
     m.qrCode.translation = [m.global.deviceSize["w"] / 2 + m.global.deviceSize["w"] / 8, m.global.deviceSize["h"] / 5 + 100]
 
     if m.global.firstLaunch = "true"
         print "in first launch true"
-        m.fadeRect = m.top.findNode("fadeRect")
+        m.fromMenuFade.opacity = 0
         m.fadeRect.opacity = 100
         m.fadeRect.width = m.global.deviceSize["w"]
         m.fadeRect.height = m.global.deviceSize["h"]
-        m.screenFadeInAnimation = m.top.findNode("screenFadeInAnimation")
         m.screenFadeInAnimation.control = "start"
         m.screenFadeInAnimation.observeField("state", "startGetSessionCodeTask")
     else if m.global.firstLaunch = "false"
-        m.getSessionCodeTask.observeField("result", "startSessionCheck")
-        m.getSessionCodeTask.control = "run"
+        m.fromMenuFadeIn.control = "start"
+        m.fromMenuFadeIn.observeField("state", "startGetSessionCodeTask")
     end if
 
 end sub
 
 sub startGetSessionCodeTask()
-    print "in start get session code task"
+    m.fromMenuFadeIn.unobserveField("state")
     m.screenFadeInAnimation.unobserveField("state")
     m.global.firstLaunch = "false"
     m.getSessionCodeTask.observeField("result", "startSessionCheck")

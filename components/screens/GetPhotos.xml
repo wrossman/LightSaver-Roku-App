@@ -47,7 +47,20 @@
             color="#001C30"
         />
         <Poster id="qrCode" uri="pkg:/components/data/qr-code.png" />
+        <MenuBase id="fromMenuFade" opacity="100" />
         <Rectangle id="fadeRect" opacity="0" color="0xFFFFFF" />
+        <Animation
+            id="fromMenuFadeIn"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="0.5">
+            <FloatFieldInterpolator
+                id="fromMenuFadeInInterp"
+                key="[0.0,1.0]"
+                KeyValue="[1.0,0.0]"
+                fieldToInterp="fromMenuFade.opacity"
+            />
+        </Animation>
         <Animation
             id="screenFadeInAnimation"
             repeat="false"

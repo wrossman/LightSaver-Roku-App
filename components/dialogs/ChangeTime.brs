@@ -19,9 +19,10 @@ end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
-        menu = m.top.getParent()
-        menu.removeChild(m.top)
-        m.global.currScreen = "Settings"
+        settings = m.top.getParent()
+        settings.removeChild(m.top)
+        settingsSelection = settings.findNode("settingsSelection")
+        settingsSelection.setFocus(true)
         return true
     end if
     return false

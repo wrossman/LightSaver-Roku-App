@@ -31,13 +31,20 @@ sub onMenuSelection()
         mainScene.removeChild(m.top)
         m.global.currScreen = "StartWallpapers"
     else if m.menuSelection.itemSelected = 1
-        mainScene = m.top.getParent()
-        mainScene.removeChild(m.top)
-        m.global.currScreen = "GetPhotos"
+        m.getPhotosFadeOut = m.top.findNode("getPhotosFadeOut")
+        m.getPhotosFadeOut.control = "start"
+        m.getPhotosFadeOut.observeField("state", "openGetPhotos")
     else if m.menuSelection.itemSelected = 2
         m.settings = CreateObject("roSGNode", "Settings")
         m.top.appendChild(m.settings)
         m.settings.setFocus(true)
     end if
 
+end sub
+
+sub openGetPhotos()
+    m.getPhotosFadeOut.unobserveField("state")
+    mainScene = m.top.getParent()
+    mainScene.removeChild(m.top)
+    m.global.currScreen = "GetPhotos"
 end sub

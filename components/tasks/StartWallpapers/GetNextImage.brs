@@ -27,6 +27,10 @@ sub getNextImage()
         "Device": m.global.clientId,
     }
 
+    for each item in m.currHeader
+        print item + ": " + m.currHeader[item]
+    end for
+
     m.imageHttp = CreateObject("roUrlTransfer")
     print m.imageHttp.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
     m.imageHttp.SetHeaders(m.currHeader)

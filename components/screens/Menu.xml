@@ -17,10 +17,23 @@
         >
             <ContentNode id="menuContent" role="content">
                 <ContentNode title="Start Wallpaper" />
-                <ContentNode title="Select Images" />
+                <ContentNode title="Change Images" />
                 <ContentNode title="Settings" />
             </ContentNode>
         </LabelList>
+        <MenuBase id="getPhotosFadeScreen" opacity="0" />
+        <Animation
+            id="getPhotosFadeOut"
+            repeat="false"
+            easeFunction="inQuad"
+            duration="0.5">
+            <FloatFieldInterpolator
+                id="getPhotosFadeOutInterp"
+                key="[0.0,1.0]"
+                KeyValue="[0.0,1.0]"
+                fieldToInterp="getPhotosFadeScreen.opacity"
+            />
+        </Animation>
     </children>
     <script type="text/brightscript" uri="Menu.brs" />
 </component>
