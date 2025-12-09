@@ -37,7 +37,7 @@ sub loadConfig()
         m.global.picDisplayTime = 10
     end if
 
-    if m.registry.Exists("imgLinks")
+    if m.registry.Exists("imgLinks") = false
 
         m.global.resourceLinks = ParseJson(m.registry.Read("imgLinks"))
 
@@ -67,10 +67,10 @@ sub loadConfig()
     m.global.imageUri = ""
     m.global.folderPath = "pkg:/images/wallpapers/"
     m.global.backgroundColor = "#001C30"
-    m.global.webappUrl = "https://10.0.0.15:8443"
-    ' m.global.webappUrl = "https://lightsaver.billrossman.com"
-    ' m.global.certificates = "common:/certs/ca-bundle.crt"
-    m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
+    ' m.global.webappUrl = "https://10.0.0.15:8443"
+    m.global.webappUrl = "https://lightsaver.billrossman.com"
+    m.global.certificates = "common:/certs/ca-bundle.crt"
+    ' m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
     m.global.fadeColor = "#FFFFFF"
     m.global.titleFont = "charger-font/ChargerBold-gXaY.otf"
     m.global.baseFont = "charger-font/Charger-XRDo.otf"
