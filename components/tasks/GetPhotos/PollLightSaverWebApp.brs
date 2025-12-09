@@ -15,10 +15,21 @@ sub pollLightSaverWebApp()
         "RokuId": m.global.clientId
     }
 
+    for each item in sessionCodeArr
+        print item
+        print sessionCodeArr[item]
+
+    end for
+
     jsonPostSessionBody = FormatJson(sessionCodeArr)
 
+    print jsonPostSessionBody
+
     post = CreateObject("roUrlTransfer")
-    print post.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
+    post.SetRequest("POST")
+    post.AddHeader("Content-Type", "application/json")
+    post.AddHeader("Accept", "application/json")
+    print post.SetCertificatesFile(m.global.certificates)
     post.SetUrl(m.global.webappUrl + "/link/reception")
     postPort = CreateObject("roMessagePort")
     post.SetPort(postPort)

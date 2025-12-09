@@ -21,13 +21,10 @@ sub init()
         DialogBackgroundColor: "0xF0F0F0FF", ' inverted: dark navy → soft white
         DialogItemColor: "0x001C30FF", ' inverted: white → favorite blue
         DialogTextColor: "0x001C30FF", ' inverted: white → favorite blue
-
         DialogFocusColor: "0x001A36FF", ' inverted: soft white → soft blue
         DialogFocusItemColor: "0xFFFFFFFF", ' inverted: your blue → white
-
         DialogSecondaryTextColor: "0x001C30FF", ' inverted: white → favorite blue
         DialogSecondaryItemColor: "0x001C3066", ' inverted: semi white → semi blue
-
         DialogInputFieldColor: "0x001A36FF", ' inverted: soft white → soft blue
         DialogKeyboardColor: "0x001C30FF", ' inverted: white → favorite blue
         DialogFootprintColor: "0x001C3080" ' inverted: semi white → semi blue

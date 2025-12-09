@@ -32,7 +32,7 @@ sub getNextImage()
     end for
 
     m.imageHttp = CreateObject("roUrlTransfer")
-    print m.imageHttp.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
+    print m.imageHttp.SetCertificatesFile(m.global.certificates)
     m.imageHttp.SetHeaders(m.currHeader)
     m.imageHttp.SetUrl(m.global.webappUrl + "/link/get-resource")
     m.imgHttpPort = CreateObject("roMessagePort")
@@ -50,6 +50,9 @@ sub getNextImage()
     if m.responseCode = 401
         m.top.result = "keyFail"
         return
+    end if
+
+    if m.responseCode = 203
     end if
 
     if m.responseCode <> 200

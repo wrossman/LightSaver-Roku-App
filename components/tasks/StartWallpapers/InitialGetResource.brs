@@ -13,13 +13,15 @@ sub initialGet()
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
-    print m.imageHttp.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
+    print m.imageHttp.SetCertificatesFile(m.global.certificates)
     m.imageHttp.SetHeaders(m.currHeader)
     m.imageHttp.SetUrl(m.global.webappUrl + "/link/initial")
     m.imgHttpPort = CreateObject("roMessagePort")
     m.imageHttp.SetPort(m.imgHttpPort)
     m.imageHttp.AsyncGetToString()
     m.imgResponse = Wait(0, m.imgHttpPort)
+
+    print m.imgResponse.GetResponseCode()
 
     if m.imgResponse.GetResponseCode() < 0
         m.top.result = "fail"

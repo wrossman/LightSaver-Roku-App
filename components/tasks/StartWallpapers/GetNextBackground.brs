@@ -26,7 +26,7 @@ sub GetNextBackground()
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")
-    print m.imageHttp.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
+    print m.imageHttp.SetCertificatesFile(m.global.certificates)
     m.imageHttp.SetHeaders(m.currHeader)
     m.imageHttp.SetUrl(m.global.webappUrl + "/link/background")
     m.imgHttpPort = CreateObject("roMessagePort")

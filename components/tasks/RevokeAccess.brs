@@ -14,7 +14,7 @@ sub revokeAccess()
     print m.payloadJson
 
     m.revokeTransfer = CreateObject("roUrlTransfer")
-    print m.revokeTransfer.SetCertificatesFile("pkg:/components/data/certs/rootCA.crt")
+    print m.revokeTransfer.SetCertificatesFile(m.global.certificates)
     m.revokeTransferPort = CreateObject("roMessagePort")
 
     m.revokeTransfer.SetUrl(m.global.webappUrl + "/link/revoke")

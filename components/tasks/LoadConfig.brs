@@ -65,11 +65,12 @@ sub loadConfig()
     m.global.filenameCounter = 0
     m.global.imgIndex = 0
     m.global.imageUri = ""
-    m.global.certificates = "common:/certs/ca-bundle.crt"
     m.global.folderPath = "pkg:/images/wallpapers/"
     m.global.backgroundColor = "#001C30"
-    ' m.global.webappUrl = "http://10.0.0.15:8080"
     m.global.webappUrl = "https://10.0.0.15:8443"
+    ' m.global.webappUrl = "https://lightsaver.billrossman.com"
+    ' m.global.certificates = "common:/certs/ca-bundle.crt"
+    m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
     m.global.fadeColor = "#FFFFFF"
     m.global.titleFont = "charger-font/ChargerBold-gXaY.otf"
     m.global.baseFont = "charger-font/Charger-XRDo.otf"
