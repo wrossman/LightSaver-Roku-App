@@ -37,7 +37,7 @@ sub loadConfig()
         m.global.picDisplayTime = 10
     end if
 
-    if m.registry.Exists("imgLinks") = false
+    if m.registry.Exists("imgLinks")
 
         m.global.resourceLinks = ParseJson(m.registry.Read("imgLinks"))
 
