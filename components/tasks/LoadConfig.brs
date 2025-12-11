@@ -39,22 +39,22 @@ sub loadConfig()
 
     if m.registry.Exists("imgLinks")
 
-        m.global.resourceLinks = ParseJson(m.registry.Read("imgLinks"))
+        m.global.resourceIds = ParseJson(m.registry.Read("imgLinks"))
 
-        if m.global.resourceLinks = invalid
+        if m.global.resourceIds = invalid
             print "loaded resource links were invalid"
-            m.global.resourceLinks = {}
+            m.global.resourceIds = {}
             m.registry.Write("loaded", "false")
             m.registry.Write("imgLinks", "")
             m.global.loaded = "false"
         else
-            print "loaded resourceLinks: "
-            for each item in m.global.resourceLinks
+            print "loaded resourceIds: "
+            for each item in m.global.resourceIds
                 print item
             end for
         end if
     else
-        m.global.resourceLinks = {}
+        m.global.resourceIds = {}
         m.global.loaded = "false"
         m.registry.Write("loaded", "false")
         m.registry.Write("imgLinks", "")
@@ -67,14 +67,15 @@ sub loadConfig()
     m.global.imageUri = ""
     m.global.folderPath = "pkg:/images/wallpapers/"
     m.global.backgroundColor = "#001C30"
-    ' m.global.webappUrl = "https://10.0.0.15:8443"
-    m.global.webappUrl = "https://lightsaver.billrossman.com"
-    m.global.certificates = "common:/certs/ca-bundle.crt"
-    ' m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
     m.global.fadeColor = "#FFFFFF"
     m.global.titleFont = "charger-font/ChargerBold-gXaY.otf"
     m.global.baseFont = "charger-font/Charger-XRDo.otf"
     m.global.firstLaunch = "true"
+
+    ' m.global.webappUrl = "https://10.0.0.15:8443"
+    m.global.webappUrl = "https://roku.lightsaver.photos"
+    m.global.certificates = "common:/certs/ca-bundle.crt"
+    ' m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
 
     print "Finished loading config"
 

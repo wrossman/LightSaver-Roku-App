@@ -7,9 +7,9 @@ sub Main()
 
     m.global = screen.getGlobalNode()
     m.global.AddField("deviceSize", "assocarray", true)
-    m.global.AddField("resourceLinks", "assocarray", true)
+    m.global.AddField("resourceIds", "assocarray", true)
 
-    m.global.AddField("keyList", "array", true)
+    m.global.AddField("idList", "array", true)
     m.global.AddField("imageUriArr", "array", true)
 
     m.global.AddField("webappUrl", "string", true)

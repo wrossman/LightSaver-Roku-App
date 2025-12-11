@@ -5,7 +5,7 @@ end sub
 sub revokeAccess()
 
     m.payload = {
-        "Links": m.global.resourceLinks
+        "Links": m.global.resourceIds
         "RokuId": m.global.clientId
     }
 

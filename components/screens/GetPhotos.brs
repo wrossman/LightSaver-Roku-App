@@ -152,7 +152,7 @@ sub finishGetPhotosFlow()
         return
     end if
 
-    linksStr = FormatJson(m.global.resourceLinks)
+    linksStr = FormatJson(m.global.resourceIds)
 
     m.settings = CreateObject("roRegistrySection", "Config")
     m.settings.Write("imgLinks", linksStr)

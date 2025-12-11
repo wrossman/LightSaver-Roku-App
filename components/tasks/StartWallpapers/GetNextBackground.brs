@@ -9,17 +9,17 @@ sub GetNextBackground()
     fs = CreateObject("roFileSystem")
     fs.Delete(m.global.backgroundUri)
 
-    if m.global.resourceLinks = invalid or m.global.keyList = invalid
+    if m.global.resourceIds = invalid or m.global.idList = invalid
         m.top.result = "fail"
         return
-    else if m.global.resourceLinks.Count() = 0 or m.global.keyList.Count() = 0
+    else if m.global.resourceIds.Count() = 0 or m.global.idList.Count() = 0
         m.top.result = "fail"
         return
     end if
 
     m.currHeader = {
-        "Authorization": m.global.resourceLinks[m.global.keyList[m.global.imgIndex]],
-        "ResourceId": m.global.keyList[m.global.imgIndex],
+        "Authorization": m.global.resourceIds[m.global.idList[m.global.imgIndex]],
+        "ResourceId": m.global.idList[m.global.imgIndex],
         "Device": m.global.clientId,
         "Height": m.global.deviceSize["h"].ToStr(),
         "Width": m.global.deviceSize["w"].ToStr()

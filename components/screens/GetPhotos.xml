@@ -36,7 +36,7 @@
         />
         <Label
             id="link"
-            text="https://lightsaver.app"
+            text="https://roku.lightsaver.photos"
             horizAlign="center"
             color="#001C30"
         />

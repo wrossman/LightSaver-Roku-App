@@ -24,7 +24,7 @@ sub onButtonSelected()
         m.registry.Write("imgLinks", "")
         m.registry.Flush()
 
-        m.global.resourceLinks = {}
+        m.global.resourceIds = {}
         m.global.loaded = "false"
 
         mainScene = m.top.getParent()

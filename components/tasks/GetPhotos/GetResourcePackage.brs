@@ -30,26 +30,26 @@ sub getResourcePackage()
         return
     end if
 
-    linksJsonString = responseEvent.GetString()
+    idsJsonString = responseEvent.GetString()
 
-    if linksJsonString = invalid
+    if idsJsonString = invalid
         m.top.result = "fail"
         return
     end if
 
-    linksJson = ParseJson(linksJsonString)
+    idsJson = ParseJson(idsJsonString)
 
-    if linksJson = invalid
+    if idsJson = invalid
         m.top.result = "fail"
         return
     end if
 
-    if linksJson.Count() < 1
+    if idsJson.Count() < 1
         m.top.result = "fail"
         return
     end if
 
-    m.global.resourceLinks = linksJson
+    m.global.resourceIds = idsJson
 
     m.top.result = "success"
 end sub

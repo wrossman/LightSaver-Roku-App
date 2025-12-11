@@ -56,7 +56,7 @@ sub pollLightroomUpdate()
         return
     end if
 
-    m.global.resourceLinks = m.bodyJson
+    m.global.resourceIds = m.bodyJson
 
     m.registry = CreateObject("roRegistrySection", "Config")
     m.registry.Write("imgLinks", FormatJson(m.bodyJson))

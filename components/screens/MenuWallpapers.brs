@@ -18,11 +18,11 @@ sub init()
     m.picTimer = m.top.findNode("picTimer")
     m.picTimer.duration = 2
 
-    m.keyList = []
-    for each item in m.global.resourceLinks
-        m.keyList.Push(item)
+    m.idList = []
+    for each item in m.global.resourceIds
+        m.idList.Push(item)
     end for
-    m.global.keyList = m.keyList
+    m.global.idList = m.idList
 
     m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
 
@@ -77,11 +77,11 @@ sub checkLightroomUpdate()
     end if
 
     'update the key list now that we got new links from lightroom update
-    m.keyList = []
-    for each item in m.global.resourceLinks
-        m.keyList.Push(item)
+    m.idList = []
+    for each item in m.global.resourceIds
+        m.idList.Push(item)
     end for
-    m.global.keyList = m.keyList
+    m.global.idList = m.idList
 
     m.getLinksFromRegistry.observeField("result", "checkUriTask")
     m.getLinksFromRegistry.control = "run"

@@ -6,8 +6,8 @@ sub initialGet()
     print "in initial get"
 
     m.currHeader = {
-        "Authorization": m.global.resourceLinks[m.global.keyList[0]],
-        "ResourceId": m.global.keyList[0],
+        "Authorization": m.global.resourceIds[m.global.idList[0]],
+        "ResourceId": m.global.idList[0],
         "Device": m.global.clientId,
         "MaxScreenSize": m.global.maxScreenSize.ToStr()
     }
