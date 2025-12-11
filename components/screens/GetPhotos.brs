@@ -19,7 +19,6 @@ sub init()
     m.qrCode = m.top.findNode("qrCode")
     m.fromMenuFade = m.top.findNode("fromMenuFade")
 
-
     m.leftRect.height = m.global.deviceSize["h"]
     m.leftRect.width = m.global.deviceSize["w"] / 2
 
@@ -126,10 +125,18 @@ end sub
 sub animateOutFinished()
     m.fadeOutAnimation.unobserveField("state")
 
-    menu = m.top.getParent()
-    menu.removeChild(m.top)
-    m.global.currScreen = ""
-    m.global.currScreen = "GetPhotos"
+    m.top.removeChild(m.getSessionCodeTask)
+    m.top.removeChild(m.getResourcePackageTask)
+    m.top.removeChild(m.pollLightSaverWebAppTask)
+
+    m.getSessionCodeTask = CreateObject("roSGNode", "GetSessionCode")
+    m.pollLightSaverWebAppTask = CreateObject("roSGNode", "PollLightSaverWebApp")
+
+    m.top.appendChild(m.getSessionCodeTask)
+    m.top.appendChild(m.pollLightSaverWebAppTask)
+
+    startGetSessionCodeTask()
+
 end sub
 
 sub finishGetPhotosFlow()

@@ -55,6 +55,11 @@ sub pollLightSaverWebApp()
             return
         end if
 
+        if responseEvent.GetResponseCode() < 0
+            m.top.result = "fail"
+            return
+        end if
+
         responseString = responseEvent.GetString()
 
         print responseString
