@@ -10,11 +10,9 @@ sub Main()
     m.global.AddField("resourceIds", "assocarray", true)
 
     m.global.AddField("idList", "array", true)
-    m.global.AddField("imageUriArr", "array", true)
 
     m.global.AddField("webappUrl", "string", true)
     m.global.AddField("sessionCode", "string", true)
-    m.global.AddField("folderPath", "string", true)
     m.global.AddField("currScreen", "string", true)
     m.global.AddField("backgroundColor", "string", true)
     m.global.AddField("certificates", "string", true)
@@ -30,7 +28,6 @@ sub Main()
     m.global.AddField("titleFont", "string", true)
     m.global.AddField("baseFont", "string", true)
     m.global.AddField("firstLaunch", "string", true)
-    m.global.AddField("certs", "string", true)
 
     m.global.AddField("maxImages", "int", true)
     m.global.AddField("filenameCounter", "int", true)
@@ -39,9 +36,7 @@ sub Main()
     m.global.AddField("picDisplayTime", "int", true)
     m.global.AddField("maxScreenSize", "int", true)
 
-    m.global.deviceSize = getDeviceSize()
     m.global.maxScreenSize = getMaxSize()
-    m.global.clientId = getChannelClientId()
 
     screen.show()
 
@@ -70,27 +65,5 @@ function getMaxSize()
     end for
 
     return 1920
-
-end function
-
-function getDeviceSize()
-    devInfo = CreateObject("roDeviceInfo")
-    size = devInfo.GetDisplaySize()
-    return size
-end function
-
-function getChannelClientId()
-
-    devInfo = CreateObject("roDeviceInfo")
-    devSerial = devInfo.GetChannelClientId()
-
-    ba = CreateObject("roByteArray")
-    ba.FromAsciiString(devSerial)
-
-    digest = CreateObject("roEVPDigest")
-    digest.Setup("sha256")
-    result = digest.Process(ba)
-
-    return result
 
 end function

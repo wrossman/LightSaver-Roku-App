@@ -2,6 +2,7 @@
 <component name="LoadConfig" extends="Task">
     <interface>
         <field id="result" type="string" />
+        <field id="palette" type="assocarray" />
     </interface>
     <script type="text/brightscript" uri="LoadConfig.brs" />
 </component>

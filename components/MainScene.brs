@@ -10,40 +10,29 @@ sub init()
         m.top.backgroundColor = "#FFFFFF"
     end if
 
+    m.top.palette = m.bluePalette
+
+    m.loadConfigTask = m.top.findNode("LoadConfigTask")
+    m.loadConfigTask.observeField("result", "startFade")
+    m.loadConfigTask.observeField("palette", "setPalette")
+    m.loadConfigTask.control = "run"
+
+end sub
+
+sub setPalette()
+    m.bluePalette = CreateObject("roSGNode", "RSGPalette")
+    m.bluePalette.colors = m.loadConfigTask.palette
+    m.top.palette = m.bluePalette
+end sub
+
+sub startFade()
+    m.loadConfigTask.unobserveField("result")
+
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
     m.fadeRect.width = m.global.deviceSize["w"]
 
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
-
-    m.bluePalette = CreateObject("roSGNode", "RSGPalette")
-    m.bluePalette.colors = {
-        DialogBackgroundColor: "0xF0F0F0FF", ' inverted: dark navy → soft white
-        DialogItemColor: "0x001C30FF", ' inverted: white → favorite blue
-        DialogTextColor: "0x001C30FF", ' inverted: white → favorite blue
-        DialogFocusColor: "0x001A36FF", ' inverted: soft white → soft blue
-        DialogFocusItemColor: "0xFFFFFFFF", ' inverted: your blue → white
-        DialogSecondaryTextColor: "0x001C30FF", ' inverted: white → favorite blue
-        DialogSecondaryItemColor: "0x001C3066", ' inverted: semi white → semi blue
-        DialogInputFieldColor: "0x001A36FF", ' inverted: soft white → soft blue
-        DialogKeyboardColor: "0x001C30FF", ' inverted: white → favorite blue
-        DialogFootprintColor: "0x001C3080" ' inverted: semi white → semi blue
-    }
-
-    m.top.palette = m.bluePalette
-
-    getConfig()
-
-end sub
-
-sub getConfig()
-    m.loadConfigTask = m.top.findNode("LoadConfigTask")
-    m.loadConfigTask.observeField("result", "startFade")
-    m.loadConfigTask.control = "run"
-end sub
-
-sub startFade()
-    m.loadConfigTask.unobserveField("result")
     m.fadeOutAnimation.control = "start"
     m.fadeOutAnimation.observeField("state", "firstLaunch")
 end sub

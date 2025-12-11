@@ -65,20 +65,57 @@ sub loadConfig()
     m.global.filenameCounter = 0
     m.global.imgIndex = 0
     m.global.imageUri = ""
-    m.global.folderPath = "pkg:/images/wallpapers/"
     m.global.backgroundColor = "#001C30"
     m.global.fadeColor = "#FFFFFF"
     m.global.titleFont = "charger-font/ChargerBold-gXaY.otf"
     m.global.baseFont = "charger-font/Charger-XRDo.otf"
     m.global.firstLaunch = "true"
+    m.global.deviceSize = getDeviceSize()
 
-    ' m.global.webappUrl = "https://10.0.0.15:8443"
-    m.global.webappUrl = "https://roku.lightsaver.photos"
-    m.global.certificates = "common:/certs/ca-bundle.crt"
-    ' m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
+    m.global.clientId = getChannelClientId()
+
+    ' m.global.webappUrl = "https://roku.lightsaver.photos"
+    ' m.global.certificates = "common:/certs/ca-bundle.crt"
+    m.global.webappUrl = "https://10.0.0.15:8443"
+    m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
+
+    m.top.palette = {
+        DialogBackgroundColor: "0xF0F0F0FF", ' inverted: dark navy → soft white
+        DialogItemColor: "0x001C30FF", ' inverted: white → favorite blue
+        DialogTextColor: "0x001C30FF", ' inverted: white → favorite blue
+        DialogFocusColor: "0x001A36FF", ' inverted: soft white → soft blue
+        DialogFocusItemColor: "0xFFFFFFFF", ' inverted: your blue → white
+        DialogSecondaryTextColor: "0x001C30FF", ' inverted: white → favorite blue
+        DialogSecondaryItemColor: "0x001C3066", ' inverted: semi white → semi blue
+        DialogInputFieldColor: "0x001A36FF", ' inverted: soft white → soft blue
+        DialogKeyboardColor: "0x001C30FF", ' inverted: white → favorite blue
+        DialogFootprintColor: "0x001C3080" ' inverted: semi white → semi blue
+    }
 
     print "Finished loading config"
 
     m.top.result = "done"
 
 end sub
+
+function getDeviceSize()
+    devInfo = CreateObject("roDeviceInfo")
+    size = devInfo.GetDisplaySize()
+    return size
+end function
+
+function getChannelClientId()
+
+    devInfo = CreateObject("roDeviceInfo")
+    devSerial = devInfo.GetChannelClientId()
+
+    ba = CreateObject("roByteArray")
+    ba.FromAsciiString(devSerial)
+
+    digest = CreateObject("roEVPDigest")
+    digest.Setup("sha256")
+    result = digest.Process(ba)
+
+    return result
+
+end function
