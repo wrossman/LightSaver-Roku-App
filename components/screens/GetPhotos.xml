@@ -4,13 +4,6 @@
         <Rectangle id="left" color="#FFFFFF" />
         <Rectangle id="right" color="#001C30" />
         <Label
-            id="sessionCode"
-            text=""
-            horizAlign="center"
-            color="#FFFFFF"
-            opacity="0"
-        />
-        <Label
             id="title"
             text="LightSaver"
             horizAlign="center"
@@ -18,33 +11,32 @@
         />
         <Label
             id="directions1"
-            text="SCAN THE QR CODE"
+            text="Scan QR code or go to"
             horizAlign="center"
-            color="#001C30"
-        />
-        <Label
-            id="or"
-            text="or"
-            horizAlign="center"
-            color="#001C30"
-        />
-        <Label
-            id="navigate"
-            text="NAVIGATE TO"
-            horizAlign="center"
-            color="#001C30"
+            color="#FFFFFF"
+            font="font:SmallSystemFont"
         />
         <Label
             id="link"
-            text="https://roku.lightsaver.photos"
+            text="roku.lightsaver.photos"
             horizAlign="center"
-            color="#001C30"
+            color="#FFFFFF"
+            font="font:SmallBoldSystemFont"
         />
         <Label
             id="directions2"
-            text="Enter your Session Code"
+            text="Enter your code"
             horizAlign="center"
-            color="#001C30"
+            color="#FFFFFF"
+            font="font:SmallSystemFont"
+        />
+        <Label
+            id="sessionCode"
+            text=""
+            horizAlign="center"
+            color="#FFFFFF"
+            opacity="0"
+            font="font:LargeBoldSystemFont"
         />
         <Poster id="qrCode" uri="pkg:/components/data/qr-code.png" />
         <MenuBase id="fromMenuFade" opacity="100" />

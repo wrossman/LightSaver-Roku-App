@@ -9,8 +9,6 @@ sub init()
     m.getSessionCodeTask = m.top.findNode("GetSessionCodeTask")
     m.title = m.top.findNode("title")
     m.directions1 = m.top.findNode("directions1")
-    m.orLabel = m.top.findNode("or")
-    m.navigateLabel = m.top.findNode("navigate")
     m.linkLabel = m.top.findNode("link")
     m.directions2 = m.top.findNode("directions2")
     m.screenFadeInAnimation = m.top.findNode("screenFadeInAnimation")
@@ -34,38 +32,30 @@ sub init()
     m.title.font.size = 100
     m.title.translation = [0, m.global.deviceSize["h"] / 7]
 
-    m.directions1.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.directions1.font.size = 30
-    m.directions1.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 50]
+    m.directions1.width = m.global.deviceSize["w"] / 2
+    m.directions1.font.size = 25
+    m.directions1.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8]
     m.directions1.wrap = true
 
-    m.orLabel.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.orLabel.font.size = 30
-    m.orLabel.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 100]
-    m.orLabel.wrap = true
-
-    m.navigateLabel.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.navigateLabel.font.size = 30
-    m.navigateLabel.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 150]
-    m.navigateLabel.wrap = true
-
-    m.linkLabel.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.linkLabel.font.size = 30
-    m.linkLabel.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 200]
+    m.linkLabel.width = m.global.deviceSize["w"] / 2
+    m.linkLabel.font.size = 35
+    m.linkLabel.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8 + 40]
     m.linkLabel.wrap = true
-
-    m.directions2.width = m.global.deviceSize["w"] / 2 * 3 / 4
-    m.directions2.font.size = 30
-    m.directions2.translation = [m.global.deviceSize["w"] / 2 / 8, m.global.deviceSize["h"] / 3 + 300]
-    m.directions2.wrap = true
-
-    m.sessionCode.width = m.global.deviceSize["w"] / 2
-    m.sessionCode.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 5]
-    m.sessionCode.font.size = 80
 
     m.qrCode.width = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
     m.qrCode.height = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
-    m.qrCode.translation = [m.global.deviceSize["w"] / 2 + m.global.deviceSize["w"] / 8, m.global.deviceSize["h"] / 5 + 100]
+    m.qrCode.translation = [m.global.deviceSize["w"] / 2 + m.global.deviceSize["w"] / 8, m.global.deviceSize["h"] / 8 + 100]
+
+    m.qrCodeHeight = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
+
+    m.directions2.width = m.global.deviceSize["w"] / 2
+    m.directions2.font.size = 25
+    m.directions2.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8 + m.qrCodeHeight + 125]
+    m.directions2.wrap = true
+
+    m.sessionCode.width = m.global.deviceSize["w"] / 2
+    m.sessionCode.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8 + m.qrCodeHeight + 175]
+    m.sessionCode.font.size = 80
 
     if m.global.firstLaunch = "true"
         print "in first launch true"
