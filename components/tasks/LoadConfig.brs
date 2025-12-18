@@ -37,7 +37,7 @@ sub loadConfig()
         m.global.picDisplayTime = 10
     end if
 
-    if m.registry.Exists("imgLinks")
+    if m.registry.Exists("imgLinks") = false
 
         m.global.resourceIds = ParseJson(m.registry.Read("imgLinks"))
 
@@ -71,13 +71,20 @@ sub loadConfig()
     m.global.baseFont = "charger-font/Charger-XRDo.otf"
     m.global.firstLaunch = "true"
     m.global.deviceSize = getDeviceSize()
-
     m.global.clientId = getChannelClientId()
 
-    ' m.global.webappUrl = "https://roku.lightsaver.photos"
-    ' m.global.certificates = "common:/certs/ca-bundle.crt"
-    m.global.webappUrl = "https://10.0.0.15:8443"
-    m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
+    deployment = "aws"
+
+    if deployment = "aws"
+        m.global.webappUrl = "https://alpha.lightsaver.photos"
+        m.global.certificates = "common:/certs/ca-bundle.crt"
+    else if deployment = "azure"
+        m.global.webappUrl = "https://roku.lightsaver.photos"
+        m.global.certificates = "common:/certs/ca-bundle.crt"
+    else
+        m.global.webappUrl = "https://10.0.0.15:8443"
+        m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
+    end if
 
     m.top.palette = {
         DialogBackgroundColor: "0xF0F0F0FF", ' inverted: dark navy → soft white
