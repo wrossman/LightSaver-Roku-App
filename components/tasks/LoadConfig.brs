@@ -73,7 +73,7 @@ sub loadConfig()
     m.global.deviceSize = getDeviceSize()
     m.global.clientId = getChannelClientId()
 
-    deployment = "aws"
+    deployment = "local"
 
     if deployment = "aws"
         m.global.webappUrl = "https://alpha.lightsaver.photos"
@@ -81,22 +81,22 @@ sub loadConfig()
     else if deployment = "azure"
         m.global.webappUrl = "https://roku.lightsaver.photos"
         m.global.certificates = "common:/certs/ca-bundle.crt"
-    else
+    else if deployment = "local"
         m.global.webappUrl = "https://10.0.0.15:8443"
         m.global.certificates = "pkg:/components/data/certs/rootCA.crt"
     end if
 
     m.top.palette = {
-        DialogBackgroundColor: "0xF0F0F0FF", ' inverted: dark navy → soft white
-        DialogItemColor: "0x001C30FF", ' inverted: white → favorite blue
-        DialogTextColor: "0x001C30FF", ' inverted: white → favorite blue
-        DialogFocusColor: "0x001A36FF", ' inverted: soft white → soft blue
-        DialogFocusItemColor: "0xFFFFFFFF", ' inverted: your blue → white
-        DialogSecondaryTextColor: "0x001C30FF", ' inverted: white → favorite blue
-        DialogSecondaryItemColor: "0x001C3066", ' inverted: semi white → semi blue
-        DialogInputFieldColor: "0x001A36FF", ' inverted: soft white → soft blue
-        DialogKeyboardColor: "0x001C30FF", ' inverted: white → favorite blue
-        DialogFootprintColor: "0x001C3080" ' inverted: semi white → semi blue
+        DialogBackgroundColor: "0xF0F0F0FF",
+        DialogItemColor: "0x001C30FF",
+        DialogTextColor: "0x001C30FF",
+        DialogFocusColor: "0x001A36FF",
+        DialogFocusItemColor: "0xFFFFFFFF",
+        DialogSecondaryTextColor: "0x001C30FF",
+        DialogSecondaryItemColor: "0x001C3066",
+        DialogInputFieldColor: "0x001A36FF",
+        DialogKeyboardColor: "0x001C30FF",
+        DialogFootprintColor: "0x001C3080"
     }
 
     print "Finished loading config"

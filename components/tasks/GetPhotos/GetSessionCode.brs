@@ -12,6 +12,7 @@ sub getSessionCode()
     serialJson = FormatJson(serialArr)
 
     post = CreateObject("roUrlTransfer")
+    post.AddHeader("Content-Type", "application/json")
     print post.SetCertificatesFile(m.global.certificates)
     post.SetUrl(m.global.webappUrl + "/link/code")
     postPort = CreateObject("roMessagePort")
@@ -23,6 +24,8 @@ sub getSessionCode()
         m.top.result = "fail"
         return
     end if
+
+    print postEvent.GetResponseCode()
 
     postResponse = postEvent.GetString()
 

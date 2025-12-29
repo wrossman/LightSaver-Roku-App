@@ -166,7 +166,6 @@ end sub
 function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
 
-        'DONT LET THEM GO BACK IF THERE IS NOTHING LOADED
         if m.global.loaded = "false"
             return true
         end if

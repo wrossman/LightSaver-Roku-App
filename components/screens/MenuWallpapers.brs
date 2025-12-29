@@ -217,30 +217,3 @@ sub finishAnimateIn()
         m.picTimer.control = "start"
     end if
 end sub
-
-' function onKeyEvent(key as string, press as boolean) as boolean
-'     if key = "back" and press = true
-'         'remove all children of wallpapers then remove wallpaper from parent
-'         if m.global.imageCount > 1
-'             m.picTimer.control = "stop"
-'         end if
-
-'         'stop polling task in case it is running
-'         m.pollLightroomUpdateTask.state = "stop"
-
-'         m.global.filenameCounter++
-'         m.currWallpaper.uri = ""
-'         m.posterStage.uri = ""
-'         m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
-'         m.removeTempFilesTask.control = "run"
-
-'         while m.top.getChildCount() > 0
-'             m.top.removeChild(m.top.getChild(0))
-'         end while
-'         menu = m.top.getParent()
-'         menu.removeChild(m.top)
-'         m.global.currScreen = "Menu"
-'         return true
-'     end if
-'     return false
-' end function

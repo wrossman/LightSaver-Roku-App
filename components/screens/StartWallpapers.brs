@@ -211,7 +211,6 @@ sub getPoster()
         if m.getNextBackgroundTask.result <> "fail" and m.getNextBackgroundTask.result <> "keyFail"
             m.backgroundImg.uri = m.global.backgroundUri
         else
-            'HOW SHOULD I HANDLE THIS?
             print "FAILED TO LOAD BACKGROUND IMAGE"
         end if
     end if
