@@ -1,6 +1,8 @@
 {
   "keyboardWidthHD": 324,
   "keyboardHeightHD": 200,
+  "keyboardWidthFHD": 324,
+  "keyboardHeightFHD": 200,
   "sections": [
     {
       "grids": [

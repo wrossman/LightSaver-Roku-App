@@ -37,7 +37,7 @@ sub loadConfig()
         m.global.picDisplayTime = 10
     end if
 
-    if m.registry.Exists("imgLinks") = false
+    if m.registry.Exists("imgLinks")
 
         m.global.resourceIds = ParseJson(m.registry.Read("imgLinks"))
 
@@ -73,7 +73,7 @@ sub loadConfig()
     m.global.deviceSize = getDeviceSize()
     m.global.clientId = getChannelClientId()
 
-    deployment = "local"
+    deployment = "aws"
 
     if deployment = "aws"
         m.global.webappUrl = "https://alpha.lightsaver.photos"
