@@ -206,6 +206,14 @@ sub getPoster()
             m.global.currScreen = "WebAppError"
         end if
 
+        m.posterStage.uri = m.global.imageUri
+
+        if m.posterStage.loadStatus = "loading"
+            m.posterStage.observeField("loadStatus", "onPosterLoaded")
+        else if m.posterStage.loadStatus = "ready"
+            onPosterLoaded()
+        end if
+
     else
         m.getNextBackgroundTask.unobserveField("result")
         if m.getNextBackgroundTask.result <> "fail" and m.getNextBackgroundTask.result <> "keyFail"
@@ -213,7 +221,19 @@ sub getPoster()
         else
             print "FAILED TO LOAD BACKGROUND IMAGE"
         end if
+
+        if m.backgroundImg.loadStatus = "loading"
+            m.backgroundImg.observeField("loadStatus", "onBackgroundImgLoaded")
+        else if m.backgroundImg.loadStatus = "ready"
+            onBackgroundImgLoaded()
+        end if
+
     end if
+
+end sub
+
+sub onBackgroundImgLoaded()
+    m.backgroundImg.unobserveField("loadStatus")
 
     m.posterStage.uri = m.global.imageUri
 
@@ -226,7 +246,6 @@ sub getPoster()
 end sub
 
 sub onPosterLoaded()
-
     m.posterStage.unobserveField("loadStatus")
 
     if m.posterStage.loadStatus = "ready"

@@ -13,7 +13,7 @@ sub init()
 
     m.settingsSelection = m.top.findNode("settingsSelection")
     m.settingsSelection.translation = [m.global.deviceSize["w"] / 12, m.global.deviceSize["h"] / 7 + 200]
-    m.settingsSelection.itemSize = [m.global.deviceSize["w"] / 3, 70]
+    m.settingsSelection.itemSize = [m.global.deviceSize["w"] / 3, m.global.deviceSize["h"] / 7]
     m.settingsSelection.observeField("itemSelected", "onSettingsSelection")
     m.settingsSelection.setFocus(true)
 
