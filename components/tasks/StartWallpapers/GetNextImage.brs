@@ -143,7 +143,7 @@ sub getNextImage()
             m.cleanType = ""
         end if
 
-        m.finalImgName = "tmp:/img" + m.global.filenameCounter.ToStr() + m.cleanType
+        m.finalImgName = "tmp:/nextImg" + m.global.filenameCounter.ToStr() + m.cleanType
 
         if fs.CopyFile("tmp:/" + m.global.filenameCounter.ToStr(), m.finalImgName)
             fs.Delete("tmp:/" + m.global.filenameCounter.ToStr())
@@ -181,7 +181,7 @@ sub getNextImage()
         m.cleanType = ""
     end if
 
-    m.finalImgName = "tmp:/img" + m.global.filenameCounter.ToStr() + m.cleanType
+    m.finalImgName = "tmp:/nextImg" + m.global.filenameCounter.ToStr() + m.cleanType
 
     if fs.CopyFile("tmp:/" + m.global.filenameCounter.ToStr(), m.finalImgName)
         fs.Delete("tmp:/" + m.global.filenameCounter.ToStr())

@@ -63,7 +63,7 @@ sub GetNextBackground()
         m.cleanType = ""
     end if
 
-    m.finalImgName = "tmp:/background" + m.global.filenameCounter.ToStr() + m.cleanType
+    m.finalImgName = "tmp:/nextBackground" + m.global.filenameCounter.ToStr() + m.cleanType
 
     if fs.CopyFile("tmp:/" + m.global.filenameCounter.ToStr(), m.finalImgName)
         fs.Delete("tmp:/" + m.global.filenameCounter.ToStr())

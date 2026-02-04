@@ -1,4 +1,5 @@
 sub init()
+    print ">> ENTER init"
 
     m.paused = false
     m.imageDisplayed = false
@@ -77,17 +78,24 @@ sub init()
         m.initialGetResourceTask.control = "run"
     end if
 
+    print "<< EXIT init"
 end sub
 
 sub startGetLinksFromRegistry()
+    print ">> ENTER startGetLinksFromRegistry"
+
     m.screenFadeInAnimation.unobserveField("state")
     m.global.firstLaunch = "false"
     m.initialGetResourceTask = m.top.findNode("InitialGetResourceTask")
     m.initialGetResourceTask.observeField("result", "getLinksFromRegistry")
     m.initialGetResourceTask.control = "run"
+
+    print "<< EXIT startGetLinksFromRegistry"
 end sub
 
 sub getLinksFromRegistry()
+    print ">> ENTER getLinksFromRegistry"
+
     m.initialGetResourceTask.unobserveField("result")
 
     if m.initialGetResourceTask.result = "fail"
@@ -95,6 +103,7 @@ sub getLinksFromRegistry()
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppError"
+        print "<< EXIT getLinksFromRegistry"
         return
     else if m.initialGetResourceTask.result = "overflow"
         m.global.maxImages = m.initialGetResourceTask.maxImages
@@ -102,19 +111,25 @@ sub getLinksFromRegistry()
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "LightroomAlbumOverflow"
+        print "<< EXIT getLinksFromRegistry"
         return
     else if m.initialGetResourceTask.result = "update"
         m.progressDialog.message = "Retrieving new images from Lightroom Album"
         m.pollLightroomUpdateTask.observeField("result", "checkLightroomUpdate")
         m.pollLightroomUpdateTask.control = "run"
+        print "<< EXIT getLinksFromRegistry"
         return
     end if
 
     m.getLinksFromRegistry.observeField("result", "checkUriTask")
     m.getLinksFromRegistry.control = "run"
+
+    print "<< EXIT getLinksFromRegistry"
 end sub
 
 sub checkLightroomUpdate()
+    print ">> ENTER checkLightroomUpdate"
+
     m.pollLightroomUpdateTask.unobserveField("result")
 
     if m.pollLightroomUpdateTask.result <> "success"
@@ -122,6 +137,7 @@ sub checkLightroomUpdate()
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppError"
+        print "<< EXIT checkLightroomUpdate"
         return
     end if
 
@@ -134,37 +150,42 @@ sub checkLightroomUpdate()
 
     m.getLinksFromRegistry.observeField("result", "checkUriTask")
     m.getLinksFromRegistry.control = "run"
+
+    print "<< EXIT checkLightroomUpdate"
 end sub
 
 sub onVideoState()
+    print ">> ENTER onVideoState"
+
     if m.video.state = "finished"
         m.video.control = "play"
     end if
+
+    print "<< EXIT onVideoState"
 end sub
 
 sub checkUriTask()
+    print ">> ENTER checkUriTask"
+
     m.getLinksFromRegistry.unobserveField("result")
     if m.getLinksFromRegistry.result = "success"
-        getNextImage()
+        onTimerFire()
     else if m.getLinksFromRegistry.result = "fail"
         m.top.removeChild(m.progressDialog)
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "WebAppKeyError"
     end if
+
+    print "<< EXIT checkUriTask"
 end sub
 
 sub onTimerFire()
+    print ">> ENTER onTimerFire"
+
     m.picTimer.unobserveField("fire")
 
     m.imageDisplayed = false
-
-    m.fadeOutAnimation.control = "start"
-    m.fadeOutAnimation.observeField("state", "getNextImage")
-end sub
-
-sub getNextImage()
-    m.fadeOutAnimation.unobserveField("state")
 
     if m.global.background = "false"
         m.getNextImageTask.observeField("result", "getPoster")
@@ -173,9 +194,13 @@ sub getNextImage()
     end if
 
     m.getNextImageTask.control = "run"
+
+    print "<< EXIT onTimerFire"
 end sub
 
 sub getNextBackground()
+    print ">> ENTER getNextBackground"
+
     m.getNextImageTask.unobserveField("result")
 
     if m.getNextImageTask.result = "keyFail"
@@ -183,63 +208,43 @@ sub getNextBackground()
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "WebAppKeyError"
+        print "<< EXIT getNextBackground"
+        return
     else if m.getNextImageTask.result = "fail"
         m.top.removeChild(m.progressDialog)
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "WebAppError"
+        print "<< EXIT getNextBackground"
+        return
     end if
 
     m.getNextBackgroundTask.observeField("result", "getPoster")
     m.getNextBackgroundTask.control = "run"
 
+    print "<< EXIT getNextBackground"
 end sub
 
 sub getPoster()
+    print ">> ENTER getPoster"
 
-    if m.global.background = "false"
-        m.getNextImageTask.unobserveField("result")
+    m.getNextImageTask.unobserveField("result")
 
-        if m.getNextImageTask.result = "keyFail"
-            m.top.removeChild(m.progressDialog)
-            mainScene = m.top.getParent()
-            mainScene.removeChild(m.top)
-            m.global.currScreen = "WebAppKeyError"
-        else if m.getNextImageTask.result = "fail"
-            m.top.removeChild(m.progressDialog)
-            mainScene = m.top.getParent()
-            mainScene.removeChild(m.top)
-            m.global.currScreen = "WebAppError"
-        end if
-
-        m.posterStage.uri = m.global.imageUri
-
-        if m.posterStage.loadStatus = "loading"
-            m.posterStage.observeField("loadStatus", "onPosterLoaded")
-        else if m.posterStage.loadStatus = "ready"
-            onPosterLoaded()
-        end if
-
-    else
-        m.getNextBackgroundTask.unobserveField("result")
-        if m.getNextBackgroundTask.result <> "fail" and m.getNextBackgroundTask.result <> "keyFail"
-            m.backgroundImg.uri = m.global.backgroundUri
-        else
-            print "FAILED TO LOAD BACKGROUND IMAGE"
-        end if
-
-        if m.backgroundImg.loadStatus = "loading"
-            m.backgroundImg.observeField("loadStatus", "onBackgroundImgLoaded")
-        else if m.backgroundImg.loadStatus = "ready"
-            onBackgroundImgLoaded()
-        end if
-
+    if m.getNextImageTask.result = "keyFail"
+        m.top.removeChild(m.progressDialog)
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "WebAppKeyError"
+        print "<< EXIT getPoster"
+        return
+    else if m.getNextImageTask.result = "fail"
+        m.top.removeChild(m.progressDialog)
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "WebAppError"
+        print "<< EXIT getPoster"
+        return
     end if
-
-end sub
-
-sub onBackgroundImgLoaded()
-    m.backgroundImg.unobserveField("loadStatus")
 
     m.posterStage.uri = m.global.imageUri
 
@@ -249,10 +254,18 @@ sub onBackgroundImgLoaded()
         onPosterLoaded()
     end if
 
+    print "<< EXIT getPoster"
 end sub
 
 sub onPosterLoaded()
+    print ">> ENTER onPosterLoaded"
+
     m.posterStage.unobserveField("loadStatus")
+
+    m.finalWidth = 0
+    m.finalHeight = 0
+    m.finalTransX = 0
+    m.finalTransY = 0
 
     if m.posterStage.loadStatus = "ready"
 
@@ -263,47 +276,73 @@ sub onPosterLoaded()
         currDevRatio = m.global.deviceSize["w"] / m.global.deviceSize["h"]
 
         if currPicRatio > currDevRatio
-            m.currWallpaper.width = m.global.deviceSize["w"]
-            m.currWallpaper.height = m.global.deviceSize["w"] / currPicRatio
+            m.finalWidth = m.global.deviceSize["w"]
+            m.finalHeight = m.global.deviceSize["w"] / currPicRatio
 
-            moveDown = (m.global.deviceSize["h"] - m.currWallpaper.height) / 2
+            moveDown = (m.global.deviceSize["h"] - m.finalHeight) / 2
 
-            m.currWallpaper.translation = [0, moveDown]
+            m.finalTransY = moveDown
         else
-            m.currWallpaper.height = m.global.deviceSize["h"]
-            m.currWallpaper.width = m.global.deviceSize["h"] * currPicRatio
+            m.finalHeight = m.global.deviceSize["h"]
+            m.finalWidth = m.global.deviceSize["h"] * currPicRatio
 
-            moveRight = (m.global.deviceSize["w"] - m.currWallpaper.width) / 2
+            moveRight = (m.global.deviceSize["w"] - m.finalWidth) / 2
 
-            m.currWallpaper.translation = [moveRight, 0]
+            m.finalTransX = moveRight
         end if
     else
-        m.currWallpaper.width = m.global.deviceSize["w"]
-        m.currWallpaper.height = m.global.deviceSize["h"]
-        m.currWallpaper.translation = [0, 0]
+        m.finalWidth = m.global.deviceSize["w"]
+        m.finalHeight = m.global.deviceSize["h"]
+        m.finalTransX = 0
+        m.finalTransY = 0
     end if
 
+    if m.firstFire
+        setImages()
+    else
+        m.fadeOutAnimation.control = "start"
+        m.fadeOutAnimation.observeField("state", "setImages")
+    end if
+
+    print "<< EXIT onPosterLoaded"
+end sub
+
+sub setImages()
+    print ">> ENTER setImages"
+
+    m.fadeOutAnimation.unobserveField("state")
+
+    m.currWallpaper.width = m.finalWidth
+    m.currWallpaper.height = m.finalHeight
+    m.currWallpaper.translation = [m.finalTransX, m.finalTransY]
     m.currWallpaper.uri = m.global.imageUri
 
-    if m.currWallpaper.loadStatus = "loading"
-        m.currWallpaper.observeField("loadStatus", "animateIn")
-    else if m.currWallpaper.loadStatus = "ready"
-        animateIn()
+    if m.global.background = "true"
+        m.backgroundImg.uri = m.global.backgroundUri
     end if
 
+    animateIn()
+
+    print "<< EXIT setImages"
 end sub
 
 sub animateIn()
+    print ">> ENTER animateIn"
+
     if m.firstFire
         m.top.removeChild(m.progressDialog)
         m.solidBackground.opacity = 100
     end if
-    m.currWallpaper.unobserveField("loadStatus")
+
     m.fadeInAnimation.control = "start"
     m.fadeInAnimation.observeField("state", "finishAnimateIn")
+
+    print "<< EXIT animateIn"
 end sub
 
 sub finishAnimateIn()
+    print ">> ENTER finishAnimateIn"
+
     m.fadeInAnimation.unobserveField("state")
 
     m.imageDisplayed = true
@@ -316,9 +355,13 @@ sub finishAnimateIn()
         m.picTimer.observeField("fire", "onTimerFire")
         m.picTimer.control = "start"
     end if
+
+    print "<< EXIT finishAnimateIn"
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
+    print ">> ENTER onKeyEvent"
+
     if key = "OK" and press = true and m.global.imageCount > 1 and m.imageDisplayed
         ' pause the stream
         if m.paused
@@ -368,7 +411,10 @@ function onKeyEvent(key as string, press as boolean) as boolean
         menu = m.top.getParent()
         menu.removeChild(m.top)
         m.global.currScreen = "Menu"
+        print "<< EXIT onKeyEvent"
         return true
     end if
+
+    print "<< EXIT onKeyEvent"
     return false
 end function
