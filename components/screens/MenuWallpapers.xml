@@ -7,7 +7,6 @@
         <InitialGetResource id="InitialGetResourceTask" />
         <PollLightroomUpdate id="PollLightroomUpdateTask" />
         <GetNextImage id="GetNextImageTask" />
-        <GetNextBackground id="GetNextBackgroundTask" />
         <GetLinksFromRegistry id="GetLinksFromRegistryTask" />
         <RemoveTempFiles id="RemoveTempFilesTask" />
         <Animation
