@@ -27,7 +27,6 @@ sub init()
     m.getLinksFromRegistry = m.top.findNode("GetLinksFromRegistryTask")
 
     m.getNextImageTask = m.top.findNode("GetNextImageTask")
-    m.getNextBackgroundTask = m.top.findNode("GetNextBackgroundTask")
 
     m.currWallpaper = m.top.findNode("currWallpaper")
 
@@ -90,7 +89,7 @@ end sub
 sub checkUriTask()
     m.getLinksFromRegistry.unobserveField("result")
     if m.getLinksFromRegistry.result = "success"
-        getNextImage()
+        onTimerFire()
     else if m.getLinksFromRegistry.result = "fail"
         menu = m.top.getParent()
         menu.removeChild(m.top)
@@ -99,39 +98,14 @@ sub checkUriTask()
 end sub
 
 sub onTimerFire()
+    print ">> ENTER onTimerFire"
+
     m.picTimer.unobserveField("fire")
-    m.fadeOutAnimation.control = "start"
-    m.fadeOutAnimation.observeField("state", "getNextImage")
-end sub
 
-sub getNextImage()
-    m.fadeOutAnimation.unobserveField("state")
-
-    if m.global.background = "false"
-        m.getNextImageTask.observeField("result", "getPoster")
-    else
-        m.getNextImageTask.observeField("result", "getNextBackground")
-    end if
-
+    m.getNextImageTask.observeField("result", "getPoster")
     m.getNextImageTask.control = "run"
-end sub
 
-sub getNextBackground()
-    m.getNextImageTask.unobserveField("result")
-
-    if m.getNextImageTask.result = "keyFail"
-        mainScene = m.top.getParent()
-        mainScene.removeChild(m.top)
-        m.global.currScreen = "WebAppKeyError"
-    else if m.getNextImageTask.result = "fail"
-        mainScene = m.top.getParent()
-        mainScene.removeChild(m.top)
-        m.global.currScreen = "WebAppError"
-    end if
-
-    m.getNextBackgroundTask.observeField("result", "getPoster")
-    m.getNextBackgroundTask.control = "run"
-
+    print "<< EXIT onTimerFire"
 end sub
 
 sub getPoster()
@@ -159,8 +133,14 @@ sub getPoster()
 end sub
 
 sub onPosterLoaded()
+    print ">> ENTER onPosterLoaded"
 
     m.posterStage.unobserveField("loadStatus")
+
+    m.finalWidth = 0
+    m.finalHeight = 0
+    m.finalTransX = 0
+    m.finalTransY = 0
 
     if m.posterStage.loadStatus = "ready"
 
@@ -171,40 +151,59 @@ sub onPosterLoaded()
         currDevRatio = m.global.deviceSize["w"] / 3 / m.global.deviceSize["h"]
 
         if currPicRatio > currDevRatio
-            m.currWallpaper.width = m.global.deviceSize["w"] / 3
-            m.currWallpaper.height = m.global.deviceSize["w"] / 3 / currPicRatio
+            m.finalWidth = m.global.deviceSize["w"] / 3
+            m.finalHeight = m.global.deviceSize["w"] / 3 / currPicRatio
 
-            moveDown = (m.global.deviceSize["h"] - m.currWallpaper.height) / 2
+            moveDown = (m.global.deviceSize["h"] - m.finalHeight) / 2
 
-            m.currWallpaper.translation = [0, moveDown]
+            m.finalTransY = moveDown
         else
-            m.currWallpaper.height = m.global.deviceSize["h"]
-            m.currWallpaper.width = m.global.deviceSize["h"] * currPicRatio
+            m.finalHeight = m.global.deviceSize["h"]
+            m.finalWidth = m.global.deviceSize["h"] * currPicRatio
 
-            moveRight = (m.global.deviceSize["w"] / 3 - m.currWallpaper.width) / 2
+            moveRight = (m.global.deviceSize["w"] / 3 - m.finalWidth) / 2
 
-            m.currWallpaper.translation = [moveRight, 0]
+            m.finalTransX = moveRight
         end if
     else
-        m.currWallpaper.width = m.global.deviceSize["w"] / 3
-        m.currWallpaper.height = m.global.deviceSize["h"]
-        m.currWallpaper.translation = [0, 0]
+        m.finalWidth = m.global.deviceSize["w"] / 3
+        m.finalHeight = m.global.deviceSize["h"]
+        m.finalTransX = 0
+        m.finalTransY = 0
     end if
 
+    if m.firstFire
+        setImages()
+    else
+        m.fadeOutAnimation.control = "start"
+        m.fadeOutAnimation.observeField("state", "setImages")
+    end if
+
+    print "<< EXIT onPosterLoaded"
+end sub
+
+sub setImages()
+    print ">> ENTER setImages"
+
+    m.fadeOutAnimation.unobserveField("state")
+
+    m.currWallpaper.width = m.finalWidth
+    m.currWallpaper.height = m.finalHeight
+    m.currWallpaper.translation = [m.finalTransX, m.finalTransY]
     m.currWallpaper.uri = m.global.imageUri
 
-    if m.currWallpaper.loadStatus = "loading"
-        m.currWallpaper.observeField("loadStatus", "animateIn")
-    else if m.currWallpaper.loadStatus = "ready"
-        animateIn()
-    end if
+    animateIn()
 
+    print "<< EXIT setImages"
 end sub
 
 sub animateIn()
-    m.currWallpaper.unobserveField("loadStatus")
+    print ">> ENTER animateIn"
+
     m.fadeInAnimation.control = "start"
     m.fadeInAnimation.observeField("state", "finishAnimateIn")
+
+    print "<< EXIT animateIn"
 end sub
 
 sub finishAnimateIn()
