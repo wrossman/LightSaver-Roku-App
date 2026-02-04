@@ -1,4 +1,3 @@
-
 sub init()
 
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")

@@ -27,6 +27,11 @@ sub finishRevokeTask()
         mainScene = m.top.getParent()
         mainScene.removeChild(m.top)
         m.global.currScreen = "RevokeSuccess"
+    else
+        m.top.removeChild(m.progressDialog)
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
+        m.global.currScreen = "WebAppError"
     end if
 end sub
 

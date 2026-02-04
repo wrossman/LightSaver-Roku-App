@@ -50,7 +50,7 @@ sub onSettingsSelection()
         menu = m.top.getParent()
         mainScene = menu.getParent()
         mainScene.removeChild(menu)
-        m.global.currScreen = "RevokeAccessSuccess"
+        m.global.currScreen = "RevokeAccessDialog"
     end if
 
 end sub

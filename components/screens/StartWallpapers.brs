@@ -1,5 +1,8 @@
 sub init()
 
+    m.paused = false
+    m.imageDisplayed = false
+
     m.solidBackground = m.top.findNode("solidBackground")
     m.solidBackground.width = m.global.deviceSize["w"]
     m.solidBackground.height = m.global.deviceSize["h"]
@@ -153,6 +156,9 @@ end sub
 
 sub onTimerFire()
     m.picTimer.unobserveField("fire")
+
+    m.imageDisplayed = false
+
     m.fadeOutAnimation.control = "start"
     m.fadeOutAnimation.observeField("state", "getNextImage")
 end sub
@@ -299,18 +305,48 @@ end sub
 
 sub finishAnimateIn()
     m.fadeInAnimation.unobserveField("state")
+
+    m.imageDisplayed = true
+
     if m.firstFire
         m.fadeRect.color = m.global.fadeColor
         m.firstFire = false
     end if
-    if m.global.imageCount > 1
+    if m.global.imageCount > 1 and not m.paused
         m.picTimer.observeField("fire", "onTimerFire")
         m.picTimer.control = "start"
     end if
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
-    if key = "back" and press = true
+    if key = "OK" and press = true and m.global.imageCount > 1 and m.imageDisplayed
+        ' pause the stream
+        if m.paused
+            print "resuming"
+            m.picTimer.observeField("fire", "onTimerFire")
+            m.picTimer.control = "start"
+            m.paused = false
+        else
+            print "pausing"
+            m.picTimer.unobserveField("fire")
+            m.paused = true
+        end if
+    else if key = "left" and press = true and m.global.imageCount > 1 and m.imageDisplayed
+        ' go to the last image displayed
+        for i = 0 to 1
+            print i
+            m.global.imgIndex--
+            if (m.global.imgIndex < 0)
+                m.global.imgIndex = m.global.idList.Count() - 1
+            end if
+        end for
+        m.picTimer.control = "stop"
+        onTimerFire()
+    else if key = "right" and press = true and m.global.imageCount > 1 and m.imageDisplayed
+        ' go to the next image displayed
+        m.picTimer.control = "stop"
+        onTimerFire()
+    else if key = "back" and press = true
         'remove all children of wallpapers then remove wallpaper from parent
         if m.global.imageCount > 1
             m.picTimer.control = "stop"
