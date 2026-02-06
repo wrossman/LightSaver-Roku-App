@@ -195,6 +195,10 @@ sub onTimerFire()
 
     m.getNextImageTask.control = "run"
 
+    if not m.firstFire
+        m.fadeOutAnimation.control = "start"
+    end if
+
     print "<< EXIT onTimerFire"
 end sub
 
@@ -297,11 +301,11 @@ sub onPosterLoaded()
         m.finalTransY = 0
     end if
 
-    if m.firstFire
-        setImages()
-    else
-        m.fadeOutAnimation.control = "start"
+    ' check to see if the fade out animation is done, if not, then queue an event to trigger set images
+    if m.fadeOutAnimation.state = "running"
         m.fadeOutAnimation.observeField("state", "setImages")
+    else
+        setImages()
     end if
 
     print "<< EXIT onPosterLoaded"
