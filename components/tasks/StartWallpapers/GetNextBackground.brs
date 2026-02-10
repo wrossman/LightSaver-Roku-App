@@ -69,6 +69,5 @@ sub GetNextBackground()
         m.top.result = m.finalImgName
     else
         m.top.result = "fail"
-        return
     end if
 end sub

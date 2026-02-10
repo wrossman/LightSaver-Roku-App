@@ -233,6 +233,7 @@ sub getPoster()
     print ">> ENTER getPoster"
 
     m.getNextImageTask.unobserveField("result")
+    m.getNextBackgroundTask.unobserveField("result")
 
     if m.getNextImageTask.result = "keyFail"
         m.top.removeChild(m.progressDialog)
