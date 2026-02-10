@@ -107,8 +107,14 @@ end sub
 
 function getDeviceSize()
     devInfo = CreateObject("roDeviceInfo")
-    size = devInfo.GetDisplaySize()
-    return size
+    size = devInfo.GetUIResolution()
+    print size["width"].ToStr()
+    print size["height"].ToStr()
+    sizeArr = {
+        "w": size["width"]
+        "h": size["height"]
+    }
+    return sizeArr
 end function
 
 function getChannelClientId()

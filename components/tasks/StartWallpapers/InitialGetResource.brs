@@ -9,7 +9,8 @@ sub initialGet()
         "Authorization": m.global.resourceIds[m.global.idList[0]],
         "ResourceId": m.global.idList[0],
         "Device": m.global.clientId,
-        "MaxScreenSize": m.global.maxScreenSize.ToStr()
+        "ScreenWidth": m.global.deviceSize["w"],
+        "ScreenHeight": m.global.deviceSize["h"]
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")

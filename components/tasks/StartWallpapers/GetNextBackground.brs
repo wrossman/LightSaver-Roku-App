@@ -20,9 +20,7 @@ sub GetNextBackground()
     m.currHeader = {
         "Authorization": m.global.resourceIds[m.global.idList[m.global.imgIndex]],
         "ResourceId": m.global.idList[m.global.imgIndex],
-        "Device": m.global.clientId,
-        "Height": m.global.deviceSize["h"].ToStr(),
-        "Width": m.global.deviceSize["w"].ToStr()
+        "Device": m.global.clientId
     }
 
     m.imageHttp = CreateObject("roUrlTransfer")

@@ -6,7 +6,8 @@ sub getSessionCode()
 
     serialArr = {
         "RokuId": m.global.clientId,
-        "MaxScreenSize": m.global.maxScreenSize
+        "ScreenWidth": m.global.deviceSize["w"],
+        "ScreenHeight": m.global.deviceSize["h"]
     }
 
     serialJson = FormatJson(serialArr)
