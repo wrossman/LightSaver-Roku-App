@@ -35,30 +35,70 @@ sub init()
     m.title.font.size = 100
     m.title.translation = [0, m.global.deviceSize["h"] / 7]
 
-    m.directions1.width = m.global.deviceSize["w"] / 2
+    ' ---- RIGHT SIDE (VERTICALLY JUSTIFIED WITH 1/8 TOP/BOTTOM PADDING) ----
+    w = m.global.deviceSize["w"]
+    h = m.global.deviceSize["h"]
+
+    rightX = w / 2
+    rightW = w / 2
+
+    topPadding = h / 8
+    bottomPadding = h / 8
+    usableHeight = h - topPadding - bottomPadding
+
+    ' ---- Widths + fonts (must be set before measuring) ----
+    m.directions1.width = rightW
     m.directions1.font.size = 25
-    m.directions1.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8]
     m.directions1.wrap = true
 
-    m.linkLabel.width = m.global.deviceSize["w"] / 2
+    m.linkLabel.width = rightW
     m.linkLabel.font.size = 35
-    m.linkLabel.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8 + 40]
     m.linkLabel.wrap = true
 
-    m.qrCode.width = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
-    m.qrCode.height = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
-    m.qrCode.translation = [m.global.deviceSize["w"] / 2 + m.global.deviceSize["w"] / 8, m.global.deviceSize["h"] / 8 + 100]
-
-    m.qrCodeHeight = m.global.deviceSize["w"] / 2 - m.global.deviceSize["w"] / 4
-
-    m.directions2.width = m.global.deviceSize["w"] / 2
+    m.directions2.width = rightW
     m.directions2.font.size = 25
-    m.directions2.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8 + m.qrCodeHeight + 125]
     m.directions2.wrap = true
 
-    m.sessionCode.width = m.global.deviceSize["w"] / 2
-    m.sessionCode.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8 + m.qrCodeHeight + 175]
+    m.sessionCode.width = rightW
     m.sessionCode.font.size = 80
+
+    ' ---- QR sizing ----
+    qrSize = rightW / 2
+    m.qrCode.width = qrSize
+    m.qrCode.height = qrSize
+    m.qrCodeHeight = qrSize
+
+    qrX = rightX + (rightW - qrSize) / 2
+
+    ' ---- Measure heights ----
+    h1 = m.directions1.boundingRect().height
+    h2 = m.linkLabel.boundingRect().height
+    h3 = m.qrCode.height
+    h4 = m.directions2.boundingRect().height
+    h5 = m.sessionCode.boundingRect().height
+
+    totalContentHeight = h1 + h2 + h3 + h4 + h5
+
+    ' 5 items → 4 internal gaps
+    gap = (usableHeight - totalContentHeight) / 4
+    if gap < 10 then gap = 10
+
+    ' ---- Start at padded top ----
+    y = topPadding
+
+    m.directions1.translation = [rightX, y]
+    y += h1 + gap
+
+    m.linkLabel.translation = [rightX, y]
+    y += h2 + gap
+
+    m.qrCode.translation = [qrX, y]
+    y += h3 + gap
+
+    m.directions2.translation = [rightX, y]
+    y += h4 + gap
+
+    m.sessionCode.translation = [rightX, y]
 
     m.pollLightSaverWebAppTask.observeField("resourceCount", "showDownloadDialog")
 

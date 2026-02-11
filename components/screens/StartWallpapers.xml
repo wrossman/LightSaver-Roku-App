@@ -34,7 +34,7 @@
             id="fadeOutAnimation"
             repeat="false"
             easeFunction="inQuad"
-            duration="0.75">
+            duration="0.65">
             <FloatFieldInterpolator
                 id="animateOutInterp"
                 key="[0.0,1.0]"
@@ -46,7 +46,7 @@
             id="fadeInAnimation"
             repeat="false"
             easeFunction="inQuad"
-            duration="0.75">
+            duration="0.65">
             <FloatFieldInterpolator
                 id="animateInInterp"
                 key="[0.0,1.0]"

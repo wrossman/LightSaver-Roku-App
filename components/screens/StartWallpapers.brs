@@ -304,16 +304,16 @@ sub onPosterLoaded()
 
     ' check to see if the fade out animation is done, if not, then queue an event to trigger set images
     if m.fadeOutAnimation.state = "running"
-        m.fadeOutAnimation.observeField("state", "setImages")
+        m.fadeOutAnimation.observeField("state", "setImage")
     else
-        setImages()
+        setImage()
     end if
 
     print "<< EXIT onPosterLoaded"
 end sub
 
-sub setImages()
-    print ">> ENTER setImages"
+sub setImage()
+    print ">> ENTER setImage"
 
     m.fadeOutAnimation.unobserveField("state")
 
@@ -322,17 +322,42 @@ sub setImages()
     m.currWallpaper.translation = [m.finalTransX, m.finalTransY]
     m.currWallpaper.uri = m.global.imageUri
 
-    if m.global.background = "true"
-        m.backgroundImg.uri = m.global.backgroundUri
+    if m.currWallpaper.loadStatus = "ready"
+        if m.global.background = "true"
+            setBackground()
+        else
+            animateIn()
+        end if
+    else
+        if m.global.background = "true"
+            m.currWallpaper.observeField("loadStatus", "setBackground")
+        else
+            m.currWallpaper.observeField("loadStatus", "animateIn")
+        end if
     end if
 
-    animateIn()
+    print "<< EXIT setImage"
+end sub
 
-    print "<< EXIT setImages"
+sub setBackground()
+    print ">> ENTER setBackground"
+    m.currWallpaper.unobserveField("loadStatus")
+
+    m.backgroundImg.uri = m.global.backgroundUri
+
+    if m.backgroundImg.loadStatus = "ready"
+        animateIn()
+    else
+        m.backgroundImg.observeField("loadStatus", "animateIn")
+    end if
+    print "<< EXIT setBackground"
 end sub
 
 sub animateIn()
     print ">> ENTER animateIn"
+
+    m.currWallpaper.unobserveField("loadStatus")
+    m.backgroundImg.unobserveField("loadStatus")
 
     if m.firstFire
         m.top.removeChild(m.progressDialog)

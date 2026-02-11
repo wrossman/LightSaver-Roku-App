@@ -32,7 +32,7 @@
         />
         <Label
             id="sessionCode"
-            text=""
+            text="0000000"
             horizAlign="center"
             color="#FFFFFF"
             opacity="0"
