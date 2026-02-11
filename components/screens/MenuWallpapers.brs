@@ -144,33 +144,42 @@ sub onPosterLoaded()
 
     if m.posterStage.loadStatus = "ready"
 
+        deviceWidth = m.global.deviceSize["w"]
+        deviceHeight = m.global.deviceSize["h"]
+
+        columnWidth = deviceWidth / 3
+
+        reducedHeight = deviceHeight * 4 / 5
+        verticalOffset = deviceHeight / 10 ' 1/10 shift downward
+
         currPicWidth = m.posterStage.bitmapWidth
         currPicHeight = m.posterStage.bitmapHeight
         currPicRatio = currPicWidth / currPicHeight
 
-        currDevRatio = m.global.deviceSize["w"] / 3 / m.global.deviceSize["h"]
+        currDevRatio = columnWidth / reducedHeight
 
         if currPicRatio > currDevRatio
-            m.finalWidth = m.global.deviceSize["w"] / 3
-            m.finalHeight = m.global.deviceSize["w"] / 3 / currPicRatio
+            m.finalWidth = columnWidth
+            m.finalHeight = columnWidth / currPicRatio
 
-            moveDown = (m.global.deviceSize["h"] - m.finalHeight) / 2
-
-            m.finalTransY = moveDown
+            moveDown = (reducedHeight - m.finalHeight) / 2
+            m.finalTransY = moveDown + verticalOffset
         else
-            m.finalHeight = m.global.deviceSize["h"]
-            m.finalWidth = m.global.deviceSize["h"] * currPicRatio
+            m.finalHeight = reducedHeight
+            m.finalWidth = reducedHeight * currPicRatio
 
-            moveRight = (m.global.deviceSize["w"] / 3 - m.finalWidth) / 2
-
+            moveRight = (columnWidth - m.finalWidth) / 2
             m.finalTransX = moveRight
+            m.finalTransY = verticalOffset
         end if
+
     else
         m.finalWidth = m.global.deviceSize["w"] / 3
-        m.finalHeight = m.global.deviceSize["h"]
+        m.finalHeight = m.global.deviceSize["h"] * 4 / 5
         m.finalTransX = 0
-        m.finalTransY = 0
+        m.finalTransY = m.global.deviceSize["h"] / 10
     end if
+
 
     if m.firstFire
         setImages()
