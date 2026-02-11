@@ -178,6 +178,10 @@ end sub
 function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
 
+        if m.pollLightSaverWebAppTask.resourceCount > 0
+            return true
+        end if
+
         if m.global.loaded = "false"
             return true
         end if
