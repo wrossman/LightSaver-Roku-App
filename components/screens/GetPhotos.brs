@@ -17,6 +17,11 @@ sub init()
     m.fromMenuFadeIn = m.top.findNode("fromMenuFadeIn")
     m.qrCode = m.top.findNode("qrCode")
     m.fromMenuFade = m.top.findNode("fromMenuFade")
+    m.downloadDialog = m.top.findNode("downloadDialog")
+    m.downloadBackground = m.top.findNode("downloadBackground")
+
+    m.downloadBackground.height = m.global.deviceSize["h"]
+    m.downloadBackground.width = m.global.deviceSize["w"]
 
     m.leftRect.height = m.global.deviceSize["h"]
     m.leftRect.width = m.global.deviceSize["w"] / 2
@@ -54,6 +59,8 @@ sub init()
     m.sessionCode.width = m.global.deviceSize["w"] / 2
     m.sessionCode.translation = [m.global.deviceSize["w"] / 2, m.global.deviceSize["h"] / 8 + m.qrCodeHeight + 175]
     m.sessionCode.font.size = 80
+
+    m.pollLightSaverWebAppTask.observeField("resourceCount", "showDownloadDialog")
 
     if m.global.firstLaunch = "true"
         print "in first launch true"
@@ -160,6 +167,12 @@ sub finishGetPhotosFlow()
     menu = m.top.getParent()
     menu.removeChild(m.top)
     m.global.currScreen = "GetPhotosSuccess"
+end sub
+
+sub showDownloadDialog()
+    m.downloadBackground.visible = true
+    m.downloadDialog.visible = true
+    m.downloadDialog.message = "Uploaded " + m.pollLightSaverWebAppTask.resourceCount.ToStr() + " images to LightSaver..."
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean

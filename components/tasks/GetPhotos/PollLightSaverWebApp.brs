@@ -43,9 +43,11 @@ sub pollLightSaverWebApp()
 
     responseString = responseEvent.GetString()
 
+    sleepTime = 5000
+
     while responseString <> "Ready"
 
-        Sleep(5000)
+        Sleep(sleepTime)
 
         post.AsyncPostFromString(jsonPostSessionBody)
         responseEvent = Wait(5000, postPort)
@@ -67,6 +69,12 @@ sub pollLightSaverWebApp()
         if responseString = "Expired"
             m.top.result = "expired"
             return
+        end if
+
+        if StrToI(responseString) > 0
+            print "in string parsed"
+            m.top.resourceCount = StrToI(responseString)
+            sleepTime = 1000
         end if
     end while
 
