@@ -23,6 +23,8 @@ sub init()
     m.downloadBackground.height = m.global.deviceSize["h"]
     m.downloadBackground.width = m.global.deviceSize["w"]
 
+    m.downloadDialog.width = m.downloadDialog.boundingRect().width
+
     m.leftRect.height = m.global.deviceSize["h"]
     m.leftRect.width = m.global.deviceSize["w"] / 2
 
@@ -33,7 +35,7 @@ sub init()
     m.title.width = m.global.deviceSize["w"] / 2
     m.title.font.uri = "pkg:/components/data/fonts/" + m.global.titleFont
     m.title.font.size = 100
-    m.title.translation = [0, m.global.deviceSize["h"] / 7]
+    m.title.translation = [0, m.global.deviceSize["h"] / 2 - (m.title.boundingRect().height / 2)]
 
     ' ---- RIGHT SIDE (VERTICALLY JUSTIFIED WITH 1/8 TOP/BOTTOM PADDING) ----
     w = m.global.deviceSize["w"]
@@ -177,6 +179,7 @@ sub animateOutFinished()
 
     m.getSessionCodeTask = CreateObject("roSGNode", "GetSessionCode")
     m.pollLightSaverWebAppTask = CreateObject("roSGNode", "PollLightSaverWebApp")
+    m.pollLightSaverWebAppTask.observeField("resourceCount", "showDownloadDialog")
 
     m.top.appendChild(m.getSessionCodeTask)
     m.top.appendChild(m.pollLightSaverWebAppTask)
@@ -212,7 +215,12 @@ end sub
 sub showDownloadDialog()
     m.downloadBackground.visible = true
     m.downloadDialog.visible = true
-    m.downloadDialog.message = "Uploaded " + m.pollLightSaverWebAppTask.resourceCount.ToStr() + " images to LightSaver..."
+    if m.pollLightSaverWebAppTask.resourceCount = 1
+        m.downloadDialog.message = "Uploaded " + m.pollLightSaverWebAppTask.resourceCount.ToStr() + " image to LightSaver..."
+    else
+        m.downloadDialog.message = "Uploaded " + m.pollLightSaverWebAppTask.resourceCount.ToStr() + " images to LightSaver..."
+    end if
+
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean

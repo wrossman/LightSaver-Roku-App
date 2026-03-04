@@ -7,9 +7,9 @@ sub loadConfig()
     print "loading config from registry"
 
     ' FOR TESTING A CLEAN REGISTRY
-    ' m.reg = CreateObject("roRegistry")
-    ' print "Successfully deleted config from registry: " + m.reg.Delete("Config").ToStr()
-    ' m.reg.Flush()
+    m.reg = CreateObject("roRegistry")
+    print "Successfully deleted config from registry: " + m.reg.Delete("Config").ToStr()
+    m.reg.Flush()
 
     m.registry = CreateObject("roRegistrySection", "Config")
 
@@ -25,8 +25,8 @@ sub loadConfig()
         m.global.background = m.registry.Read("background")
         print "loaded background: " + m.global.background.ToStr()
     else
-        m.registry.Write("background", "false")
-        m.global.background = "false"
+        m.registry.Write("background", "true")
+        m.global.background = "true"
     end if
 
     if m.registry.Exists("displayTime")
@@ -79,7 +79,7 @@ sub loadConfig()
         m.global.webappUrl = "https://alpha.lightsaver.photos"
         m.global.certificates = "common:/certs/ca-bundle.crt"
     else if deployment = "azure"
-        m.global.webappUrl = "https://roku.lightsaver.photos"
+        m.global.webappUrl = "https://lstestsix-webapp.azurewebsites.net"
         m.global.certificates = "common:/certs/ca-bundle.crt"
     else if deployment = "local"
         m.global.webappUrl = "https://10.0.0.15:8443"

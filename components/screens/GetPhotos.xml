@@ -93,7 +93,11 @@
         <PollLightSaverWebApp id="PollLightSaverWebAppTask" />
         <GetResourcePackage id="GetResourcePackageTask" />
         <Rectangle id="downloadBackground" color="#001C30" visible="false" />
-        <StandardProgressDialog id="downloadDialog" visible="false" />
+        <StandardProgressDialog
+            id="downloadDialog"
+            visible="false"
+            message="Uploaded 0 images to LightSaver..."
+        />
     </children>
     <script type="text/brightscript" uri="GetPhotos.brs" />
 </component>
