@@ -119,6 +119,13 @@ sub getLinksFromRegistry()
         m.pollLightroomUpdateTask.control = "run"
         print "<< EXIT getLinksFromRegistry"
         return
+    else if m.initialGetResourceTask.result = "load"
+        m.top.removeChild(m.progressDialog)
+        menu = m.top.getParent()
+        menu.removeChild(m.top)
+        m.global.currScreen = "GetPhotos"
+        print "<< EXIT getLinksFromRegistry"
+        return
     end if
 
     m.getLinksFromRegistry.observeField("result", "checkUriTask")

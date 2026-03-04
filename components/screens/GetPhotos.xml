@@ -96,7 +96,7 @@
         <StandardProgressDialog
             id="downloadDialog"
             visible="false"
-            message="Uploaded 0 images to LightSaver..."
+            message="Uploaded 00 images to LightSaver..."
         />
     </children>
     <script type="text/brightscript" uri="GetPhotos.brs" />

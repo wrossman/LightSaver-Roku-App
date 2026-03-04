@@ -73,12 +73,9 @@ sub loadConfig()
     m.global.deviceSize = getDeviceSize()
     m.global.clientId = getChannelClientId()
 
-    deployment = "azure"
+    deployment = "local"
 
-    if deployment = "aws"
-        m.global.webappUrl = "https://alpha.lightsaver.photos"
-        m.global.certificates = "common:/certs/ca-bundle.crt"
-    else if deployment = "azure"
+    if deployment = "azure"
         m.global.webappUrl = "https://lstestsix-webapp.azurewebsites.net"
         m.global.certificates = "common:/certs/ca-bundle.crt"
     else if deployment = "local"

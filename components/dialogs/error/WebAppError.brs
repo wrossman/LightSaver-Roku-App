@@ -11,7 +11,7 @@ end sub
 sub launchDialog()
     m.dialog = m.top.findNode("error")
     m.dialog.title = ["Connection Error"]
-    m.dialog.message = ["LightSaver Website is unable to be reached. Please try again."]
+    m.dialog.message = ["LightSaver Website is unable to be reached.", "Please try again."]
     m.dialog.buttons = ["Continue"]
     m.dialog.observeField("buttonSelected", "onButtonSelected")
 end sub
@@ -27,8 +27,8 @@ end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
     if key = "back" and press = true
-        menu = m.top.getParent()
-        menu.removeChild(m.top)
+        mainScene = m.top.getParent()
+        mainScene.removeChild(m.top)
         m.global.currScreen = "Menu"
         return true
     end if

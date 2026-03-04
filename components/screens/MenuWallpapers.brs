@@ -46,18 +46,26 @@ sub getLinksFromRegistry()
 
     if m.initialGetResourceTask.result = "fail"
         menu = m.top.getParent()
-        menu.removeChild(m.top)
+        mainScene = menu.getParent()
+        mainScene.removeChild(menu)
         m.global.currScreen = "WebAppError"
         return
     else if m.initialGetResourceTask.result = "overflow"
         m.global.maxImages = m.initialGetResourceTask.maxImages
         menu = m.top.getParent()
-        menu.removeChild(m.top)
+        mainScene = menu.getParent()
+        mainScene.removeChild(menu)
         m.global.currScreen = "LightroomAlbumOverflow"
         return
     else if m.initialGetResourceTask.result = "update"
         m.pollLightroomUpdateTask.observeField("result", "checkLightroomUpdate")
         m.pollLightroomUpdateTask.control = "run"
+        return
+    else if m.initialGetResourceTask.result = "load"
+        menu = m.top.getParent()
+        mainScene = menu.getParent()
+        mainScene.removeChild(menu)
+        m.global.currScreen = "GetPhotos"
         return
     end if
 
@@ -70,7 +78,8 @@ sub checkLightroomUpdate()
 
     if m.pollLightroomUpdateTask.result <> "success"
         menu = m.top.getParent()
-        menu.removeChild(m.top)
+        mainScene = menu.getParent()
+        mainScene.removeChild(menu)
         m.global.currScreen = "WebAppError"
         return
     end if

@@ -6,7 +6,7 @@ sub getLinksFromRegistry()
 
     m.regConfig = CreateObject("roRegistrySection", "Config")
 
-    if m.global.resourceIds.Count() = 0
+    if m.global.resourceIds.Count() = 0 or m.global.loaded = "false"
         m.top.result = "fail"
         return
     end if

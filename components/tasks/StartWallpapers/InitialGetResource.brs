@@ -5,6 +5,11 @@ end sub
 sub initialGet()
     print "in initial get"
 
+    if m.global.loaded = "false"
+        m.top.result = "load"
+        return
+    end if
+
     m.currHeader = {
         "Authorization": m.global.resourceIds[m.global.idList[0]],
         "ResourceId": m.global.idList[0],
