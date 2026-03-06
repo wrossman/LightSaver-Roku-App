@@ -17,7 +17,7 @@ sub revokeAccess()
     print m.revokeTransfer.SetCertificatesFile(m.global.certificates)
     m.revokeTransferPort = CreateObject("roMessagePort")
 
-    m.revokeTransfer.SetUrl(m.global.webappUrl + "/link/revoke")
+    m.revokeTransfer.SetUrl(m.global.webappUrl + "/api/link/revoke")
     m.revokeTransfer.AddHeader("Content-Type", "application/json")
     m.revokeTransfer.SetPort(m.revokeTransferPort)
     response = m.revokeTransfer.PostFromString(m.payloadJson)
