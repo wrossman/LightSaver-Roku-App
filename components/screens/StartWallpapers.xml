@@ -11,6 +11,10 @@
         <Poster id="currWallpaper" loadDisplayMode="scaleToFit" />
         <Rectangle id="fadeRect" opacity="100" color="0xFFFFFF" />
         <Rectangle id="startFadeRect" opacity="0" color="0xFFFFFF" />
+        <Poster id="pauseIcon" uri="pkg:/components/data/images/pause.png" opacity="0" />
+        <Poster id="playIcon" uri="pkg:/components/data/images/play.png" opacity="0" />
+        <Poster id="ffIcon" uri="pkg:/components/data/images/fast-forward.png" opacity="0" />
+        <Poster id="sbIcon" uri="pkg:/components/data/images/step-backward.png" opacity="0" />
         <Timer id="picTimer" />
         <InitialGetResource id="InitialGetResourceTask" />
         <PollLightroomUpdate id="PollLightroomUpdateTask" />

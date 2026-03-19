@@ -17,6 +17,15 @@ sub init()
     m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
     m.removeTempFilesTask.control = "run"
 
+    m.playIcon = m.top.findNode("playIcon")
+    m.pauseIcon = m.top.findNode("pauseIcon")
+    m.ffIcon = m.top.findNode("ffIcon")
+    m.sbIcon = m.top.findNode("sbIcon")
+    centerIcons(m.playIcon)
+    centerIcons(m.pauseIcon)
+    centerIcons(m.ffIcon)
+    centerIcons(m.sbIcon)
+
     m.fadeRect = m.top.findNode("fadeRect")
     m.fadeRect.height = m.global.deviceSize["h"]
     m.fadeRect.width = m.global.deviceSize["w"]
@@ -455,3 +464,9 @@ function onKeyEvent(key as string, press as boolean) as boolean
     print "<< EXIT onKeyEvent"
     return false
 end function
+
+sub centerIcons(node as object)
+    node.width = m.global.deviceSize["w"] / 7
+    node.height = m.global.deviceSize["w"] / 7
+    node.translation = [m.global.deviceSize["w"] / 2 - node.width / 2, m.global.deviceSize["h"] / 2 - node.height / 2]
+end sub

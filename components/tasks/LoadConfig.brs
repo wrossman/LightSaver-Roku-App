@@ -7,9 +7,9 @@ sub loadConfig()
     print "loading config from registry"
 
     ' FOR TESTING A CLEAN REGISTRY
-    m.reg = CreateObject("roRegistry")
-    print "Successfully deleted config from registry: " + m.reg.Delete("Config").ToStr()
-    m.reg.Flush()
+    ' m.reg = CreateObject("roRegistry")
+    ' print "Successfully deleted config from registry: " + m.reg.Delete("Config").ToStr()
+    ' m.reg.Flush()
 
     m.registry = CreateObject("roRegistrySection", "Config")
 
