@@ -73,7 +73,7 @@ sub loadConfig()
     m.global.deviceSize = getDeviceSize()
     m.global.clientId = getChannelClientId()
 
-    deployment = "azure"
+    deployment = "local"
 
     if deployment = "azure"
         m.global.webappUrl = "https://lstestsix-webapp.azurewebsites.net"

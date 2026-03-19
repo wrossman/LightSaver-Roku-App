@@ -3,6 +3,9 @@ sub init()
 
     m.paused = false
     m.imageDisplayed = false
+    m.iconAnimationOn = false
+    m.fastForwardTransition = false
+    m.stepBackwardTransition = false
 
     m.solidBackground = m.top.findNode("solidBackground")
     m.solidBackground.width = m.global.deviceSize["w"]
@@ -33,6 +36,12 @@ sub init()
 
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
     m.fadeInAnimation = m.top.findNode("fadeInAnimation")
+    m.pauseAnimation = m.top.findNode("pauseAnimation")
+    m.playAnimation = m.top.findNode("playAnimation")
+    m.ffAnimateIn = m.top.findNode("ffAnimateIn")
+    m.ffAnimateOut = m.top.findNode("ffAnimateOut")
+    m.sbAnimateIn = m.top.findNode("sbAnimateIn")
+    m.sbAnimateOut = m.top.findNode("sbAnimateOut")
 
     m.picTimer = m.top.findNode("picTimer")
     m.picTimer.duration = m.global.picDisplayTime
@@ -381,6 +390,14 @@ sub animateIn()
     end if
 
     m.fadeInAnimation.control = "start"
+
+    ' run fast forward or step back animation fade out along with fading in the new image
+    if m.fastForwardTransition
+        startFfAnimateOut()
+    else if m.stepBackwardTransition
+        startSbAnimateOut()
+    end if
+
     m.fadeInAnimation.observeField("state", "finishAnimateIn")
 
     print "<< EXIT animateIn"
@@ -413,11 +430,13 @@ function onKeyEvent(key as string, press as boolean) as boolean
         if m.paused
             print "resuming"
             m.picTimer.observeField("fire", "onTimerFire")
+            runPlayAnimation()
             m.picTimer.control = "start"
             m.paused = false
         else
             print "pausing"
             m.picTimer.unobserveField("fire")
+            runPauseAnimation()
             m.paused = true
         end if
     else if key = "left" and press = true and m.global.imageCount > 1 and m.imageDisplayed
@@ -431,10 +450,12 @@ function onKeyEvent(key as string, press as boolean) as boolean
         end for
         m.picTimer.control = "stop"
         onTimerFire()
+        startSbAnimateIn()
     else if key = "right" and press = true and m.global.imageCount > 1 and m.imageDisplayed
         ' go to the next image displayed
         m.picTimer.control = "stop"
         onTimerFire()
+        startFfAnimateIn()
     else if key = "back" and press = true
         'remove all children of wallpapers then remove wallpaper from parent
         if m.global.imageCount > 1
@@ -469,4 +490,42 @@ sub centerIcons(node as object)
     node.width = m.global.deviceSize["w"] / 7
     node.height = m.global.deviceSize["w"] / 7
     node.translation = [m.global.deviceSize["w"] / 2 - node.width / 2, m.global.deviceSize["h"] / 2 - node.height / 2]
+end sub
+
+sub runPauseAnimation()
+    if m.playAnimation.state = "running"
+        m.playAnimation.control = "stop"
+        m.playIcon.opacity = 0
+    end if
+    m.pauseAnimation.control = "start"
+    m.pauseAnimation.observeField("state", "endIconAnimation")
+end sub
+
+sub runPlayAnimation()
+    if m.pauseAnimation.state = "running"
+        m.pauseAnimation.control = "stop"
+        m.pauseIcon.opacity = 0
+    end if
+    m.playAnimation.control = "start"
+    m.playAnimation.observeField("state", "endIconAnimation")
+end sub
+
+sub startFfAnimateIn()
+    m.fastForwardTransition = true
+    m.ffAnimateIn.control = "start"
+end sub
+
+sub startSbAnimateIn()
+    m.stepBackwardTransition = true
+    m.sbAnimateIn.control = "start"
+end sub
+
+sub startFfAnimateOut()
+    m.ffAnimateOut.control = "start"
+    m.fastForwardTransition = false
+end sub
+
+sub startSbAnimateOut()
+    m.sbAnimateOut.control = "start"
+    m.stepBackwardTransition = false
 end sub
