@@ -7,11 +7,6 @@ sub init()
     m.removeTempFilesTask = m.top.findNode("RemoveTempFilesTask")
     m.removeTempFilesTask.control = "run"
 
-    m.fadeRect = m.top.findNode("fadeRect")
-    m.fadeRect.height = m.global.deviceSize["h"]
-    m.fadeRect.width = m.global.deviceSize["w"] / 2
-    m.fadeRect.color = m.global.backgroundColor
-
     m.fadeOutAnimation = m.top.findNode("fadeOutAnimation")
     m.fadeInAnimation = m.top.findNode("fadeInAnimation")
 

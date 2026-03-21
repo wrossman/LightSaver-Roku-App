@@ -108,8 +108,6 @@ sub init()
         print "in first launch true"
         m.fromMenuFade.opacity = 0
         m.fadeRect.opacity = 100
-        m.fadeRect.width = m.global.deviceSize["w"]
-        m.fadeRect.height = m.global.deviceSize["h"]
         m.screenFadeInAnimation.control = "start"
         m.screenFadeInAnimation.observeField("state", "startGetSessionCodeTask")
     else if m.global.firstLaunch = "false"

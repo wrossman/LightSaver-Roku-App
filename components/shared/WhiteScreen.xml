@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="WhiteScreen" extends="Group">
+    <children>
+        <Rectangle id="screen" color="0xFFFFFF" />
+    </children>
+    <script type="text/brightscript" uri="WhiteScreen.brs" />
+</component>

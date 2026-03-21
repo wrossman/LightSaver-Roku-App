@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="SplitBackground" extends="Scene">
+    <children>
+        <Rectangle id="fadeRect" opacity="0" color="0xFFFFFF" />
+    </children>
+    <script type="text/brightscript" uri="SplitBackground.brs" />
+</component>

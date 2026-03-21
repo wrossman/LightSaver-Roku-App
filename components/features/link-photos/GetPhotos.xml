@@ -40,7 +40,7 @@
         />
         <Poster id="qrCode" uri="pkg:/components/data/qr-code.png" />
         <MenuBase id="fromMenuFade" opacity="100" />
-        <Rectangle id="fadeRect" opacity="0" color="0xFFFFFF" />
+        <WhiteScreen id="fadeRect" opacity="0" color="0xFFFFFF" />
         <Animation
             id="fromMenuFadeIn"
             repeat="false"
